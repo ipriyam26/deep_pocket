@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'models/user_model.dart';
+import '../models/user_model.dart';
 
 class editProfile extends StatefulWidget {
   static const route = 'editProfile';
@@ -23,12 +23,20 @@ class _editProfileState extends State<editProfile> {
   final collegeEditingController = new TextEditingController();
   final enrollmentNoEditingController = new TextEditingController();
 
-  UserModel loggedInUser = UserModel();
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    NameEditingController.dispose();
+    collegeEditingController.dispose();
+    enrollmentNoEditingController.dispose();
+
+    super.dispose();
   }
 
   bool _waiting = false;

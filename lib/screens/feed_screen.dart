@@ -2,7 +2,7 @@ import 'package:deep_pocket_1/models/data_feed.dart';
 import 'package:deep_pocket_1/models/mock_data.dart';
 import 'package:deep_pocket_1/screens/login.dart';
 import 'package:deep_pocket_1/screens/user_input.dart';
-import 'package:deep_pocket_1/widgets/menu_buttons.dart';
+
 import 'package:deep_pocket_1/widgets/post_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -108,14 +108,6 @@ class _feedScreenState extends State<feedScreen> {
                         ));
                       },
                       child: Text("Logout")),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: posts.length,
-                        itemBuilder: (ctx, i) => postWidget(post: posts[i])),
-                  ),
                 ],
               ),
             ),

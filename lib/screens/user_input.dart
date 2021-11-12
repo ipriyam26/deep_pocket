@@ -1,11 +1,18 @@
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/api_integration_imgur.dart';
 import 'package:deep_pocket_1/models/mock_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+
 import 'package:provider/src/provider.dart';
+import 'package:readmore/readmore.dart';
 
 import '../models/data_feed.dart';
 
@@ -32,6 +39,8 @@ class _userInputState extends State<userInput> {
 
   final titleController = TextEditingController();
   final bodyController = TextEditingController();
+  // CollectionReference userCollection =
+  //     FirebaseFirestore.instance.collection("users");
 
   int cata = 0;
   int _value = 0;
@@ -46,22 +55,51 @@ class _userInputState extends State<userInput> {
       return;
     }
     for (int i = 0; i < image.length; i++) {
-      var link = await API_Manager().postImage(image[0].path);
+      var link = await API_Manager().postImage(image[i].path);
       ImageLink.add(link);
     }
-    // final newPost = dataFeed(
-    //   id: DateTime.now().toString(),
-    //   imgsrc: "http://simpleicon.com/wp-content/uploads/user1.png",
-    //   name: "Priyam ",
-    //   title: titleCheck,
-    //   text: bodyCheck,
-    //   tag: tag,
-    //   date: DateTime.now().toString(),
-    // );
+
+    String? userName;
+    String? userImage;
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      userName = value['Name'];
+      userImage = value['Image'];
+    });
+
+    var newPost = {
+      'AuthorUID': user!.uid,
+// 'PostID':,
+      'AuthorProfilePic': userImage,
+      'AuthorName': userName,
+      'Date': DateFormat.yMMMMd('en_US').format(DateTime.now()),
+      'Time': DateFormat.jm().format(DateTime.now()),
+      'Title': titleController.text,
+      'Body': bodyController.text,
+      'ImageLinks': ImageLink,
+      'Likes': 0,
+      'Comments': 0,
+      'Tag': _chosenValue,
+    };
+    await FirebaseFirestore.instance
+        .collection("Posts")
+        .add(newPost)
+        .then((value) => print(value));
 
     //Sending newPost to previous page via Navigator.
     // context.read<mockData>().addPost(newPost as dataFeed);
     Navigator.of(context).pop(); //<- Attention
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    titleController.dispose();
+    bodyController.dispose();
+    super.dispose();
   }
 
   void uploadImage() {
@@ -87,175 +125,277 @@ class _userInputState extends State<userInput> {
         });
   }
 
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
+    final MWidth = MediaQuery.of(context).size.width;
+    final Mheight = MediaQuery.of(context).size.height;
+
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: Color(0xff171717),
           title: const Text('Ask a Question'),
         ),
         backgroundColor: const Color(0xff080808),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 25),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  if (image.isNotEmpty)
-                    for (int i = 0; i < image.length; i++)
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.file(
-                            image[i],
-                            height: MediaQuery.of(context).size.height * 0.08,
-                            width: MediaQuery.of(context).size.height * 0.08,
-                            fit: BoxFit.cover,
+        body: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("users")
+                .doc(user!.uid)
+                .get()
+                .asStream(),
+            builder: (context,
+                AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
+                    snapshot) {
+              var userdata = snapshot.data!.data();
+
+              return Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 18.0, vertical: 25),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: Mheight * 0.10,
+                      // color: Colors.amber,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          userdata!['Image'] == null
+                              ? ClipOval(
+                                  child: Container(
+                                    color: Colors.grey,
+                                    width: MWidth * 0.2,
+                                    height: MWidth * 0.2,
+                                  ),
+                                )
+                              : ClipOval(
+                                  child: Image.network(
+                                    userdata['Image'],
+                                    width: MWidth * 0.2,
+                                    height: MWidth * 0.2,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                          SizedBox(
+                            width: MWidth * 0.05,
+                          ),
+                          Container(
+                            // color: Colors.amber,
+                            width: MWidth * 0.65,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AutoSizeText(
+                                  userdata['Name'],
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                  maxFontSize: 28,
+                                  minFontSize: 24,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Select a Tag:",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    SizedBox(
+                                      width: MWidth * 0.05,
+                                    ),
+                                    DropdownButton<String>(
+                                      focusColor: Colors.black,
+                                      value: _chosenValue,
+                                      dropdownColor: Colors.black,
+                                      elevation: 0,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                      iconEnabledColor: Colors.orange,
+                                      items: Tag.map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Container(
+                                            child: Text(
+                                              value,
+                                              style: const TextStyle(
+                                                  color: Colors.orange),
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? value) {
+                                        setState(() {
+                                          _chosenValue = value.toString();
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: Mheight * 0.01,
+                    ),
+                    Container(
+                      // height: widget.MHeight * 0.1,
+
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: Mheight * 0.08,
+                            child: TextFormField(
+                              maxLines: null,
+                              minLines: null,
+                              expands: true,
+                              controller: titleController,
+                              maxLength: 80,
+                              autocorrect: false,
+                              scrollPadding:
+                                  EdgeInsets.symmetric(horizontal: 20),
+                              // onChanged: (value){
+                              //   titleController = value;
+                              // },
+                              decoration: const InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  hintText: "Title",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                  )),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: Mheight * 0.17,
+                            child: TextFormField(
+                              maxLength: 500,
+                              maxLines: null,
+                              minLines: null,
+                              expands: true,
+                              controller: bodyController,
+                              autocorrect: false,
+                              decoration: const InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  hintText:
+                                      "Describe what you are talking about",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400,
+                                  )),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                                fontSize: 13,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    image.isNotEmpty
+                        ? Container(
+                            height: Mheight * 0.28,
+                            child: CarouselSlider(
+                              options: CarouselOptions(
+                                aspectRatio: 4.5 / 3,
+                                viewportFraction: 0.95,
+                                enlargeCenterPage: false,
+                                enableInfiniteScroll: false,
+                                autoPlay: false,
+                              ),
+                              items: image
+                                  .map(
+                                    (item) => Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Center(
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Image.file(
+                                            item,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          )
+                        : InkWell(
+                            onTap: uploadImage,
+                            splashColor: Colors.white,
+                            child: Icon(
+                              Icons.add_a_photo,
+                              size: Mheight * 0.15,
+                              color: Colors.white,
+                            ),
+                          ),
+                    if (image.isNotEmpty)
+                      Container(
+                        width: double.maxFinite,
+                        alignment: Alignment.bottomRight,
+                        child: InkWell(
+                          onTap: uploadImage,
+                          splashColor: Colors.white,
+                          child: const Icon(
+                            Icons.add_a_photo,
+                            size: 30,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                  IconButton(
-                      // onPressed: _pickImage,
-                      onPressed: uploadImage,
-                      icon: const Icon(
-                        Icons.add_a_photo,
-                        size: 36,
-                        color: Colors.white,
-                      )),
-                ],
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-              TextField(
-                controller: titleController,
-                maxLength: 90,
-                buildCounter: (
-                  BuildContext context, {
-                  required int currentLength,
-                  required int? maxLength,
-                  required bool isFocused,
-                }) {
-                  return Text(
-                    '$currentLength/$maxLength',
-                    style: const TextStyle(color: Colors.white),
-                    semanticsLabel: 'character count',
-                  );
-                },
-                style: const TextStyle(color: Colors.white),
-                maxLines: 1,
-                decoration: const InputDecoration(
-                  alignLabelWithHint: true,
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 25, horizontal: 10),
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  floatingLabelStyle: TextStyle(height: 0.1),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  filled: true,
-                  fillColor: Color(0xff0f0f0f),
-                  focusColor: Colors.grey,
-                  focusedBorder: InputBorder.none,
-                  label: Text('Title',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.orange,
-                      )),
+                    Container(
+                      width: double.maxFinite,
+                      child: ElevatedButton.icon(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.orange),
+                          ),
+                          onPressed: () {
+                            submitted();
+                          },
+                          icon: const Icon(
+                            Icons.send,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                          label: const Text(
+                            "Post",
+                            style: TextStyle(color: Colors.black, fontSize: 20),
+                          )),
+                    ),
+                  ],
                 ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: TextField(
-                  controller: bodyController,
-                  maxLength: 500,
-                  buildCounter: (
-                    BuildContext context, {
-                    required int currentLength,
-                    required int? maxLength,
-                    required bool isFocused,
-                  }) {
-                    return Text(
-                      '$currentLength/$maxLength',
-                      style: const TextStyle(color: Colors.white),
-                      semanticsLabel: 'character count',
-                    );
-                  },
-                  textAlign: TextAlign.start,
-                  textAlignVertical: TextAlignVertical.top,
-                  style: const TextStyle(color: Colors.white),
-                  maxLines: null,
-                  expands: true,
-                  decoration: const InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    alignLabelWithHint: true,
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 25, horizontal: 10),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    floatingLabelStyle: TextStyle(height: 0.1),
-                    // enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    filled: true,
-                    fillColor: Color(0xff0f0f0f),
-                    focusColor: Colors.grey,
-                    label: Text('Type Something',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.orange,
-                        )),
-                  ),
-                ),
-              ),
-              const Text("Pick a Tag",
-                  style: TextStyle(color: Colors.orange, fontSize: 18)),
-              Container(
-                // margin: EdgeInsets.symmetric(horizontal: 100, vertical: 30),
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.black)),
-                child: DropdownButton<String>(
-                  focusColor: Colors.black,
-                  value: _chosenValue,
-                  dropdownColor: Colors.black,
-                  elevation: 10,
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
-                  iconEnabledColor: Colors.orange,
-                  items: Tag.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Container(
-                        // color: Colors.black,
-                        // width: double.maxFinite,
-                        // padding: EdgeInsets.all(5),
-                        child: Text(
-                          value,
-                          style: const TextStyle(color: Colors.orange),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  hint: const Text(
-                    "select a tag",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _chosenValue = value.toString();
-                    });
-                  },
-                ),
-              ),
-              ElevatedButton(onPressed: () {}, child: Text("Post"))
-            ],
-          ),
-        ));
+              );
+            }));
   }
 
   Future<void> _pickImageCamera() async {
@@ -277,6 +417,7 @@ class _userInputState extends State<userInput> {
       // setState(() {
       //   ImageLink.add(link);
       // });
+      Navigator.pop(context);
     } on PlatformException catch (e) {
       print(e);
     }
@@ -297,10 +438,11 @@ class _userInputState extends State<userInput> {
         image.add(tempImage);
         // image = tempImage;
       });
-      var link = await API_Manager().postImage(newimage.path);
-      setState(() {
-        ImageLink.add(link);
-      });
+      // var link = await API_Manager().postImage(newimage.path);
+      // setState(() {
+      //   ImageLink.add(link);
+      // });
+      Navigator.pop(context);
     } on PlatformException catch (e) {
       print(e);
     }

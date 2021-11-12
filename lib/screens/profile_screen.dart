@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_pocket_1/edit_profile.dart';
+import 'package:deep_pocket_1/screens/edit_profile.dart';
 import 'package:deep_pocket_1/screens/login.dart';
 
 import 'package:deep_pocket_1/widgets/recent_about.dart';

@@ -1,4 +1,4 @@
-import 'package:deep_pocket_1/edit_profile.dart';
+import 'package:deep_pocket_1/screens/edit_profile.dart';
 import 'package:deep_pocket_1/screens/club/club_detail_screen.dart';
 import 'package:deep_pocket_1/screens/club/clubs_screen.dart';
 import 'package:deep_pocket_1/screens/event/even_tabs.dart';
@@ -23,6 +23,7 @@ import 'package:deep_pocket_1/screens/signup.dart';
 import 'package:deep_pocket_1/screens/tabs_screen.dart';
 import 'package:deep_pocket_1/screens/user_input.dart';
 import 'package:deep_pocket_1/screens/verification_screen.dart';
+import 'package:deep_pocket_1/widgets/post_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
                 selectionColor: Colors.yellow,
                 selectionHandleColor: Colors.blue),
           ),
-          home: TabsScreen(),
+          home: userInput(),
           debugShowCheckedModeBanner: false,
           routes: {
             userInput.route: (ctx) => userInput(),
