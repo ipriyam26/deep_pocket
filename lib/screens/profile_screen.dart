@@ -1,14 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/screens/login.dart';
-import 'package:deep_pocket_1/screens/user_input.dart';
+
 import 'package:deep_pocket_1/widgets/recent_about.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
 
-import '../models/data_feed.dart';
-import '../models/mock_data.dart';
 import '../models/user_model.dart';
 
 class profileScreen extends StatefulWidget {
@@ -49,37 +46,55 @@ class _profileScreenState extends State<profileScreen> {
             ));
           },
           child: const Icon(Icons.add)),
-      body: SingleChildScrollView(
-        child: Container(
-            child: Column(
-          children: [
-            Container(
-              padding:
-                  EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
-              decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-              height: MediaQuery.of(context).size.height * 0.27,
-              child: Column(
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection("users")
+              .doc(user!.uid)
+              .snapshots(),
+          builder: (context,
+              AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+            if (snapshot.hasError) {
+              return Text('Something went wrong');
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text("Loading");
+            }
+
+            var userdata = snapshot.data!.data();
+            return SingleChildScrollView(
+              child: Container(
+                  child: Column(
                 children: [
-                  userImageName(
-                    name: loggedInUser.Name.toString(),
-                    Image: loggedInUser.Image.toString(),
-                    college: loggedInUser.CollegeName.toString(),
+                  Container(
+                    padding: EdgeInsets.all(
+                        MediaQuery.of(context).size.height * 0.01),
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.grey)),
+                    height: MediaQuery.of(context).size.height * 0.27,
+                    child: Column(
+                      children: [
+                        userImageName(
+                          name: userdata!['Name'],
+                          Image: userdata['Image'],
+                          college: userdata['CollegeName'],
+                        ),
+                        editprofile(),
+                      ],
+                    ),
                   ),
-                  editprofile(),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.23,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [headingColumn2(), Credentials()],
+                    ),
+                  ),
+                  RecentAbout(),
                 ],
-              ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.23,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [headingColumn2(), Credentials()],
-              ),
-            ),
-            RecentAbout(),
-          ],
-        )),
-      ),
+              )),
+            );
+          }),
     );
   }
 }
@@ -211,7 +226,7 @@ class userImageName extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.14,
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.lightBlue,
+                  color: Colors.grey,
                   image: DecorationImage(
                       fit: BoxFit.cover, image: NetworkImage(Image))),
             ),
