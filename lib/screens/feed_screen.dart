@@ -40,10 +40,6 @@ class _feedScreenState extends State<feedScreen> {
 
   @override
   void didChangeDependencies() {
-    if (_intstate) {
-      Provider.of<mockData>(context).fetchandAddPost();
-    }
-    _intstate = false;
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
@@ -75,9 +71,7 @@ class _feedScreenState extends State<feedScreen> {
         builder: (context, child) {
           var posts = context.select((mockData m) => m.items);
           print(posts.length);
-          if (filter != 0) {
-            posts = posts.where((i) => i.tag == filter).toList();
-          }
+
           return Scaffold(
             // drawer: Drawer(
             //     // Populate the Drawer in the next step.
