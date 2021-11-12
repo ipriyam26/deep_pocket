@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deep_pocket_1/edit_profile.dart';
 import 'package:deep_pocket_1/screens/login.dart';
 
 import 'package:deep_pocket_1/widgets/recent_about.dart';
@@ -17,20 +18,6 @@ class _profileScreenState extends State<profileScreen> {
   User? user = FirebaseAuth.instance.currentUser;
 
   UserModel loggedInUser = UserModel();
-
-  @override
-  void initState() {
-    super.initState();
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
-
-      print(loggedInUser.enrollmentNo);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +180,9 @@ class editprofile extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(50))),
           width: MediaQuery.of(context).size.width * 0.7,
           child: ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, editProfile.route);
+            },
             icon: Icon(Icons.edit),
             label: Text("Edit Profile"),
           ),
