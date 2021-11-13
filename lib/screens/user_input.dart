@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/api_integration_imgur.dart';
+import 'package:deep_pocket_1/models/image_upload.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,8 @@ class _userInputState extends State<userInput> {
     if (titleCheck.isEmpty || bodyCheck.length < 10) {
       return;
     }
+    print("Total Images to be uploaded ${image.length}");
+
     for (int i = 0; i < image.length; i++) {
       var link = await API_Manager().postImage(image[i].path);
       ImageLink.add(link);
@@ -143,6 +146,9 @@ class _userInputState extends State<userInput> {
             builder: (context,
                 AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
                     snapshot) {
+              if (!snapshot.hasData) {
+                return CircularProgressIndicator();
+              }
               var userdata = snapshot.data!.data();
 
               return Container(
@@ -417,16 +423,10 @@ class _userInputState extends State<userInput> {
         return;
       }
       final tempImage = File(newimage.path);
-      // final PermaImage = await saveImagePermanently(image.path);
-      print(newimage.path);
       setState(() {
         image.add(tempImage);
-        // image = tempImage;
       });
-      // var link = await API_Manager().postImage(newimage.path);
-      // setState(() {
-      //   ImageLink.add(link);
-      // });
+
       Navigator.pop(context);
     } on PlatformException catch (e) {
       print(e);
@@ -438,20 +438,14 @@ class _userInputState extends State<userInput> {
       final newimage =
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (newimage == null) {
-        print("object");
         return;
       }
       final tempImage = File(newimage.path);
-      // final PermaImage = await saveImagePermanently(image.path);
-      print(newimage.path);
+
       setState(() {
         image.add(tempImage);
-        // image = tempImage;
       });
-      // var link = await API_Manager().postImage(newimage.path);
-      // setState(() {
-      //   ImageLink.add(link);
-      // });
+
       Navigator.pop(context);
     } on PlatformException catch (e) {
       print(e);

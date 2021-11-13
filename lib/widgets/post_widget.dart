@@ -17,8 +17,11 @@ class postCard extends StatefulWidget {
     required this.time,
     required this.likes,
     required this.comments,
+    required this.date,
+    required this.tag,
   }) : super(key: key);
 
+  final dynamic tag;
   final double MHeight;
   final double MWidth;
   final List<dynamic> imagesList;
@@ -29,6 +32,7 @@ class postCard extends StatefulWidget {
   final dynamic time;
   dynamic likes;
   final dynamic comments;
+  final dynamic date;
 
   @override
   State<postCard> createState() => _postCardState();
@@ -41,7 +45,7 @@ class _postCardState extends State<postCard> {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        color: Colors.amberAccent,
+        // color: Colors.amberAccent,
         // height: widget.MHeight * 0.5,
         // width: MWidth * 0.9,
         padding: EdgeInsets.symmetric(
@@ -53,7 +57,9 @@ class _postCardState extends State<postCard> {
                 MWidth: widget.MWidth,
                 name: widget.name,
                 time: widget.time,
-                AuthorImage: widget.AuthorImage),
+                date: widget.date,
+                AuthorImage: widget.AuthorImage,
+                tag: widget.tag),
             SizedBox(
               height: widget.MHeight * 0.01,
             ),
@@ -90,7 +96,7 @@ class _postCardState extends State<postCard> {
             ),
             Container(
               height: widget.MHeight * 0.28,
-              color: Colors.amber,
+              // color: Colors.amber,
               child: CarouselSlider(
                 options: CarouselOptions(
                   aspectRatio: 4.5 / 3,
@@ -175,12 +181,16 @@ class firstColumn extends StatelessWidget {
     required this.name,
     required this.time,
     required this.AuthorImage,
+    required this.date,
+    required this.tag,
   }) : super(key: key);
 
+  final dynamic date;
   final double MWidth;
   final dynamic name;
   final dynamic time;
   final dynamic AuthorImage;
+  final dynamic tag;
 
   @override
   Widget build(BuildContext context) {
@@ -188,12 +198,26 @@ class firstColumn extends StatelessWidget {
       child: Row(
         children: [
           ClipOval(
-              child: Image.network(
-            AuthorImage.toString(),
-            width: MWidth * 0.15,
-            height: MWidth * 0.15,
-            fit: BoxFit.cover,
-          )),
+            child: Container(
+              width: MWidth * 0.15,
+              height: MWidth * 0.15,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                image: DecorationImage(
+                  image: NetworkImage(
+                    AuthorImage.toString(),
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            //      Image.network(
+            //   AuthorImage.toString(),
+            //   width: MWidth * 0.15,
+            //   height: MWidth * 0.15,
+            //   fit: BoxFit.cover,
+            // )
+          ),
           SizedBox(
             width: MWidth * 0.03,
           ),
@@ -202,15 +226,25 @@ class firstColumn extends StatelessWidget {
             children: [
               AutoSizeText(
                 name.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
                 maxFontSize: 22,
                 minFontSize: 20,
               ),
               AutoSizeText(
                 time.toString(),
-                style: TextStyle(color: Colors.grey, fontSize: 14),
+                style: const TextStyle(color: Colors.grey, fontSize: 14),
               )
             ],
+          ),
+          SizedBox(
+            width: MWidth * 0.04,
+          ),
+          Chip(
+            label: Text(
+              tag,
+              style: const TextStyle(color: Colors.orange, fontSize: 12),
+            ),
+            backgroundColor: Colors.black,
           )
         ],
       ),

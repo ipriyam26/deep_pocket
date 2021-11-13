@@ -51,6 +51,7 @@ dependencies:
   unique_list: ^1.0.1
   url_launcher: ^6.0.12
   youtube_explode_dart: ^1.10.8
+  cloudinary_public: ^0.11.0
 
 dev_dependencies:
 
