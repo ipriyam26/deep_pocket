@@ -100,6 +100,7 @@ class _feedScreenState extends State<feedScreen> {
               child: ListView(
                 children: snapshot.data!.docs.map<Widget>((document) {
                   final imageList = document.data()['ImageLinks'];
+
                   // print(imageList);
                   return Center(
                     child: Container(
@@ -107,6 +108,8 @@ class _feedScreenState extends State<feedScreen> {
                             MHeight: MHeight,
                             MWidth: MWidth,
                             imagesList: imageList,
+                            id: document.id,
+                            LikedBy: document.data()['LikedBy'],
                             name: document.data()['AuthorName'],
                             AuthorImage: document.data()['AuthorProfilePic'],
                             title: document.data()['Title'],

@@ -1,10 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:readmore/readmore.dart';
 
 class postCard extends StatefulWidget {
+  final dynamic id;
+  final currentuser = FirebaseAuth.instance.currentUser;
+
+  List<dynamic>? LikedBy;
+
   postCard({
     Key? key,
     required this.MHeight,
@@ -19,6 +26,8 @@ class postCard extends StatefulWidget {
     required this.comments,
     required this.date,
     required this.tag,
+    required this.id,
+    required this.LikedBy,
   }) : super(key: key);
 
   final dynamic tag;
@@ -40,15 +49,22 @@ class postCard extends StatefulWidget {
 
 class _postCardState extends State<postCard> {
   bool liked = false;
-
   @override
   Widget build(BuildContext context) {
+    try {
+      if (widget.LikedBy!.contains(widget.currentuser) == true) {
+        liked = true;
+      }
+    } catch (e) {
+      liked = false;
+    }
+
     return Card(
       child: Container(
         // color: Colors.amberAccent,
         // height: widget.MHeight * 0.5,
         // width: MWidth * 0.9,
-        padding: EdgeInsets.symmetric(
+        margin: EdgeInsets.symmetric(
             horizontal: widget.MWidth * 0.01, vertical: widget.MHeight * 0.01),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -78,17 +94,14 @@ class _postCardState extends State<postCard> {
                   ),
                   Container(
                     // height:DeviceSize.height(context),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                      child: ReadMoreText(
-                        widget.body.toString(),
-                        trimLines: 2,
-                        colorClickableText: Colors.pink,
-                        trimMode: TrimMode.Line,
-                        trimCollapsedText: '..Read More',
-                        style: const TextStyle(fontSize: 13),
-                        trimExpandedText: ' Less',
-                      ),
+                    child: ReadMoreText(
+                      widget.body.toString(),
+                      trimLines: 2,
+                      colorClickableText: Colors.pink,
+                      trimMode: TrimMode.Line,
+                      trimCollapsedText: '..Read More',
+                      style: const TextStyle(fontSize: 13),
+                      trimExpandedText: ' Less',
                     ),
                   ),
                 ],
@@ -96,11 +109,12 @@ class _postCardState extends State<postCard> {
             ),
             Container(
               height: widget.MHeight * 0.28,
+              padding: EdgeInsets.all(widget.MHeight * 0.005),
               // color: Colors.amber,
               child: CarouselSlider(
                 options: CarouselOptions(
                   aspectRatio: 4.5 / 3,
-                  viewportFraction: 0.9,
+                  viewportFraction: 1,
                   enlargeCenterPage: true,
                   enableInfiniteScroll: false,
                   autoPlay: false,
@@ -131,15 +145,30 @@ class _postCardState extends State<postCard> {
                           style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(
                                   Colors.black)),
-                          onPressed: () {
-                            setState(() {
-                              liked = !liked;
-                              if (liked) {
-                                widget.likes += 1;
-                              } else {
-                                widget.likes -= 1;
-                              }
-                            });
+                          onPressed: () async {
+                            liked = !liked;
+                            if (liked) {
+                              widget.likes += 1;
+                              await FirebaseFirestore.instance
+                                  .collection("Posts")
+                                  .doc(widget.id)
+                                  .update({
+                                'Likes': widget.likes,
+                                "LikedBy": FieldValue.arrayUnion(
+                                    [widget.currentuser!.uid])
+                              });
+                            } else {
+                              widget.likes -= 1;
+                              await FirebaseFirestore.instance
+                                  .collection("Posts")
+                                  .doc(widget.id)
+                                  .update({
+                                'Likes': widget.likes,
+                                "LikedBy": FieldValue.arrayRemove(
+                                    [widget.currentuser!.uid])
+                              });
+                            }
+                            setState(() {});
                           },
                           icon: liked
                               ? const Icon(
