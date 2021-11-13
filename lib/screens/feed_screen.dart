@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/data_feed.dart';
 import 'package:deep_pocket_1/models/mock_data.dart';
 import 'package:deep_pocket_1/screens/login.dart';
@@ -66,52 +67,59 @@ class _feedScreenState extends State<feedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<mockData>(
-        create: (context) => mockData(),
-        builder: (context, child) {
-          var posts = context.select((mockData m) => m.items);
-          print(posts.length);
-
-          return Scaffold(
-            // drawer: Drawer(
-            //     // Populate the Drawer in the next step.
-            //     ),
-            appBar: AppBar(
-              backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
-              title: const Text("Home"),
-              actions: [
-                TextButton(
-                    onPressed: () => {filterSheet(context)},
-                    child: const Text(
-                      "Filters",
-                      style: TextStyle(color: Colors.white),
+    final MHeight = MediaQuery.of(context).size.height;
+    final MWidth = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
+        title: const Text("Home"),
+        actions: [
+          TextButton(
+              onPressed: () => {filterSheet(context)},
+              child: const Text(
+                "Filters",
+                style: TextStyle(color: Colors.white),
+              )),
+          TextButton(
+              onPressed: () => {Navigator.pushNamed(context, userInput.route)},
+              child: const Icon(
+                Icons.add_box,
+                color: Colors.red,
+              )),
+        ],
+      ),
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection("Posts").snapshots(),
+          builder: (context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            if (!snapshot.hasData) {
+              return CircularProgressIndicator();
+            }
+            return Container(
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: ListView(
+                children: snapshot.data!.docs.map<Widget>((document) {
+                  final imageList = document.data()['ImageLinks'];
+                  print(imageList);
+                  return Center(
+                    child: Container(
+                        child: postCard(
+                      MHeight: MHeight,
+                      MWidth: MWidth,
+                      imagesList: imageList,
+                      name: document.data()['AuthorName'],
+                      AuthorImage: document.data()['AuthorProfilePic'],
+                      title: document.data()['Title'],
+                      body: document.data()['Body'],
+                      time: document.data()['Time'],
+                      likes: document.data()['Likes'],
+                      comments: document.data()['Comments'],
                     )),
-                TextButton(
-                    onPressed: () =>
-                        {Navigator.pushNamed(context, userInput.route)},
-                    child: Icon(
-                      Icons.add_box,
-                      color: Colors.red,
-                    )),
-              ],
-            ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ElevatedButton(
-                      onPressed: () async {
-                        localStorage = await SharedPreferences.getInstance();
-                        localStorage.clear();
-                        await FirebaseAuth.instance.signOut();
-                        runApp(MaterialApp(
-                          home: LoginScreen(),
-                        ));
-                      },
-                      child: Text("Logout")),
-                ],
+                  );
+                }).toList(),
               ),
-            ),
-          );
-        });
+            );
+          }),
+    );
   }
 }

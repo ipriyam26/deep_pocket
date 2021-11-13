@@ -4,17 +4,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/api_integration_imgur.dart';
-import 'package:deep_pocket_1/models/mock_data.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-
-import 'package:provider/src/provider.dart';
-import 'package:readmore/readmore.dart';
-
-import '../models/data_feed.dart';
 
 class userInput extends StatefulWidget {
   static const route = '/user-input';
@@ -136,6 +131,7 @@ class _userInputState extends State<userInput> {
         appBar: AppBar(
           backgroundColor: Color(0xff171717),
           title: const Text('Ask a Question'),
+          actions: [IconButton(onPressed: submitted, icon: Icon(Icons.send))],
         ),
         backgroundColor: const Color(0xff080808),
         body: StreamBuilder(
@@ -244,80 +240,88 @@ class _userInputState extends State<userInput> {
                       ),
                     ),
                     SizedBox(
-                      height: Mheight * 0.01,
+                      height: Mheight * 0.03,
                     ),
-                    Container(
-                      // height: widget.MHeight * 0.1,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: Mheight * 0.08,
+                          child: TextFormField(
+                            maxLines: null,
+                            minLines: null,
+                            expands: true,
+                            controller: titleController,
+                            maxLength: 80,
+                            autocorrect: false,
+                            scrollPadding: EdgeInsets.symmetric(horizontal: 20),
+                            // onChanged: (value){
+                            //   titleController = value;
 
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: Mheight * 0.08,
-                            child: TextFormField(
-                              maxLines: null,
-                              minLines: null,
-                              expands: true,
-                              controller: titleController,
-                              maxLength: 80,
-                              autocorrect: false,
-                              scrollPadding:
-                                  EdgeInsets.symmetric(horizontal: 20),
-                              // onChanged: (value){
-                              //   titleController = value;
-                              // },
-                              decoration: const InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  hintText: "Title",
-                                  hintStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                  )),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                                fontSize: 18,
-                              ),
+                            validator: (value) {
+                              if (value!.length <= 20) {
+                                return ("Title should be at least 20 Characters");
+                              }
+                            },
+                            // },
+
+                            decoration: const InputDecoration(
+                                errorStyle: TextStyle(color: Colors.red),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                hintText: "Title",
+                                hintStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                )),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                              fontSize: 18,
                             ),
                           ),
-                          Container(
-                            height: Mheight * 0.17,
-                            child: TextFormField(
-                              maxLength: 500,
-                              maxLines: null,
-                              minLines: null,
-                              expands: true,
-                              controller: bodyController,
-                              autocorrect: false,
-                              decoration: const InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  hintText:
-                                      "Describe what you are talking about",
-                                  hintStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w400,
-                                  )),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white,
-                                fontSize: 13,
-                              ),
+                        ),
+                        SizedBox(
+                          height: Mheight * 0.01,
+                        ),
+                        Container(
+                          height: Mheight * 0.17,
+                          child: TextFormField(
+                            maxLength: 500,
+                            maxLines: null,
+                            minLines: null,
+                            expands: true,
+                            controller: bodyController,
+                            autocorrect: false,
+                            decoration: const InputDecoration(
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                hintText: "Describe what you are talking about",
+                                hintStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400,
+                                )),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                              fontSize: 13,
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: Mheight * 0.02,
                     ),
                     image.isNotEmpty
                         ? Container(
@@ -354,7 +358,7 @@ class _userInputState extends State<userInput> {
                             splashColor: Colors.white,
                             child: Icon(
                               Icons.add_a_photo,
-                              size: Mheight * 0.15,
+                              size: Mheight * 0.18,
                               color: Colors.white,
                             ),
                           ),
@@ -367,35 +371,41 @@ class _userInputState extends State<userInput> {
                           splashColor: Colors.white,
                           child: const Icon(
                             Icons.add_a_photo,
+                            // Icons.add_a_photo,
                             size: 30,
                             color: Colors.white,
                           ),
                         ),
                       ),
-                    Container(
-                      width: double.maxFinite,
-                      child: ElevatedButton.icon(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.orange),
-                          ),
-                          onPressed: () {
-                            submitted();
-                          },
-                          icon: const Icon(
-                            Icons.send,
-                            color: Colors.black,
-                            size: 30,
-                          ),
-                          label: const Text(
-                            "Post",
-                            style: TextStyle(color: Colors.black, fontSize: 20),
-                          )),
-                    ),
                   ],
                 ),
               );
-            }));
+            }),
+        floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: Colors.orange,
+          onPressed: submitted,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          label: Container(
+            width: MWidth * 0.8,
+            // width: double.maxFinite,
+            alignment: Alignment.center,
+            // alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.send,
+                  color: Colors.black,
+                  size: 30,
+                ),
+                Text(
+                  "  Post",
+                  style: TextStyle(color: Colors.black, fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 
   Future<void> _pickImageCamera() async {

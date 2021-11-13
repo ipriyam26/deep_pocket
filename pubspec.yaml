@@ -40,25 +40,19 @@ dependencies:
   fluttertoast: ^8.0.8
   http: ^0.13.4
   image_picker: ^0.8.4+4
-  path_provider: ^2.0.6
   intl: ^0.17.0
+  path_provider: ^2.0.6
   provider: ^6.0.1
+  readmore: ^2.1.0
   selection_menu: ^1.0.0
   shared_preferences: ^2.0.8
   syncfusion_flutter_pdfviewer: ^19.3.48-beta
   table_calendar: ^3.0.3
   unique_list: ^1.0.1
   url_launcher: ^6.0.12
-  youtube_explode_dart: ^1.10.8  
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-
+  youtube_explode_dart: ^1.10.8
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -66,10 +60,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+  flutter_test:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
 
@@ -101,10 +96,8 @@ flutter:
     - assets/background.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

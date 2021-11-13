@@ -99,7 +99,7 @@ class _editProfileState extends State<editProfile> {
                             Stack(
                               alignment: Alignment.bottomRight,
                               children: [
-                                if (userdata!['Image'] == null)
+                                if (userdata['Image'] == null)
                                   Container(
                                     width: MediaQuery.of(context).size.height *
                                         0.20,

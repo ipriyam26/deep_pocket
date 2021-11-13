@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
                 selectionColor: Colors.yellow,
                 selectionHandleColor: Colors.blue),
           ),
-          home: userInput(),
+          home: TabsScreen(),
           debugShowCheckedModeBanner: false,
           routes: {
             userInput.route: (ctx) => userInput(),
