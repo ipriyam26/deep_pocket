@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/data_feed.dart';
 import 'package:deep_pocket_1/models/mock_data.dart';
+import 'package:deep_pocket_1/models/user_model.dart';
 import 'package:deep_pocket_1/screens/login.dart';
+import 'package:deep_pocket_1/screens/new_post_page.dart';
 import 'package:deep_pocket_1/screens/user_input.dart';
 
 import 'package:deep_pocket_1/widgets/post_widget.dart';
@@ -69,6 +71,7 @@ class _feedScreenState extends State<feedScreen> {
   Widget build(BuildContext context) {
     final MHeight = MediaQuery.of(context).size.height;
     final MWidth = MediaQuery.of(context).size.width;
+    final loggedInuser = Provider.of<UserModel>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
@@ -103,22 +106,31 @@ class _feedScreenState extends State<feedScreen> {
 
                   // print(imageList);
                   return Center(
-                    child: Container(
-                        child: postCard(
-                            MHeight: MHeight,
-                            MWidth: MWidth,
-                            imagesList: imageList,
-                            id: document.id,
-                            LikedBy: document.data()['LikedBy'],
-                            name: document.data()['AuthorName'],
-                            AuthorImage: document.data()['AuthorProfilePic'],
-                            title: document.data()['Title'],
-                            body: document.data()['Body'],
-                            time: document.data()['Time'],
-                            likes: document.data()['Likes'],
-                            comments: document.data()['Comments'],
-                            date: document.data()['Date'],
-                            tag: document.data()['Tag'])),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, postPage.route,
+                            arguments: {
+                              'document': document,
+                              'user': loggedInuser,
+                            });
+                      },
+                      child: Container(
+                          child: postCard(
+                              MHeight: MHeight,
+                              MWidth: MWidth,
+                              imagesList: imageList,
+                              id: document.id,
+                              LikedBy: document.data()['LikedBy'],
+                              name: document.data()['AuthorName'],
+                              AuthorImage: document.data()['AuthorProfilePic'],
+                              title: document.data()['Title'],
+                              body: document.data()['Body'],
+                              time: document.data()['Time'],
+                              likes: document.data()['Likes'],
+                              comments: document.data()['Comments'],
+                              date: document.data()['Date'],
+                              tag: document.data()['Tag'])),
+                    ),
                   );
                 }).toList(),
               ),

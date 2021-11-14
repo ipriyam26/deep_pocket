@@ -52,7 +52,7 @@ class _postCardState extends State<postCard> {
   @override
   Widget build(BuildContext context) {
     try {
-      if (widget.LikedBy!.contains(widget.currentuser) == true) {
+      if (widget.LikedBy!.contains(widget.currentuser!.uid) == true) {
         liked = true;
       }
     } catch (e) {
@@ -80,6 +80,7 @@ class _postCardState extends State<postCard> {
               height: widget.MHeight * 0.01,
             ),
             Container(
+              width: widget.MWidth,
               // height: widget.MHeight * 0.1,
               margin: EdgeInsets.symmetric(horizontal: widget.MWidth * 0.02),
               child: Column(
