@@ -10,6 +10,7 @@ import 'package:deep_pocket_1/widgets/post_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -106,6 +107,11 @@ class _feedScreenState extends State<feedScreen> {
               child: ListView(
                 children: snapshot.data!.docs.map<Widget>((document) {
                   final imageList = document.data()['ImageLinks'];
+                  final ctime = document.data()['Time'];
+
+                  final dtime = DateTime.parse(ctime.toDate().toString());
+
+                  final time = DateFormat.jm().format(dtime);
 
                   // print(imageList);
                   return Center(
@@ -128,7 +134,7 @@ class _feedScreenState extends State<feedScreen> {
                               AuthorImage: document.data()['AuthorProfilePic'],
                               title: document.data()['Title'],
                               body: document.data()['Body'],
-                              time: document.data()['Time'],
+                              time: time,
                               likes: document.data()['Likes'],
                               comments: document.data()['Comments'],
                               date: document.data()['Date'],
