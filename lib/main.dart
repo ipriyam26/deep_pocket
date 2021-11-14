@@ -22,6 +22,7 @@ import 'package:deep_pocket_1/screens/resources/book/book_viewer.dart';
 import 'package:deep_pocket_1/screens/resources/resources_tab_screen.dart';
 import 'package:deep_pocket_1/screens/signup.dart';
 import 'package:deep_pocket_1/screens/tabs_screen.dart';
+import 'package:deep_pocket_1/screens/update_profile.dart';
 import 'package:deep_pocket_1/screens/user_input.dart';
 import 'package:deep_pocket_1/screens/verification_screen.dart';
 import 'package:deep_pocket_1/widgets/post_widget.dart';
@@ -65,6 +66,7 @@ class MyApp extends StatelessWidget {
           routes: {
             userInput.route: (ctx) => userInput(),
             feedScreen.route: (ctx) => feedScreen(),
+            verification.route: (ctx) => verification(),
             clubsScreen.route: (ctx) => clubsScreen(),
             // eventSreen.route: (ctx) => eventSreen(),
             facultyScreen.route: (ctx) => facultyScreen(),

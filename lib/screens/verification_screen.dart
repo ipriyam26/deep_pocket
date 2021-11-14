@@ -1,12 +1,19 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/main.dart';
+import 'package:deep_pocket_1/models/api_integration_imgur.dart';
+import 'package:deep_pocket_1/models/user_model.dart';
+import 'package:deep_pocket_1/screens/tabs_screen.dart';
+import 'package:deep_pocket_1/screens/update_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class verification extends StatefulWidget {
   verification({Key? key}) : super(key: key);
-
+  static const route = 'verfication-screen';
   @override
   _verificationState createState() => _verificationState();
 }
@@ -21,10 +28,18 @@ class _verificationState extends State<verification> {
     // TODO: implement initState
     user = auth.currentUser;
     user!.sendEmailVerification();
-    Timer.periodic(Duration(seconds: 5), (timer) {
+    Timer.periodic(const Duration(seconds: 2), (timer) {
       checkVerification();
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    timer!.cancel();
+    super.dispose();
   }
 
   @override
@@ -79,9 +94,12 @@ class _verificationState extends State<verification> {
     user = auth.currentUser;
     await user!.reload();
     if (user!.emailVerified) {
-      // timer!.cancel();
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => MyApp()));
+      Navigator.pushAndRemoveUntil(
+          (context),
+          MaterialPageRoute(builder: (context) => UpdateProfileScreen()),
+          (route) => false);
+
+      timer!.cancel();
     }
   }
 }

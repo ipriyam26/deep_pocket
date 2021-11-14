@@ -26,10 +26,11 @@ class _feedScreenState extends State<feedScreen> {
 
   var _intstate = true;
   late SharedPreferences localStorage;
-
+  ScrollController _scrollController = ScrollController();
   void updateFilter(tx, context) {
     setState(() {
       filter = tx;
+      currentMax = 5;
     });
 
     Navigator.of(context).pop();
@@ -68,83 +69,192 @@ class _feedScreenState extends State<feedScreen> {
             ));
   }
 
+  int currentMax = 5;
+  Stream<QuerySnapshot<Map<String, dynamic>>> getposts() {
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        print("reached end");
+        setState(() {
+          currentMax = currentMax + 5;
+        });
+      }
+    });
+
+     FirebaseFirestore.instance
+        .collection("Posts")
+        .orderBy("Time", descending: true)
+        .limit(currentMax).
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>>? getFilteredposts() {
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        print("reached end");
+        setState(() {
+          currentMax = currentMax + 5;
+        });
+      }
+    });
+
+    return FirebaseFirestore.instance
+        .collection("Posts")
+        .orderBy("Time", descending: true)
+        .where('Tag', isEqualTo: Tag[filter])
+        .limit(currentMax)
+        .snapshots();
+  }
+
   @override
   Widget build(BuildContext context) {
     final MHeight = MediaQuery.of(context).size.height;
     final MWidth = MediaQuery.of(context).size.width;
     final loggedInuser = Provider.of<UserModel>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
-        title: const Text("Home"),
-        actions: [
-          TextButton(
-              onPressed: () => {filterSheet(context)},
-              child: const Text(
-                "Filters",
-                style: TextStyle(color: Colors.white),
-              )),
-          TextButton(
-              onPressed: () => {Navigator.pushNamed(context, userInput.route)},
-              child: const Icon(
-                Icons.add_box,
-                color: Colors.red,
-              )),
-        ],
-      ),
-      body: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection("Posts")
-              .orderBy("Time")
-              .snapshots(),
-          builder: (context,
-              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(
-                  child: CircularProgressIndicator(
-                color: Colors.orange,
-              ));
-            }
-            return Container(
-                height: MediaQuery.of(context).size.height * 0.8,
-                child: ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context, index) => Center(
-                          child: InkWell(
-                            splashColor: Colors.black,
-                            onTap: () {
-                              Navigator.pushNamed(context, postPage.route,
-                                  arguments: {
-                                    'document': snapshot.data!.docs[index],
-                                    'user': loggedInuser,
-                                  });
-                            },
-                            child: Container(
-                                child: postCard(
-                                    MHeight: MHeight,
-                                    MWidth: MWidth,
-                                    imagesList: snapshot.data!.docs[index]
-                                        .data()['ImageLinks'],
-                                    id: snapshot.data!.docs[index].id,
-                                    LikedBy: snapshot.data!.docs[index]
-                                        .data()['LikedBy'],
-                                    name: snapshot.data!.docs[index]
-                                        .data()['AuthorName'],
-                                    AuthorImage: snapshot.data!.docs[index]
-                                        .data()['AuthorProfilePic'],
-                                    title: snapshot.data!.docs[index]
-                                        .data()['Title'],
-                                    body: snapshot.data!.docs[index]
-                                        .data()['Body'],
-                                    time: DateFormat.jm().format(DateTime.parse(
-                                        snapshot.data!.docs[index].data()['Time'].toDate().toString())),
-                                    likes: snapshot.data!.docs[index].data()['Likes'],
-                                    comments: snapshot.data!.docs[index].data()['Comments'],
-                                    date: snapshot.data!.docs[index].data()['Date'],
-                                    tag: snapshot.data!.docs[index].data()['Tag'])),
-                          ),
-                        )));
-          }),
-    );
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
+          title: const Text("Home"),
+          actions: [
+            TextButton(
+                onPressed: () => {filterSheet(context)},
+                child: const Text(
+                  "Filters",
+                  style: TextStyle(color: Colors.white),
+                )),
+            TextButton(
+                onPressed: () =>
+                    {Navigator.pushNamed(context, userInput.route)},
+                child: const Icon(
+                  Icons.add_box,
+                  color: Colors.red,
+                )),
+          ],
+        ),
+        body: filter == 0
+            ? StreamBuilder(
+                stream: getposts(),
+
+                // getposts(),
+                builder: (context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      color: Colors.orange,
+                    ));
+                  }
+                  return Container(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: ListView.builder(
+                          controller: _scrollController,
+                          itemCount: snapshot.data!.docs.length + 1,
+                          itemBuilder: (context, index) => index ==
+                                  snapshot.data!.docs.length
+                              ? const CupertinoActivityIndicator()
+                              : Center(
+                                  child: InkWell(
+                                    splashColor: Colors.black,
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, postPage.route,
+                                          arguments: {
+                                            'document':
+                                                snapshot.data!.docs[index],
+                                            'user': loggedInuser,
+                                          });
+                                    },
+                                    child: Container(
+                                        child: postCard(
+                                            MHeight: MHeight,
+                                            MWidth: MWidth,
+                                            imagesList: snapshot
+                                                .data!.docs[index]
+                                                .data()['ImageLinks'],
+                                            id: snapshot.data!.docs[index].id,
+                                            LikedBy: snapshot.data!.docs[index]
+                                                .data()['LikedBy'],
+                                            name: snapshot.data!.docs[index]
+                                                .data()['AuthorName'],
+                                            AuthorImage: snapshot
+                                                .data!.docs[index]
+                                                .data()['AuthorProfilePic'],
+                                            title: snapshot.data!.docs[index]
+                                                .data()['Title'],
+                                            body: snapshot.data!.docs[index]
+                                                .data()['Body'],
+                                            time: DateFormat.jm().format(
+                                                DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString())),
+                                            likes: snapshot.data!.docs[index].data()['Likes'],
+                                            comments: snapshot.data!.docs[index].data()['Comments'],
+                                            date: snapshot.data!.docs[index].data()['Date'],
+                                            tag: snapshot.data!.docs[index].data()['Tag'])),
+                                  ),
+                                )));
+                })
+            : StreamBuilder(
+                stream: getFilteredposts(),
+
+                // getposts(),
+                builder: (context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        snapshot) {
+                  if (!snapshot.hasData) {
+                    print(snapshot);
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      color: Colors.orange,
+                    ));
+                  }
+                  return Container(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: ListView.builder(
+                          controller: _scrollController,
+                          itemCount: snapshot.data!.docs.length + 1,
+                          itemBuilder: (context, index) => index ==
+                                  snapshot.data!.docs.length
+                              ? const CupertinoActivityIndicator()
+                              : Center(
+                                  child: InkWell(
+                                    splashColor: Colors.black,
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, postPage.route,
+                                          arguments: {
+                                            'document':
+                                                snapshot.data!.docs[index],
+                                            'user': loggedInuser,
+                                          });
+                                    },
+                                    child: Container(
+                                        child: postCard(
+                                            MHeight: MHeight,
+                                            MWidth: MWidth,
+                                            imagesList: snapshot
+                                                .data!.docs[index]
+                                                .data()['ImageLinks'],
+                                            id: snapshot.data!.docs[index].id,
+                                            LikedBy: snapshot.data!.docs[index]
+                                                .data()['LikedBy'],
+                                            name: snapshot.data!.docs[index]
+                                                .data()['AuthorName'],
+                                            AuthorImage: snapshot
+                                                .data!.docs[index]
+                                                .data()['AuthorProfilePic'],
+                                            title: snapshot.data!.docs[index]
+                                                .data()['Title'],
+                                            body: snapshot.data!.docs[index]
+                                                .data()['Body'],
+                                            time: DateFormat.jm().format(
+                                                DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString())),
+                                            likes: snapshot.data!.docs[index].data()['Likes'],
+                                            comments: snapshot.data!.docs[index].data()['Comments'],
+                                            date: snapshot.data!.docs[index].data()['Date'],
+                                            tag: snapshot.data!.docs[index].data()['Tag'])),
+                                  ),
+                                )));
+                }));
   }
 }

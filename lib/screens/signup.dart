@@ -354,19 +354,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     //signup button
     final signUpButton = Material(
       elevation: 5,
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(10),
       color: Colors.purple,
       child: MaterialButton(
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
+          minWidth: MediaQuery.of(context).size.width * 0.7,
           onPressed: () {
             signUp(emailEditingController.text, passwordEditingController.text);
           },
           child: const Text(
-            "SignUp",
+            "Confirm Email",
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                fontSize: 20, color: Colors.white, fontWeight: FontWeight.w500),
           )),
     );
 
@@ -375,6 +375,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
+            height: MediaQuery.of(context).size.height,
             decoration: const BoxDecoration(
                 color: Colors.amber,
                 image: DecorationImage(
@@ -389,20 +390,32 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    profileImageU,
+                    // profileImageU,
                     SizedBox(height: 30),
-                    firstNameField,
-                    SizedBox(height: 20),
+                    // firstNameField,
+                    ClipOval(
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        color: Colors.black,
+                        child: ClipOval(
+                            child: Image.asset(
+                          'assets/logo.png',
+                          height: MediaQuery.of(context).size.width * 0.5,
+                          width: MediaQuery.of(context).size.width * 0.5,
+                        )),
+                      ),
+                    ),
+                    SizedBox(height: 50),
                     emailField,
                     SizedBox(height: 20),
                     passwordField,
                     SizedBox(height: 20),
                     confirmPasswordField,
-                    SizedBox(height: 20),
-                    CollegeNameField,
-                    SizedBox(height: 20),
-                    enrollmentNameField,
-                    SizedBox(height: 20),
+                    SizedBox(height: 100),
+                    // CollegeNameField,
+                    // SizedBox(height: 20),
+                    // enrollmentNameField,
+                    // SizedBox(height: 20),
                     signUpButton,
                     SizedBox(height: 15),
                   ],
@@ -459,24 +472,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     // calling our user model
     // sedning these values
 
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
+    // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    // User? user = _auth.currentUser;
 
-    UserModel userModel = UserModel();
-    var link = await API_Manager().postImage(imageLink!);
+    // UserModel userModel = UserModel();
+    // var link = await API_Manager().postImage(imageLink!);
 
-    // writing all the values
-    userModel.email = user!.email;
-    userModel.uid = user.uid;
-    userModel.Name = NameEditingController.text;
-    userModel.Image = link;
-    userModel.CollegeName = collegeEditingController.text;
-    userModel.enrollmentNo = enrollmentNoEditingController.text;
+    // // writing all the values
+    // userModel.email = user!.email;
+    // userModel.uid = user.uid;
+    // userModel.Name = NameEditingController.text;
+    // userModel.Image = link;
+    // userModel.CollegeName = collegeEditingController.text;
+    // userModel.enrollmentNo = enrollmentNoEditingController.text;
 
-    await firebaseFirestore
-        .collection("users")
-        .doc(user.uid)
-        .set(userModel.toMap());
+    // await firebaseFirestore
+    //     .collection("users")
+    //     .doc(user.uid)
+    //     .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
     localStorage = await SharedPreferences.getInstance();
 
