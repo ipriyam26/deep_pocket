@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_pocket_1/models/api_integration_imgur.dart';
 // import 'package:email_password_login/model/user_model.dart';
 // import 'package:email_password_login/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,7 +10,6 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/user_model.dart';
 import 'verification_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -31,12 +28,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   // editing Controller
   String? imageLink;
   File? profileImage;
-  final NameEditingController = new TextEditingController();
-  final emailEditingController = new TextEditingController();
-  final passwordEditingController = new TextEditingController();
-  final confirmPasswordEditingController = new TextEditingController();
-  final collegeEditingController = new TextEditingController();
-  final enrollmentNoEditingController = new TextEditingController();
+  final NameEditingController = TextEditingController();
+  final emailEditingController = TextEditingController();
+  final passwordEditingController = TextEditingController();
+  final confirmPasswordEditingController = TextEditingController();
+  final collegeEditingController = TextEditingController();
+  final enrollmentNoEditingController = TextEditingController();
 
   void uploadImage() {
     showModalBottomSheet(
@@ -49,12 +46,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 // IconButton(onPressed: _pickImage, icon: icon)
                 TextButton.icon(
                     onPressed: _pickImage,
-                    icon: Icon(Icons.image),
-                    label: Text("Open Gallery")),
+                    icon: const Icon(Icons.image),
+                    label: const Text("Open Gallery")),
                 TextButton.icon(
                     onPressed: _pickImageCamera,
-                    icon: Icon(Icons.camera),
-                    label: Text("Take A Picture")),
+                    icon: const Icon(Icons.camera),
+                    label: const Text("Take A Picture")),
               ],
             ),
           );
@@ -66,7 +63,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       final newimage =
           await ImagePicker().pickImage(source: ImageSource.camera);
       if (newimage == null) {
-        print("object");
         return;
       }
       final tempImage = File(newimage.path);
@@ -87,7 +83,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       final newimage =
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (newimage == null) {
-        print("object");
         return;
       }
       final tempImage = File(newimage.path);
@@ -116,7 +111,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         cursorColor: Colors.white,
         keyboardType: TextInputType.name,
         validator: (value) {
-          RegExp regex = new RegExp(r'^.{3,}$');
+          RegExp regex = RegExp(r'^.{3,}$');
           if (value!.isEmpty) {
             return ("First Name cannot be Empty");
           }
@@ -129,27 +124,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           NameEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.account_circle,
             color: Colors.white,
           ),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintStyle: TextStyle(color: Colors.white),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintStyle: const TextStyle(color: Colors.white),
           hintText: "Full Name",
           filled: true,
           fillColor: Colors.black,
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.black)),
+              borderSide: const BorderSide(color: Colors.black)),
         ));
 
     final CollegeNameField = TextFormField(
         autofocus: false,
         controller: collegeEditingController,
         keyboardType: TextInputType.text,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         validator: (value) {
           if (value!.isEmpty) {
             return ("Institute Name cannot be Empty");
@@ -161,12 +156,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          hintStyle: TextStyle(color: Colors.white),
-          prefixIcon: Icon(
+          hintStyle: const TextStyle(color: Colors.white),
+          prefixIcon: const Icon(
             Icons.school,
             color: Colors.white,
           ),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Institute's Name",
           filled: true,
           fillColor: Colors.black,
@@ -177,7 +172,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final enrollmentNameField = TextFormField(
         autofocus: false,
         controller: enrollmentNoEditingController,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         keyboardType: TextInputType.text,
         validator: (value) {
           if (value!.isEmpty) {
@@ -190,14 +185,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          hintStyle: TextStyle(color: Colors.white),
-          prefixIcon: Icon(
+          hintStyle: const TextStyle(color: Colors.white),
+          prefixIcon: const Icon(
             Icons.fingerprint,
             color: Colors.white,
           ),
           filled: true,
           fillColor: Colors.black,
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Enrollment Number",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
@@ -207,7 +202,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     //email field
     final emailField = TextFormField(
         autofocus: false,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         controller: emailEditingController,
         keyboardType: TextInputType.emailAddress,
         validator: (value) {
@@ -226,14 +221,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          hintStyle: TextStyle(color: Colors.white),
-          prefixIcon: Icon(
+          hintStyle: const TextStyle(color: Colors.white),
+          prefixIcon: const Icon(
             Icons.mail,
             color: Colors.white,
           ),
           filled: true,
           fillColor: Colors.black,
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
@@ -244,10 +239,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final passwordField = TextFormField(
         autofocus: false,
         controller: passwordEditingController,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         obscureText: true,
         validator: (value) {
-          RegExp regex = new RegExp(r'^.{6,}$');
+          RegExp regex = RegExp(r'^.{6,}$');
           if (value!.isEmpty) {
             return ("Password is required for login");
           }
@@ -260,14 +255,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          hintStyle: TextStyle(color: Colors.white),
-          prefixIcon: Icon(
+          hintStyle: const TextStyle(color: Colors.white),
+          prefixIcon: const Icon(
             Icons.vpn_key,
             color: Colors.white,
           ),
           filled: true,
           fillColor: Colors.black,
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
@@ -278,7 +273,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final confirmPasswordField = TextFormField(
         autofocus: false,
         controller: confirmPasswordEditingController,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         obscureText: true,
         validator: (value) {
           if (confirmPasswordEditingController.text !=
@@ -292,8 +287,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         },
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
-          hintStyle: TextStyle(color: Colors.white),
-          prefixIcon: Icon(
+          hintStyle: const TextStyle(color: Colors.white),
+          prefixIcon: const Icon(
             Icons.vpn_key,
             color: Colors.white,
           ),
@@ -335,7 +330,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
         ClipOval(
           child: Container(
-            padding: EdgeInsets.all(2),
+            padding: const EdgeInsets.all(2),
             // width: MediaQuery.of(context).size.width * 0.13,
             // height: MediaQuery.of(context).size.width * 0.13,
             color: Colors.white,
@@ -345,7 +340,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               color: Colors.black,
               child: IconButton(
                   onPressed: uploadImage,
-                  icon: Icon(Icons.add_a_photo, color: Colors.white)),
+                  icon: const Icon(Icons.add_a_photo, color: Colors.white)),
             )),
           ),
         )
@@ -483,13 +478,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     // userModel.uid = user.uid;
     // userModel.Name = NameEditingController.text;
     // userModel.Image = link;
-    // userModel.CollegeName = collegeEditingController.text;
-    // userModel.enrollmentNo = enrollmentNoEditingController.text;
 
-    // await firebaseFirestore
-    //     .collection("users")
-    //     .doc(user.uid)
-    //     .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
     localStorage = await SharedPreferences.getInstance();
 

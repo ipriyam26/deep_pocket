@@ -22,7 +22,7 @@ class _editProfileState extends State<editProfile> {
   final NameEditingController = new TextEditingController();
   final collegeEditingController = new TextEditingController();
   final enrollmentNoEditingController = new TextEditingController();
-
+  final db = FirebaseFirestore.instance;
   @override
   void initState() {
     // TODO: implement initState
@@ -31,7 +31,6 @@ class _editProfileState extends State<editProfile> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     NameEditingController.dispose();
     collegeEditingController.dispose();
     enrollmentNoEditingController.dispose();
@@ -50,13 +49,15 @@ class _editProfileState extends State<editProfile> {
               children: [
                 // IconButton(onPressed: _pickImage, icon: icon)
                 TextButton.icon(
-                    onPressed: _pickImage,
-                    icon: Icon(Icons.image),
-                    label: Text("Open Gallery")),
+                    onPressed: () async {
+                      await _pickImage();
+                    },
+                    icon: const Icon(Icons.image),
+                    label: const Text("Open Gallery")),
                 TextButton.icon(
                     onPressed: _pickImageCamera,
-                    icon: Icon(Icons.camera),
-                    label: Text("Take A Picture")),
+                    icon: const Icon(Icons.camera),
+                    label: const Text("Take A Picture")),
               ],
             ),
           );
@@ -71,14 +72,16 @@ class _editProfileState extends State<editProfile> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection("users")
-                  .doc(user!.uid)
-                  .get()
-                  .asStream(),
+              stream: db.collection("users").doc(user!.uid).get().asStream(),
               builder: (context,
                   AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
                       snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
                 var userdata = snapshot.data!.data();
                 NameEditingController.text = userdata!['Name'];
                 collegeEditingController.text = userdata['CollegeName'];
@@ -119,7 +122,7 @@ class _editProfileState extends State<editProfile> {
                                   else
                                     ClipOval(
                                       child: Container(
-                                        padding: EdgeInsets.all(4),
+                                        padding: const EdgeInsets.all(4),
                                         color: Colors.black,
                                         child: Container(
                                           width: MediaQuery.of(context)
@@ -142,7 +145,7 @@ class _editProfileState extends State<editProfile> {
                                     ),
                                   ClipOval(
                                     child: Container(
-                                      padding: EdgeInsets.all(4),
+                                      padding: const EdgeInsets.all(4),
                                       // width: MediaQuery.of(context).size.width * 0.13,
                                       // height: MediaQuery.of(context).size.width * 0.13,
                                       color: Colors.white,
@@ -152,7 +155,7 @@ class _editProfileState extends State<editProfile> {
                                         color: Colors.black,
                                         child: IconButton(
                                             onPressed: uploadImage,
-                                            icon: Icon(Icons.edit,
+                                            icon: const Icon(Icons.edit,
                                                 color: Colors.pink)),
                                       )),
                                     ),
@@ -181,15 +184,16 @@ class _editProfileState extends State<editProfile> {
                                     NameEditingController.text = value;
                                   },
                                   textInputAction: TextInputAction.next,
-                                  style: TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.white),
                                   decoration: InputDecoration(
-                                    prefixIcon: Icon(
+                                    prefixIcon: const Icon(
                                       Icons.account_circle,
                                       color: Colors.white,
                                     ),
-                                    contentPadding:
-                                        EdgeInsets.fromLTRB(20, 15, 20, 15),
-                                    hintStyle: TextStyle(color: Colors.white),
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        20, 15, 20, 15),
+                                    hintStyle:
+                                        const TextStyle(color: Colors.white),
                                     // hintText: "Full Name",
                                     filled: true,
                                     fillColor: Colors.black,
@@ -205,7 +209,7 @@ class _editProfileState extends State<editProfile> {
                                   initialValue: userdata['CollegeName'],
                                   autofocus: false,
                                   keyboardType: TextInputType.text,
-                                  style: TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.white),
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return ("Institute Name cannot be Empty");
@@ -217,13 +221,14 @@ class _editProfileState extends State<editProfile> {
                                   },
                                   textInputAction: TextInputAction.next,
                                   decoration: InputDecoration(
-                                    hintStyle: TextStyle(color: Colors.white),
-                                    prefixIcon: Icon(
+                                    hintStyle:
+                                        const TextStyle(color: Colors.white),
+                                    prefixIcon: const Icon(
                                       Icons.school,
                                       color: Colors.white,
                                     ),
-                                    contentPadding:
-                                        EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        20, 15, 20, 15),
                                     filled: true,
                                     fillColor: Colors.black,
                                     border: OutlineInputBorder(
@@ -236,7 +241,7 @@ class _editProfileState extends State<editProfile> {
                               TextFormField(
                                   initialValue: userdata['enrollmentNo'],
                                   autofocus: false,
-                                  style: TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.white),
                                   keyboardType: TextInputType.text,
                                   validator: (value) {
                                     if (value!.isEmpty) {
@@ -249,15 +254,16 @@ class _editProfileState extends State<editProfile> {
                                   },
                                   textInputAction: TextInputAction.next,
                                   decoration: InputDecoration(
-                                    hintStyle: TextStyle(color: Colors.white),
-                                    prefixIcon: Icon(
+                                    hintStyle:
+                                        const TextStyle(color: Colors.white),
+                                    prefixIcon: const Icon(
                                       Icons.fingerprint,
                                       color: Colors.white,
                                     ),
                                     filled: true,
                                     fillColor: Colors.black,
-                                    contentPadding:
-                                        EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        20, 15, 20, 15),
                                     // hintText: "Enrollment Number",
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(20),
@@ -273,15 +279,15 @@ class _editProfileState extends State<editProfile> {
                                   borderRadius: BorderRadius.circular(30),
                                   color: Colors.purple,
                                   child: MaterialButton(
-                                      padding:
-                                          EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 15, 20, 15),
                                       minWidth:
                                           MediaQuery.of(context).size.width,
                                       onPressed: () async {
                                         setState(() {
                                           _waiting = true;
                                         });
-                                        await FirebaseFirestore.instance
+                                        await db
                                             .collection("users")
                                             .doc(user!.uid)
                                             .update({
@@ -324,10 +330,24 @@ class _editProfileState extends State<editProfile> {
       }
       print(newimage.path);
       var link = await API_Manager().postImage(newimage.path);
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(user!.uid)
-          .update({'Image': link});
+      await db.collection("users").doc(user!.uid).update({'Image': link});
+
+      var postsToupdate = await db
+          .collection("Posts")
+          .where('AuthorUID', isEqualTo: user!.uid)
+          .get();
+
+      for (int i = 0; i < postsToupdate.docs.length; i++) {
+        print("Post:" + postsToupdate.docs[i].id);
+      }
+      // WriteBatch postImageUpdate = db.batch();
+
+      // postImageUpdate.update(document, data);
+
+      // for (int i = 0; i < postsToupdate.docs.length;i++){
+      // postsToupdate.docs[0].id;
+
+      // }
 
       setState(() {});
       Fluttertoast.showToast(msg: "Image Updated SuccessFully");
@@ -347,15 +367,42 @@ class _editProfileState extends State<editProfile> {
       }
       var link = await API_Manager().postImage(newimage.path);
 
-      FirebaseFirestore.instance
-          .collection("users")
-          .doc(user!.uid)
-          .update({'Image': link});
-
+      await db.collection("users").doc(user!.uid).update({'Image': link});
       Fluttertoast.showToast(msg: "Image Updated SuccessFully");
       setState(() {
         Imagelink = link;
       });
+
+      WriteBatch postImageUpdate = db.batch();
+      var postsToupdate = await db
+          .collection("Posts")
+          .where('AuthorUID', isEqualTo: user!.uid)
+          .get();
+
+      postsToupdate.docs[0].reference;
+
+      for (int i = 0; i < postsToupdate.docs.length; i++) {
+        print("Post:" + postsToupdate.docs[i].id);
+        // var docPath =
+        //     db.doc(db.collection("Posts").doc(postsToupdate.docs[i].id).path);
+        postImageUpdate.update(
+            postsToupdate.docs[i].reference, {'AuthorProfilePic': link});
+      }
+      Fluttertoast.showToast(msg: "Post Author Image Updated SuccessFully");
+
+      var commentsToupdate = await db
+          .collection("Comments")
+          .where("AuthorID", isEqualTo: user!.uid)
+          .get();
+      for (int i = 0; i < commentsToupdate.docs.length; i++) {
+        print("Comments" + commentsToupdate.docs[i].id);
+        // var docPath = db.doc(
+        //     db.collection("Comments").doc(commentsToupdate.docs[i].id).path);
+        postImageUpdate
+            .update(commentsToupdate.docs[i].reference, {'AuthorPic': link});
+      }
+      postImageUpdate.commit();
+      Fluttertoast.showToast(msg: "Comment Author Image Updated SuccessFully");
     } on PlatformException catch (e) {
       print(e);
     }
