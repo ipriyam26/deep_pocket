@@ -100,50 +100,50 @@ class _feedScreenState extends State<feedScreen> {
           builder: (context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (!snapshot.hasData) {
-              return CircularProgressIndicator();
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: Colors.orange,
+              ));
             }
             return Container(
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: ListView(
-                children: snapshot.data!.docs.map<Widget>((document) {
-                  final imageList = document.data()['ImageLinks'];
-                  final ctime = document.data()['Time'];
-
-                  final dtime = DateTime.parse(ctime.toDate().toString());
-
-                  final time = DateFormat.jm().format(dtime);
-
-                  // print(imageList);
-                  return Center(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, postPage.route,
-                            arguments: {
-                              'document': document,
-                              'user': loggedInuser,
-                            });
-                      },
-                      child: Container(
-                          child: postCard(
-                              MHeight: MHeight,
-                              MWidth: MWidth,
-                              imagesList: imageList,
-                              id: document.id,
-                              LikedBy: document.data()['LikedBy'],
-                              name: document.data()['AuthorName'],
-                              AuthorImage: document.data()['AuthorProfilePic'],
-                              title: document.data()['Title'],
-                              body: document.data()['Body'],
-                              time: time,
-                              likes: document.data()['Likes'],
-                              comments: document.data()['Comments'],
-                              date: document.data()['Date'],
-                              tag: document.data()['Tag'])),
-                    ),
-                  );
-                }).toList(),
-              ),
-            );
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) => Center(
+                          child: InkWell(
+                            splashColor: Colors.black,
+                            onTap: () {
+                              Navigator.pushNamed(context, postPage.route,
+                                  arguments: {
+                                    'document': snapshot.data!.docs[index],
+                                    'user': loggedInuser,
+                                  });
+                            },
+                            child: Container(
+                                child: postCard(
+                                    MHeight: MHeight,
+                                    MWidth: MWidth,
+                                    imagesList: snapshot.data!.docs[index]
+                                        .data()['ImageLinks'],
+                                    id: snapshot.data!.docs[index].id,
+                                    LikedBy: snapshot.data!.docs[index]
+                                        .data()['LikedBy'],
+                                    name: snapshot.data!.docs[index]
+                                        .data()['AuthorName'],
+                                    AuthorImage: snapshot.data!.docs[index]
+                                        .data()['AuthorProfilePic'],
+                                    title: snapshot.data!.docs[index]
+                                        .data()['Title'],
+                                    body: snapshot.data!.docs[index]
+                                        .data()['Body'],
+                                    time: DateFormat.jm().format(DateTime.parse(
+                                        snapshot.data!.docs[index].data()['Time'].toDate().toString())),
+                                    likes: snapshot.data!.docs[index].data()['Likes'],
+                                    comments: snapshot.data!.docs[index].data()['Comments'],
+                                    date: snapshot.data!.docs[index].data()['Date'],
+                                    tag: snapshot.data!.docs[index].data()['Tag'])),
+                          ),
+                        )));
           }),
     );
   }
