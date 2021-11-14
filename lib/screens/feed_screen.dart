@@ -92,7 +92,10 @@ class _feedScreenState extends State<feedScreen> {
         ],
       ),
       body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection("Posts").snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection("Posts")
+              .orderBy("Time")
+              .snapshots(),
           builder: (context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (!snapshot.hasData) {

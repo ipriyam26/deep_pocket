@@ -14,6 +14,7 @@ import 'package:deep_pocket_1/screens/freecourse/course_screen.dart';
 import 'package:deep_pocket_1/screens/freecourse/freecourses_screen.dart';
 import 'package:deep_pocket_1/screens/internship/internship_page.dart';
 import 'package:deep_pocket_1/screens/internship/interships_screen.dart';
+import 'package:deep_pocket_1/screens/new_post_page.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notiboard_home.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notice_screen.dart';
 
@@ -83,6 +84,7 @@ class MyApp extends StatelessWidget {
             schoolScreen.route: (ctx) => schoolScreen(),
             facultyPage.route: (ctx) => facultyPage(),
             editProfile.route: (ctx) => editProfile(),
+            postPage.route: (ctx) => postPage()
           }),
     );
   }

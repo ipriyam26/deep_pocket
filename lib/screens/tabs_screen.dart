@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/mock_data.dart';
+import 'package:deep_pocket_1/models/user_model.dart';
 import 'package:deep_pocket_1/screens/feed_screen.dart';
 import 'package:deep_pocket_1/screens/menu_pages.dart';
 import 'package:deep_pocket_1/screens/user_input.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -41,10 +44,20 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
+  Future<UserModel> getUserData() async {
+    var doc = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    return UserModel.fromMap(doc.data());
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context) => mockData(),
+    return FutureProvider<UserModel>(
+      initialData:
+          UserModel(Name: "Loading", Image: "loading", CollegeName: "loading"),
+      create: (_) => getUserData(),
       child: Scaffold(
           // appBar: AppBar(
           //   title: Text(pages[_selectedindex]['Title'].toString()),
