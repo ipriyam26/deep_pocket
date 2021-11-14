@@ -1,13 +1,15 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/data_feed.dart';
-import 'package:deep_pocket_1/models/mock_data.dart';
+
 import 'package:deep_pocket_1/models/user_model.dart';
-import 'package:deep_pocket_1/screens/login.dart';
+
 import 'package:deep_pocket_1/screens/new_post_page.dart';
 import 'package:deep_pocket_1/screens/user_input.dart';
 
 import 'package:deep_pocket_1/widgets/post_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -24,7 +26,6 @@ class feedScreen extends StatefulWidget {
 class _feedScreenState extends State<feedScreen> {
   int filter = 0;
 
-  var _intstate = true;
   late SharedPreferences localStorage;
   ScrollController _scrollController = ScrollController();
   void updateFilter(tx, context) {
@@ -36,26 +37,13 @@ class _feedScreenState extends State<feedScreen> {
     Navigator.of(context).pop();
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-  }
-
   void filterSheet(ctx) {
     showModalBottomSheet(
         context: ctx,
-        builder: (ctx) => Container(
+        builder: (ctx) => SizedBox(
               height: 300,
               child: SingleChildScrollView(
-                  child: Container(
+                  child: SizedBox(
                 height: 280,
                 child: ListView.builder(
                     itemCount: Tag.length,
@@ -69,6 +57,7 @@ class _feedScreenState extends State<feedScreen> {
             ));
   }
 
+  QueryDocumentSnapshot<Map<String, dynamic>>? enddoc;
   int currentMax = 5;
   Stream<QuerySnapshot<Map<String, dynamic>>> getposts() {
     _scrollController.addListener(() {
@@ -81,10 +70,10 @@ class _feedScreenState extends State<feedScreen> {
       }
     });
 
-     FirebaseFirestore.instance
+    return FirebaseFirestore.instance
         .collection("Posts")
         .orderBy("Time", descending: true)
-        .limit(currentMax).
+        .limit(currentMax)
         .snapshots();
   }
 
@@ -196,13 +185,10 @@ class _feedScreenState extends State<feedScreen> {
                 })
             : StreamBuilder(
                 stream: getFilteredposts(),
-
-                // getposts(),
                 builder: (context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                         snapshot) {
                   if (!snapshot.hasData) {
-                    print(snapshot);
                     return const Center(
                         child: CircularProgressIndicator(
                       color: Colors.orange,
