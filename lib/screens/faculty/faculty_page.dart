@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -41,18 +42,20 @@ class facultyPage extends StatelessWidget {
           Hero(
             tag: teacher.profile,
             child: Container(
-              height: MWidth,
-              width: MWidth,
-              decoration: BoxDecoration(
-                  // shape: BoxShape.circle,
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(50),
-                      bottomRight: Radius.circular(50)),
-                  image: DecorationImage(
-                      image: NetworkImage(
-                        teacher.Image,
-                      ),
-                      fit: BoxFit.fill)),
+              child: Container(
+                height: MWidth,
+                width: MWidth,
+                child: CachedNetworkImage(
+                  placeholder: (context, url) => Container(
+                      height: MWidth * 0.1,
+                      width: MWidth * 0.1,
+                      child: const CircularProgressIndicator(
+                        color: Colors.grey,
+                      )),
+                  imageUrl: teacher.Image,
+                  fit: BoxFit.fill,
+                ),
+              ),
             ),
           ),
           Container(

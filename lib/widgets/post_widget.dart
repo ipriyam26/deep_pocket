@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -125,9 +126,19 @@ class _postCardState extends State<postCard> {
                       (item) => Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: Image.network(
-                            item.toString(),
-                            fit: BoxFit.cover,
+                          child: Container(
+                            color: Colors.grey,
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) => Container(
+                                  width: widget.MWidth * 0.5,
+                                  child: const LinearProgressIndicator(
+                                    minHeight: 5,
+                                    backgroundColor: Colors.white,
+                                    color: Colors.blue,
+                                  )),
+                              imageUrl: item.toString(),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -182,7 +193,7 @@ class _postCardState extends State<postCard> {
                           style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(
                                   Colors.black)),
-                          onPressed: () {},
+                          onPressed: null,
                           icon: const Icon(Icons.comment),
                           label: Text("${widget.comments} Comments")),
                     ],
@@ -229,25 +240,39 @@ class firstColumn extends StatelessWidget {
         children: [
           ClipOval(
             child: Container(
-              width: MWidth * 0.15,
               height: MWidth * 0.15,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                image: DecorationImage(
-                  image: NetworkImage(
-                    AuthorImage.toString(),
-                  ),
-                  fit: BoxFit.cover,
-                ),
+              width: MWidth * 0.15,
+              color: Colors.grey,
+              child: CachedNetworkImage(
+                placeholder: (context, url) =>
+                    Container(child: Image.asset('assets/person.png')),
+                imageUrl: AuthorImage.toString(),
+                fit: BoxFit.cover,
               ),
             ),
-            //      Image.network(
-            //   AuthorImage.toString(),
-            //   width: MWidth * 0.15,
-            //   height: MWidth * 0.15,
-            //   fit: BoxFit.cover,
-            // )
           ),
+          // ClipOval(
+          //   child: Container(
+          //     width: MWidth * 0.15,
+          //     height: MWidth * 0.15,
+          //     decoration: BoxDecoration(
+          //       color: Colors.grey,
+          //       image: DecorationImage(
+          //         image: NetworkImage(
+          //           AuthorImage.toString(),
+          //         ),
+          //         fit: BoxFit.cover,
+          //       ),
+          //     ),
+          //   ),
+          //   //      Image.network(
+          //   //   AuthorImage.toString(),
+          //   //   width: MWidth * 0.15,
+          //   //   height: MWidth * 0.15,
+          //   //   fit: BoxFit.cover,
+          //   // )
+          // ),
+
           SizedBox(
             width: MWidth * 0.03,
           ),

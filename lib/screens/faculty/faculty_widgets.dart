@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deep_pocket_1/screens/faculty/faculty_page.dart';
 import 'package:deep_pocket_1/screens/faculty/faculty_screen.dart';
 import 'package:deep_pocket_1/screens/faculty/school_screen.dart';
@@ -226,14 +227,22 @@ class deansCard extends StatelessWidget {
                             Hero(
                               tag: head[i].profile,
                               child: Container(
-                                height: MWidth * 0.2,
-                                width: MWidth * 0.2,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                      head[i].Image,
-                                    ))),
+                                child: ClipOval(
+                                  child: Container(
+                                    height: MWidth * 0.2,
+                                    width: MWidth * 0.2,
+                                    child: CachedNetworkImage(
+                                      placeholder: (context, url) => Container(
+                                          height: MWidth * 0.1,
+                                          width: MWidth * 0.1,
+                                          child:
+                                              const CircularProgressIndicator(
+                                            color: Colors.grey,
+                                          )),
+                                      imageUrl: head[i].Image,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                             // Divider(),
@@ -301,9 +310,11 @@ class cardList extends StatelessWidget {
                 width: MHeight * 0.15,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    sch.Image,
-                    fit: BoxFit.cover,
+                  child: CachedNetworkImage(
+                    placeholder: (context, url) => Container(
+                        height: MHeight * 0.02,
+                        child: const CircularProgressIndicator()),
+                    imageUrl: sch.Image,
                   ),
                 )),
             Container(

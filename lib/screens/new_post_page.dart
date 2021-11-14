@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/user_model.dart';
 import 'package:deep_pocket_1/widgets/post_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 
@@ -21,6 +23,11 @@ class postPage extends StatelessWidget {
         MapArgms['document'] as QueryDocumentSnapshot<Map<String, dynamic>>;
     final loggeinUser = MapArgms['user'] as UserModel;
     final id = document.id;
+    final ctime = document.data()['Time'];
+
+    final dtime = DateTime.parse(ctime.toDate().toString());
+
+    final time = DateFormat.jm().format(dtime);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -40,7 +47,7 @@ class postPage extends StatelessWidget {
                     AuthorImage: document.data()['AuthorProfilePic'],
                     title: document.data()['Title'],
                     body: document.data()['Body'],
-                    time: document.data()['Time'],
+                    time: time,
                     likes: document.data()['Likes'],
                     comments: document.data()['Comments'],
                     date: document.data()['Date'],
@@ -58,55 +65,58 @@ class postPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            height: MHeight * 0.11,
-                            // color: Colors.amber,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ClipOval(
-                                  child: Container(
-                                    width: MWidth * 0.12,
-                                    height: MWidth * 0.12,
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey,
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                loggeinUser.Image!),
-                                            fit: BoxFit.cover)),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: MHeight * 0.02,
-                                )
-                              ],
+                              // height: MHeight * 0.11,
+                              // color: Colors.amber,
+                              child: ClipOval(
+                            child: Container(
+                              height: MWidth * 0.12,
+                              width: MWidth * 0.12,
+                              color: Colors.grey,
+                              child: CachedNetworkImage(
+                                placeholder: (context, url) => Container(
+                                    child: Image.asset('assets/person.png')),
+                                imageUrl: loggeinUser.Image!,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
+                          )),
                           Container(
-                            height: MHeight * 0.09,
+                            height: MHeight * 0.07,
                             width: MWidth * 0.8,
                             child: TextField(
                               expands: true,
                               maxLines: null,
                               autocorrect: false,
                               controller: commentText,
-                              maxLength: 200,
                               scrollPadding: EdgeInsets.zero,
                               minLines: null,
                               onSubmitted: (value) async {
-                                await FirebaseFirestore.instance
-                                    .collection("Comments")
-                                    .add({
-                                  'AuthorID': loggeinUser.uid,
-                                  'PostID': id,
-                                  'AuthorName': loggeinUser.Name,
-                                  'AuthorPic': loggeinUser.Image,
-                                  'Time': DateTime.now(),
-                                  'CommentText': value,
-                                  'Likes': 0
-                                });
-                                commentText.clear();
-                                Fluttertoast.showToast(
-                                    msg: "Comment posted!!!");
+                                if (value.length > 5) {
+                                  await FirebaseFirestore.instance
+                                      .collection("Comments")
+                                      .add({
+                                    'AuthorID': loggeinUser.uid,
+                                    'PostID': id,
+                                    'AuthorName': loggeinUser.Name,
+                                    'AuthorPic': loggeinUser.Image,
+                                    'Time': DateTime.now(),
+                                    'CommentText': value,
+                                    'Likes': 0
+                                  });
+                                  await FirebaseFirestore.instance
+                                      .collection("Posts")
+                                      .doc(id)
+                                      .update({
+                                    'Comments': document.data()['Comments'] + 1
+                                  });
+                                  commentText.clear();
+                                  Fluttertoast.showToast(
+                                      msg: "Comment posted!!!");
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          "Comment too-short atleast 5 characters");
+                                }
                               },
                               textInputAction: TextInputAction.done,
                               decoration: InputDecoration(
@@ -114,7 +124,7 @@ class postPage extends StatelessWidget {
                                       horizontal: MWidth * 0.03,
                                       vertical: MHeight * 0.01),
                                   hintText: "Add a Comment...",
-                                  border: OutlineInputBorder(
+                                  border: const OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(5)))),
                             ),
@@ -122,40 +132,91 @@ class postPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // StreamBuilder(
-                    //     stream: FirebaseFirestore.instance
-                    //         .collection("Comments")
-                    //         .where('postId', isEqualTo: id)
-                    //         .snapshots(),
-                    //     builder: (context,
-                    //         AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                    //             snapshot) {
-                    //       print(snapshot.data);
-                    //       return Container(
-                    //         // color: Colors.amber,
-                    //         height: MHeight * 0.354,
-                    //         // padding: EdgeInsets.symmetric(horizontal: MWidth * 0.05),
-                    //         child: ListTile(
-                    //           leading: const ClipOval(child: FlutterLogo()),
-                    //           trailing: IconButton(
-                    //               onPressed: () {},
-                    //               icon: const Icon(Icons.more_vert)),
-                    //           title: const Text("User Name2"),
-                    //           // horizontalTitleGap: 0,
-                    //           subtitle: const ReadMoreText(
-                    //             "Is that the right way ? can't I just start a project from vscode and then upload it to my git ?",
-                    //             trimLines: 2,
-                    //             colorClickableText: Colors.pink,
-                    //             trimMode: TrimMode.Line,
-                    //             // trimCollapsedText: '..Read More',
-                    //             style: TextStyle(fontSize: 13),
-                    //             trimExpandedText: ' Less',
-                    //           ),
+                    StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection("Comments")
+                            .where('PostID', isEqualTo: id)
+                            .snapshots(),
+                        builder: (context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (!snapshot.hasData) {
+                            return Center();
+                          }
+                          return Container(
+                            // height: MHeight,
+                            child: ListView(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.zero,
+                                children:
+                                    snapshot.data!.docs.map<Widget>((comment) {
+                                  final dtime = DateTime.parse(comment
+                                      .data()['Time']
+                                      .toDate()
+                                      .toString());
 
-                    //           isThreeLine: true,
-                    //         ),
-                    //       );
-                    //     }),
+                                  final time = DateFormat.jm().format(dtime);
+                                  return Card(
+                                    elevation: 0,
+                                    child: Container(
+                                      // color: Colors.amber,
+
+                                      // padding: EdgeInsets.symmetric(horizontal: MWidth * 0.05),
+                                      child: ListTile(
+                                        // horizontalTitleGap: 1,
+                                        minVerticalPadding: 0,
+
+                                        leading: ClipOval(
+                                          child: Container(
+                                            height: MWidth * 0.12,
+                                            width: MWidth * 0.12,
+                                            color: Colors.grey,
+                                            child: CachedNetworkImage(
+                                              placeholder: (context, url) =>
+                                                  Container(
+                                                      child: Image.asset(
+                                                          'assets/person.png')),
+                                              imageUrl:
+                                                  comment.data()['AuthorPic'],
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        trailing: IconButton(
+                                            onPressed: () {},
+                                            icon: const Icon(Icons.more_vert)),
+                                        title: Row(
+                                          children: [
+                                            Text(comment.data()['AuthorName'] +
+                                                " "),
+                                            Text(
+                                              " " + time,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Color(0xff36454f),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        // horizontalTitleGap: 0,
+                                        subtitle: ReadMoreText(
+                                          comment.data()['CommentText'],
+                                          trimLines: 2,
+                                          colorClickableText: Colors.pink,
+                                          trimMode: TrimMode.Line,
+                                          // trimCollapsedText: '..Read More',
+                                          style: TextStyle(fontSize: 14),
+                                          trimExpandedText: ' Less',
+                                        ),
+
+                                        isThreeLine: true,
+                                      ),
+                                    ),
+                                  );
+                                }).toList()),
+                          );
+                        }),
                   ],
                 ),
               )

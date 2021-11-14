@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deep_pocket_1/screens/club/clubs_screen.dart';
 import 'package:deep_pocket_1/screens/event/even_tabs.dart';
 import 'package:deep_pocket_1/screens/faculty/faculty_screen.dart';
@@ -70,7 +71,7 @@ class Menu extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
           child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   mainAxisSpacing: 5,
                   crossAxisSpacing: 5,
                   crossAxisCount: 2,
@@ -127,14 +128,15 @@ class menuButton extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
-                child: Image.network(
-                  image,
-                  height: Mheight * 0.13,
-                  width: Mwidth * 0.37,
-                  fit: BoxFit.fill,
-                  // color: Colors.red,
-                  // colorBlendMode: BlendMode.dstOut,
-                ),
+                child: CachedNetworkImage(
+                    placeholder: (context, url) => const SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: CircularProgressIndicator()),
+                    imageUrl: image,
+                    height: Mheight * 0.13,
+                    width: Mwidth * 0.37,
+                    fit: BoxFit.fill),
               ),
               VerticalDivider(),
               AutoSizeText(

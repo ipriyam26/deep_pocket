@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/screens/edit_profile.dart';
 import 'package:deep_pocket_1/screens/login.dart';
@@ -210,14 +211,18 @@ class userImageName extends StatelessWidget {
         padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.025),
         child: Row(
           children: [
-            Container(
-              width: MediaQuery.of(context).size.height * 0.14,
-              height: MediaQuery.of(context).size.height * 0.14,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey,
-                  image: DecorationImage(
-                      fit: BoxFit.cover, image: NetworkImage(Image))),
+            ClipOval(
+              child: Container(
+                color: Colors.grey,
+                width: MediaQuery.of(context).size.height * 0.14,
+                height: MediaQuery.of(context).size.height * 0.14,
+                child: CachedNetworkImage(
+                  placeholder: (context, url) => Container(
+                      height: 50, child: const CircularProgressIndicator()),
+                  imageUrl: Image,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.02,
@@ -230,13 +235,14 @@ class userImageName extends StatelessWidget {
                 children: [
                   AutoSizeText(
                     name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                     minFontSize: 20,
                     maxFontSize: 23,
                   ),
                   Text(
                     college,
-                    style: TextStyle(fontSize: 17, fontStyle: FontStyle.italic),
+                    style: const TextStyle(
+                        fontSize: 17, fontStyle: FontStyle.italic),
                   ),
                   // SizedBox(height:MediaQuery.of(context).size.height ,)
                 ],
