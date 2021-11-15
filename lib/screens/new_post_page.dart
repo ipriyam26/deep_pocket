@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/user_model.dart';
 import 'package:deep_pocket_1/widgets/post_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +13,26 @@ import 'package:readmore/readmore.dart';
 class postPage extends StatelessWidget {
   static const route = '/feed-screen/postPage';
   final commentText = TextEditingController();
+  final user = FirebaseAuth.instance.currentUser;
+
+  // UserModel loggeinUser = UserModel();
+
+  // Future<void> getLoggedUser() async {
+  //   final logtry = await FirebaseFirestore.instance
+  //       .collection("users")
+  //       .doc(user!.uid)
+  //       .get();
+  //   final data = logtry.data();
+
+  //   loggeinUser = UserModel(
+  //     uid: user!.uid,
+  //     email: data!['email'],
+  //     enrollmentNo: data['enrollmentNo'],
+  //     Name: data['Name'],
+  //     Image: data['Image'],
+  //     CollegeName: data['CollegeName'],
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +44,7 @@ class postPage extends StatelessWidget {
     final document =
         MapArgms['document'] as QueryDocumentSnapshot<Map<String, dynamic>>;
     final loggeinUser = MapArgms['user'] as UserModel;
+    // getLoggedUser();
     final id = document.id;
     final ctime = document.data()['Time'];
 
@@ -57,81 +80,99 @@ class postPage extends StatelessWidget {
                 padding: EdgeInsets.all(MWidth * 0.01),
                 child: Column(
                   children: [
-                    Container(
-                      // color: Colors.amber,
-                      // padding: EdgeInsets.symmetric(horizontal: MWidth * 0.05),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                              // height: MHeight * 0.11,
-                              // color: Colors.amber,
-                              child: ClipOval(
-                            child: Container(
-                              height: MWidth * 0.12,
-                              width: MWidth * 0.12,
-                              color: Colors.grey,
-                              child: CachedNetworkImage(
-                                placeholder: (context, url) => Container(
-                                    child: Image.asset('assets/person.png')),
-                                imageUrl: loggeinUser.Image!,
-                                fit: BoxFit.cover,
-                              ),
+                    StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(user!.uid)
+                            .snapshots(),
+                        builder: (context,
+                            AsyncSnapshot<
+                                    DocumentSnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          var userdata = snapshot.data!.data();
+                          return Container(
+                            // color: Colors.amber,
+                            // padding: EdgeInsets.symmetric(horizontal: MWidth * 0.05),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                    // height: MHeight * 0.11,
+                                    // color: Colors.amber,
+                                    child: ClipOval(
+                                  child: Container(
+                                    height: MWidth * 0.12,
+                                    width: MWidth * 0.12,
+                                    color: Colors.grey,
+                                    child: CachedNetworkImage(
+                                      placeholder: (context, url) => Container(
+                                          child:
+                                              Image.asset('assets/person.png')),
+                                      imageUrl: userdata!['Image'],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                )),
+                                Container(
+                                  height: MHeight * 0.07,
+                                  width: MWidth * 0.8,
+                                  child: TextField(
+                                    expands: true,
+                                    maxLines: null,
+                                    autocorrect: false,
+                                    controller: commentText,
+                                    scrollPadding: EdgeInsets.zero,
+                                    minLines: null,
+                                    onSubmitted: (value) async {
+                                      if (value.length > 5) {
+                                        await FirebaseFirestore.instance
+                                            .collection("Comments")
+                                            .add({
+                                          'AuthorID': userdata['uid'],
+                                          'PostID': id,
+                                          'AuthorName': userdata['Name'],
+                                          'AuthorPic': userdata['Image'],
+                                          'Time': DateTime.now(),
+                                          'CommentText': value,
+                                          'Likes': 0
+                                        });
+                                        await FirebaseFirestore.instance
+                                            .collection("Posts")
+                                            .doc(id)
+                                            .update({
+                                          'Comments':
+                                              document.data()['Comments'] + 1
+                                        });
+                                        commentText.clear();
+                                        Fluttertoast.showToast(
+                                            msg: "Comment posted!!!");
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Comment too-short atleast 5 characters");
+                                      }
+                                    },
+                                    textInputAction: TextInputAction.done,
+                                    decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: MWidth * 0.03,
+                                            vertical: MHeight * 0.01),
+                                        hintText: "Add a Comment...",
+                                        border: const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5)))),
+                                  ),
+                                ),
+                              ],
                             ),
-                          )),
-                          Container(
-                            height: MHeight * 0.07,
-                            width: MWidth * 0.8,
-                            child: TextField(
-                              expands: true,
-                              maxLines: null,
-                              autocorrect: false,
-                              controller: commentText,
-                              scrollPadding: EdgeInsets.zero,
-                              minLines: null,
-                              onSubmitted: (value) async {
-                                if (value.length > 5) {
-                                  await FirebaseFirestore.instance
-                                      .collection("Comments")
-                                      .add({
-                                    'AuthorID': loggeinUser.uid,
-                                    'PostID': id,
-                                    'AuthorName': loggeinUser.Name,
-                                    'AuthorPic': loggeinUser.Image,
-                                    'Time': DateTime.now(),
-                                    'CommentText': value,
-                                    'Likes': 0
-                                  });
-                                  await FirebaseFirestore.instance
-                                      .collection("Posts")
-                                      .doc(id)
-                                      .update({
-                                    'Comments': document.data()['Comments'] + 1
-                                  });
-                                  commentText.clear();
-                                  Fluttertoast.showToast(
-                                      msg: "Comment posted!!!");
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg:
-                                          "Comment too-short atleast 5 characters");
-                                }
-                              },
-                              textInputAction: TextInputAction.done,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: MWidth * 0.03,
-                                      vertical: MHeight * 0.01),
-                                  hintText: "Add a Comment...",
-                                  border: const OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5)))),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                          );
+                        }),
                     StreamBuilder(
                         stream: FirebaseFirestore.instance
                             .collection("Comments")

@@ -69,8 +69,10 @@ class Menu extends StatelessWidget {
     final Mheight = MediaQuery.of(context).size.height;
     final Mwidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Color(0xfff5f5dc),
       body: SafeArea(
           child: GridView.builder(
+              padding: EdgeInsets.symmetric(horizontal: Mwidth * 0.03),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   mainAxisSpacing: 5,
                   crossAxisSpacing: 5,
@@ -119,23 +121,23 @@ class menuButton extends StatelessWidget {
       child: Card(
         color: randomColor(),
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20))),
+            borderRadius: BorderRadius.all(Radius.circular(25))),
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: Mwidth * 0.04),
-          height: Mheight * 0.17,
+          // margin: EdgeInsets.symmetric(horizontal: Mwidth * 0.01),
+          height: Mheight * 0.18,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+                borderRadius: BorderRadius.all(Radius.circular(25)),
                 child: CachedNetworkImage(
                     placeholder: (context, url) => const SizedBox(
                         height: 50,
                         width: 50,
                         child: CircularProgressIndicator()),
                     imageUrl: image,
-                    height: Mheight * 0.13,
-                    width: Mwidth * 0.37,
+                    height: Mheight * 0.165,
+                    width: Mwidth * 0.46,
                     fit: BoxFit.fill),
               ),
               VerticalDivider(),

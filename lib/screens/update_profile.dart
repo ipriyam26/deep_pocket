@@ -28,10 +28,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final _auth = FirebaseAuth.instance;
 
   // our form key
+
   final _formKey = GlobalKey<FormState>();
   // editing Controller
   String? imageLink;
   File? profileImage;
+  var isLoading = false;
   final NameEditingController = TextEditingController();
 
   final collegeEditingController = TextEditingController();
@@ -309,7 +311,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         if (profileImage == null)
           ClipOval(
             child: Container(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(3.0),
               color: Colors.black,
               child: Container(
                 width: MediaQuery.of(context).size.height * 0.20,
@@ -318,7 +320,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     shape: BoxShape.circle,
                     color: Colors.grey,
                     image: DecorationImage(
-                      fit: BoxFit.cover,
+                      fit: BoxFit.scaleDown,
                       image: AssetImage('assets/person.png'),
                     )),
               ),
@@ -381,36 +383,54 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       backgroundColor: Colors.black,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: const BoxDecoration(
-                color: Colors.amber,
-                image: DecorationImage(
-                    image: AssetImage('assets/background.jpg'),
-                    fit: BoxFit.fill)),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 36.0, vertical: 20),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    profileImageU,
-                    const SizedBox(height: 30),
-                    firstNameField,
-                    const SizedBox(height: 20),
-                    CollegeNameField,
-                    const SizedBox(height: 20),
-                    enrollmentNameField,
-                    const SizedBox(height: 100),
-                    signUpButton,
-                    const SizedBox(height: 15),
-                  ],
+          child: Stack(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height,
+                decoration: const BoxDecoration(
+                    color: Colors.amber,
+                    image: DecorationImage(
+                        image: AssetImage('assets/background.jpg'),
+                        fit: BoxFit.fill)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 36.0, vertical: 20),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        profileImageU,
+                        const SizedBox(height: 30),
+                        firstNameField,
+                        const SizedBox(height: 20),
+                        CollegeNameField,
+                        const SizedBox(height: 20),
+                        enrollmentNameField,
+                        const SizedBox(height: 100),
+                        signUpButton,
+                        const SizedBox(height: 15),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
+              if (isLoading)
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.black.withOpacity(0.5),
+                  child: const Center(
+                      child: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: CircularProgressIndicator(
+                      color: Colors.orange,
+                    ),
+                  )),
+                )
+            ],
           ),
         ),
       ),
@@ -424,7 +444,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
-
+    setState(() {
+      isLoading = true;
+    });
     UserModel userModel = UserModel();
     var link = await API_Manager().postImage(imageLink!);
 

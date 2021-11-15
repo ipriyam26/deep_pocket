@@ -27,6 +27,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
   // editing Controller
   String? imageLink;
+  bool isLoading = false;
   File? profileImage;
   final NameEditingController = TextEditingController();
   final emailEditingController = TextEditingController();
@@ -372,50 +373,68 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           child: Container(
             height: MediaQuery.of(context).size.height,
             decoration: const BoxDecoration(
-                color: Colors.amber,
+                // color: Colors.amber,
                 image: DecorationImage(
                     image: AssetImage('assets/background.jpg'),
                     fit: BoxFit.fill)),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 36.0, vertical: 20),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    // profileImageU,
-                    SizedBox(height: 30),
-                    // firstNameField,
-                    ClipOval(
-                      child: Container(
-                        padding: EdgeInsets.all(5),
-                        color: Colors.black,
-                        child: ClipOval(
-                            child: Image.asset(
-                          'assets/logo.png',
-                          height: MediaQuery.of(context).size.width * 0.5,
-                          width: MediaQuery.of(context).size.width * 0.5,
-                        )),
-                      ),
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 36.0, vertical: 20),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        // profileImageU,
+                        const SizedBox(height: 30),
+                        // firstNameField,
+                        ClipOval(
+                          child: Container(
+                            padding: EdgeInsets.all(5),
+                            color: Colors.black,
+                            child: ClipOval(
+                                child: Image.asset(
+                              'assets/logo.png',
+                              height: MediaQuery.of(context).size.width * 0.5,
+                              width: MediaQuery.of(context).size.width * 0.5,
+                            )),
+                          ),
+                        ),
+                        const SizedBox(height: 50),
+                        emailField,
+                        const SizedBox(height: 20),
+                        passwordField,
+                        const SizedBox(height: 20),
+                        confirmPasswordField,
+                        const SizedBox(height: 100),
+                        // CollegeNameField,
+                        // SizedBox(height: 20),
+                        // enrollmentNameField,
+                        // SizedBox(height: 20),
+                        signUpButton,
+                        SizedBox(height: 15),
+                      ],
                     ),
-                    SizedBox(height: 50),
-                    emailField,
-                    SizedBox(height: 20),
-                    passwordField,
-                    SizedBox(height: 20),
-                    confirmPasswordField,
-                    SizedBox(height: 100),
-                    // CollegeNameField,
-                    // SizedBox(height: 20),
-                    // enrollmentNameField,
-                    // SizedBox(height: 20),
-                    signUpButton,
-                    SizedBox(height: 15),
-                  ],
+                  ),
                 ),
-              ),
+                if (isLoading)
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.black.withOpacity(0.5),
+                    child: const Center(
+                        child: SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: CircularProgressIndicator(
+                        color: Colors.orange,
+                      ),
+                    )),
+                  )
+              ],
             ),
           ),
         ),
@@ -427,6 +446,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     var errorMessage;
     if (_formKey.currentState!.validate()) {
       try {
+        setState(() {
+          isLoading = true;
+        });
         await _auth
             .createUserWithEmailAndPassword(email: email, password: password)
             .then((value) => {postDetailsToFirestore()})
