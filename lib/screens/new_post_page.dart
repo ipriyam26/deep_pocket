@@ -58,24 +58,11 @@ class postPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Hero(
-                tag: "xcross",
-                child: postCard(
-                    MHeight: MHeight,
-                    MWidth: MWidth,
-                    imagesList: document.data()['ImageLinks'],
-                    id: document.id,
-                    LikedBy: document.data()['LikedBy'],
-                    name: document.data()['AuthorName'],
-                    AuthorImage: document.data()['AuthorProfilePic'],
-                    title: document.data()['Title'],
-                    body: document.data()['Body'],
-                    time: time,
-                    likes: document.data()['Likes'],
-                    comments: document.data()['Comments'],
-                    date: document.data()['Date'],
-                    tag: document.data()['Tag']),
-              ),
+              postCardCall(
+                  MHeight: MHeight,
+                  MWidth: MWidth,
+                  document: document,
+                  time: time),
               Container(
                 padding: EdgeInsets.all(MWidth * 0.01),
                 child: Column(
@@ -95,83 +82,13 @@ class postPage extends StatelessWidget {
                             );
                           }
                           var userdata = snapshot.data!.data();
-                          return Container(
-                            // color: Colors.amber,
-                            // padding: EdgeInsets.symmetric(horizontal: MWidth * 0.05),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                    // height: MHeight * 0.11,
-                                    // color: Colors.amber,
-                                    child: ClipOval(
-                                  child: Container(
-                                    height: MWidth * 0.12,
-                                    width: MWidth * 0.12,
-                                    color: Colors.grey,
-                                    child: CachedNetworkImage(
-                                      placeholder: (context, url) => Container(
-                                          child:
-                                              Image.asset('assets/person.png')),
-                                      imageUrl: userdata!['Image'],
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                )),
-                                Container(
-                                  height: MHeight * 0.07,
-                                  width: MWidth * 0.8,
-                                  child: TextField(
-                                    expands: true,
-                                    maxLines: null,
-                                    autocorrect: false,
-                                    controller: commentText,
-                                    scrollPadding: EdgeInsets.zero,
-                                    minLines: null,
-                                    onSubmitted: (value) async {
-                                      if (value.length > 5) {
-                                        await FirebaseFirestore.instance
-                                            .collection("Comments")
-                                            .add({
-                                          'AuthorID': userdata['uid'],
-                                          'PostID': id,
-                                          'AuthorName': userdata['Name'],
-                                          'AuthorPic': userdata['Image'],
-                                          'Time': DateTime.now(),
-                                          'CommentText': value,
-                                          'Likes': 0
-                                        });
-                                        await FirebaseFirestore.instance
-                                            .collection("Posts")
-                                            .doc(id)
-                                            .update({
-                                          'Comments':
-                                              document.data()['Comments'] + 1
-                                        });
-                                        commentText.clear();
-                                        Fluttertoast.showToast(
-                                            msg: "Comment posted!!!");
-                                      } else {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Comment too-short atleast 5 characters");
-                                      }
-                                    },
-                                    textInputAction: TextInputAction.done,
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: MWidth * 0.03,
-                                            vertical: MHeight * 0.01),
-                                        hintText: "Add a Comment...",
-                                        border: const OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(5)))),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
+                          return UserComment(
+                              MWidth: MWidth,
+                              userdata: userdata,
+                              MHeight: MHeight,
+                              commentText: commentText,
+                              id: id,
+                              document: document);
                         }),
                     StreamBuilder(
                         stream: FirebaseFirestore.instance
@@ -265,6 +182,134 @@ class postPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class UserComment extends StatelessWidget {
+  const UserComment({
+    Key? key,
+    required this.MWidth,
+    required this.userdata,
+    required this.MHeight,
+    required this.commentText,
+    required this.id,
+    required this.document,
+  }) : super(key: key);
+
+  final double MWidth;
+  final Map<String, dynamic>? userdata;
+  final double MHeight;
+  final TextEditingController commentText;
+  final String id;
+  final QueryDocumentSnapshot<Map<String, dynamic>> document;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // color: Colors.amber,
+      // padding: EdgeInsets.symmetric(horizontal: MWidth * 0.05),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+              // height: MHeight * 0.11,
+              // color: Colors.amber,
+              child: ClipOval(
+            child: Container(
+              height: MWidth * 0.12,
+              width: MWidth * 0.12,
+              color: Colors.grey,
+              child: CachedNetworkImage(
+                placeholder: (context, url) =>
+                    Container(child: Image.asset('assets/person.png')),
+                imageUrl: userdata!['Image'],
+                fit: BoxFit.cover,
+              ),
+            ),
+          )),
+          Container(
+            height: MHeight * 0.07,
+            width: MWidth * 0.8,
+            child: TextField(
+              expands: true,
+              maxLines: null,
+              autocorrect: false,
+              controller: commentText,
+              scrollPadding: EdgeInsets.zero,
+              minLines: null,
+              onSubmitted: (value) async {
+                if (value.length > 5) {
+                  await FirebaseFirestore.instance.collection("Comments").add({
+                    'AuthorID': userdata!['uid'],
+                    'PostID': id,
+                    'AuthorName': userdata!['Name'],
+                    'AuthorPic': userdata!['Image'],
+                    'Time': DateTime.now(),
+                    'CommentText': value,
+                    'Likes': 0
+                  });
+                  await FirebaseFirestore.instance
+                      .collection("Posts")
+                      .doc(id)
+                      .update({'Comments': document.data()['Comments'] + 1});
+                  commentText.clear();
+                  Fluttertoast.showToast(msg: "Comment posted!!!");
+                } else {
+                  Fluttertoast.showToast(
+                      msg: "Comment too-short atleast 5 characters");
+                }
+              },
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: MWidth * 0.03, vertical: MHeight * 0.01),
+                  hintText: "Add a Comment...",
+                  border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5)))),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class postCardCall extends StatelessWidget {
+  const postCardCall({
+    Key? key,
+    required this.MHeight,
+    required this.MWidth,
+    required this.document,
+    required this.time,
+  }) : super(key: key);
+
+  final double MHeight;
+  final double MWidth;
+  final QueryDocumentSnapshot<Map<String, dynamic>> document;
+  final String time;
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: "xcross",
+      child: postCard(
+          NotinFeed: true,
+          MHeight: MHeight,
+          MWidth: MWidth,
+          imagesList: document.data()['ImageLinks'],
+          id: document.id,
+          LikedBy: document.data()['LikedBy'],
+          name: document.data()['AuthorName'],
+          AuthorImage: document.data()['AuthorProfilePic'],
+          title: document.data()['Title'],
+          body: document.data()['Body'],
+          time: time,
+          likes: document.data()['Likes'],
+          comments: document.data()['Comments'],
+          date: document.data()['Date'],
+          tag: document.data()['Tag']),
     );
   }
 }

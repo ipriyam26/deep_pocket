@@ -154,6 +154,7 @@ class _feedScreenState extends State<feedScreen> {
                                 child: Container(
                                     child: postCard(
                                         MHeight: MHeight,
+                                        NotinFeed: false,
                                         MWidth: MWidth,
                                         imagesList: snapshot.data!.docs[index]
                                             .data()['ImageLinks'],

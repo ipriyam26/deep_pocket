@@ -30,6 +30,7 @@ class postCard extends StatefulWidget {
     required this.tag,
     required this.id,
     required this.LikedBy,
+    required this.NotinFeed,
   }) : super(key: key);
 
   final dynamic tag;
@@ -42,6 +43,7 @@ class postCard extends StatefulWidget {
   final dynamic body;
   final dynamic time;
   dynamic likes;
+  final bool NotinFeed;
   final dynamic comments;
   final dynamic date;
 
@@ -146,7 +148,7 @@ class _postCardState extends State<postCard> {
                       .toList(),
                 ),
               ),
-            Container(
+            SizedBox(
               height: widget.MHeight * 0.06,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -158,19 +160,19 @@ class _postCardState extends State<postCard> {
                               foregroundColor: MaterialStateProperty.all<Color>(
                                   Colors.black)),
                           onPressed: () async {
-                            liked = !liked!;
-                            if (liked!) {
-                              widget.likes += 1;
+                            liked = !liked;
+                            if (liked) {
                               await FirebaseFirestore.instance
                                   .collection("Posts")
                                   .doc(widget.id)
                                   .update({
-                                'Likes': widget.likes,
                                 "LikedBy": FieldValue.arrayUnion(
                                     [widget.currentuser!.uid])
                               });
+                              if (widget.NotinFeed) {
+                                widget.LikedBy!.add(widget.currentuser!.uid);
+                              }
                             } else {
-                              widget.likes -= 1;
                               await FirebaseFirestore.instance
                                   .collection("Posts")
                                   .doc(widget.id)
@@ -179,16 +181,20 @@ class _postCardState extends State<postCard> {
                                 "LikedBy": FieldValue.arrayRemove(
                                     [widget.currentuser!.uid])
                               });
+                              if (widget.NotinFeed) {
+                                widget.LikedBy!.remove(widget.currentuser!.uid);
+                              }
                             }
+
                             setState(() {});
                           },
-                          icon: liked!
+                          icon: liked
                               ? const Icon(
                                   Icons.thumb_up,
                                   color: Colors.pink,
                                 )
                               : const Icon(Icons.thumb_up_outlined),
-                          label: Text("${widget.likes} Likes")),
+                          label: Text("${widget.LikedBy!.length} Likes")),
                       TextButton.icon(
                           style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(
