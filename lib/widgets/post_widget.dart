@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:readmore/readmore.dart';
@@ -109,43 +110,42 @@ class _postCardState extends State<postCard> {
                 ],
               ),
             ),
-            Container(
-              height: widget.MHeight * 0.28,
-              padding: EdgeInsets.all(widget.MHeight * 0.005),
-              // color: Colors.amber,
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  aspectRatio: 4.5 / 3,
-                  viewportFraction: 1,
-                  enlargeCenterPage: true,
-                  enableInfiniteScroll: false,
-                  autoPlay: false,
-                ),
-                items: widget.imagesList
-                    .map(
-                      (item) => Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Container(
-                            color: Colors.grey,
-                            child: CachedNetworkImage(
-                              placeholder: (context, url) => Container(
-                                  width: widget.MWidth * 0.5,
-                                  child: const LinearProgressIndicator(
-                                    minHeight: 5,
-                                    backgroundColor: Colors.white,
-                                    color: Colors.blue,
-                                  )),
-                              imageUrl: item.toString(),
-                              fit: BoxFit.cover,
+            if (widget.imagesList.length > 0)
+              Container(
+                height: widget.MHeight * 0.28,
+                padding: EdgeInsets.all(widget.MHeight * 0.005),
+                // color: Colors.amber,
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                    aspectRatio: 4.5 / 3,
+                    viewportFraction: 1,
+                    enlargeCenterPage: true,
+                    enableInfiniteScroll: false,
+                    autoPlay: false,
+                  ),
+                  items: widget.imagesList
+                      .map(
+                        (item) => Center(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              color: Colors.grey[200],
+                              child: CachedNetworkImage(
+                                fadeInDuration: const Duration(microseconds: 0),
+                                fadeOutDuration:
+                                    const Duration(microseconds: 2),
+                                placeholder: (context, url) =>
+                                    const CupertinoActivityIndicator(),
+                                imageUrl: item.toString(),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                    .toList(),
+                      )
+                      .toList(),
+                ),
               ),
-            ),
             Container(
               height: widget.MHeight * 0.06,
               child: Row(
@@ -158,8 +158,8 @@ class _postCardState extends State<postCard> {
                               foregroundColor: MaterialStateProperty.all<Color>(
                                   Colors.black)),
                           onPressed: () async {
-                            liked = !liked;
-                            if (liked) {
+                            liked = !liked!;
+                            if (liked!) {
                               widget.likes += 1;
                               await FirebaseFirestore.instance
                                   .collection("Posts")
@@ -182,7 +182,7 @@ class _postCardState extends State<postCard> {
                             }
                             setState(() {});
                           },
-                          icon: liked
+                          icon: liked!
                               ? const Icon(
                                   Icons.thumb_up,
                                   color: Colors.pink,
