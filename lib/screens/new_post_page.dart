@@ -295,6 +295,7 @@ class postCardCall extends StatelessWidget {
     return Hero(
       tag: "xcross",
       child: postCard(
+          AuthorUID: document.data()['AuthorUID'],
           NotinFeed: true,
           MHeight: MHeight,
           MWidth: MWidth,

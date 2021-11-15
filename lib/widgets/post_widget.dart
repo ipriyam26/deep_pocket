@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deep_pocket_1/screens/edit_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class postCard extends StatefulWidget {
 
   postCard({
     Key? key,
+    required this.AuthorUID,
     required this.MHeight,
     required this.MWidth,
     required this.imagesList,
@@ -42,6 +44,7 @@ class postCard extends StatefulWidget {
   final dynamic title;
   final dynamic body;
   final dynamic time;
+  final String AuthorUID;
   dynamic likes;
   final bool NotinFeed;
   final dynamic comments;
@@ -74,12 +77,19 @@ class _postCardState extends State<postCard> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             firstColumn(
-                MWidth: widget.MWidth,
-                name: widget.name,
-                time: widget.time,
-                date: widget.date,
-                AuthorImage: widget.AuthorImage,
-                tag: widget.tag),
+              id: widget.id,
+              imageList: widget.imagesList,
+              title: widget.title,
+              tag: widget.tag,
+              body: widget.body,
+              AuthorUID: widget.AuthorUID,
+              currentUserId: widget.currentuser!.uid,
+              MWidth: widget.MWidth,
+              name: widget.name,
+              time: widget.time,
+              date: widget.date,
+              AuthorImage: widget.AuthorImage,
+            ),
             SizedBox(
               height: widget.MHeight * 0.01,
             ),
@@ -222,6 +232,15 @@ class _postCardState extends State<postCard> {
 }
 
 class firstColumn extends StatelessWidget {
+  final String AuthorUID;
+
+  final String currentUserId;
+
+  final List<dynamic> imageList;
+  final String id;
+  final String title;
+  final String body;
+
   const firstColumn({
     Key? key,
     required this.MWidth,
@@ -230,6 +249,12 @@ class firstColumn extends StatelessWidget {
     required this.AuthorImage,
     required this.date,
     required this.tag,
+    required this.AuthorUID,
+    required this.currentUserId,
+    required this.id,
+    required this.imageList,
+    required this.title,
+    required this.body,
   }) : super(key: key);
 
   final dynamic date;
@@ -243,72 +268,131 @@ class firstColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ClipOval(
-            child: Container(
-              height: MWidth * 0.15,
-              width: MWidth * 0.15,
-              color: Colors.grey,
-              child: CachedNetworkImage(
-                placeholder: (context, url) =>
-                    Container(child: Image.asset('assets/person.png')),
-                imageUrl: AuthorImage.toString(),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          // ClipOval(
-          //   child: Container(
-          //     width: MWidth * 0.15,
-          //     height: MWidth * 0.15,
-          //     decoration: BoxDecoration(
-          //       color: Colors.grey,
-          //       image: DecorationImage(
-          //         image: NetworkImage(
-          //           AuthorImage.toString(),
-          //         ),
-          //         fit: BoxFit.cover,
-          //       ),
-          //     ),
-          //   ),
-          //   //      Image.network(
-          //   //   AuthorImage.toString(),
-          //   //   width: MWidth * 0.15,
-          //   //   height: MWidth * 0.15,
-          //   //   fit: BoxFit.cover,
-          //   // )
-          // ),
-
-          SizedBox(
-            width: MWidth * 0.03,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              AutoSizeText(
-                name.toString(),
-                style: const TextStyle(fontWeight: FontWeight.bold),
-                maxFontSize: 22,
-                minFontSize: 20,
+              ClipOval(
+                child: Container(
+                  height: MWidth * 0.15,
+                  width: MWidth * 0.15,
+                  color: Colors.grey,
+                  child: CachedNetworkImage(
+                    placeholder: (context, url) =>
+                        Container(child: Image.asset('assets/person.png')),
+                    imageUrl: AuthorImage.toString(),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-              AutoSizeText(
-                time.toString(),
-                style: const TextStyle(color: Colors.grey, fontSize: 14),
-              )
+              SizedBox(
+                width: MWidth * 0.03,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AutoSizeText(
+                    name.toString(),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    maxFontSize: 22,
+                    minFontSize: 20,
+                  ),
+                  AutoSizeText(
+                    time.toString(),
+                    style: const TextStyle(color: Colors.grey, fontSize: 14),
+                  )
+                ],
+              ),
             ],
           ),
-          SizedBox(
-            width: MWidth * 0.04,
-          ),
-          Chip(
-            label: Text(
-              tag,
-              style: const TextStyle(color: Colors.orange, fontSize: 12),
-            ),
-            backgroundColor: Colors.black,
+          Row(
+            children: [
+              Chip(
+                label: Text(
+                  tag,
+                  style: const TextStyle(color: Colors.orange, fontSize: 12),
+                ),
+                backgroundColor: Colors.black,
+              ),
+
+              // This is the type used by the popup menu below.
+
+// This menu button widget updates a _selection field (of type ,
+// not shown here).
+              if (AuthorUID == currentUserId)
+                sheet(
+                  id: id,
+                  imageList: imageList,
+                  title: title,
+                  tag: tag,
+                  body: body,
+                ),
+            ],
           )
         ],
       ),
+    );
+  }
+}
+
+class sheet extends StatefulWidget {
+  const sheet(
+      {required this.id,
+      required this.imageList,
+      required this.title,
+      required this.body,
+      required this.tag});
+  final List<dynamic> imageList;
+  final String id;
+  final String title;
+  final String body;
+  final String tag;
+
+  @override
+  State<sheet> createState() => _sheetState();
+}
+
+class _sheetState extends State<sheet> {
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+      icon: Icon(Icons.more_vert),
+      onSelected: (String result) async {
+        result == 'Edit'
+            ? Navigator.pushNamed(context, editPost.route, arguments: {
+                "id": widget.id,
+                "title": widget.title,
+                "imageList": widget.imageList,
+                "body": widget.body,
+                "tag": widget.tag,
+              })
+            : await FirebaseFirestore.instance
+                .collection("Posts")
+                .doc(widget.id)
+                .delete();
+      },
+      itemBuilder: (BuildContext context) => [
+        PopupMenuItem(
+          value: "Edit",
+          child: TextButton.icon(
+              onPressed: null,
+              icon: Icon(Icons.edit),
+              label: Text("Edit", style: TextStyle(color: Colors.black))),
+        ),
+        PopupMenuItem(
+          value: "Delete",
+          child: TextButton.icon(
+              onPressed: null,
+              icon: Icon(
+                Icons.delete_outline,
+                color: Colors.red,
+              ),
+              label: Text(
+                "Delete",
+                style: TextStyle(color: Colors.black),
+              )),
+        ),
+      ],
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:deep_pocket_1/screens/login.dart';
 
 import 'package:deep_pocket_1/widgets/recent_about.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../models/user_model.dart';
@@ -46,7 +47,12 @@ class _profileScreenState extends State<profileScreen> {
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text("Loading");
+              return Center(
+                  child: Container(
+                height: 50,
+                width: 50,
+                child: CupertinoActivityIndicator(),
+              ));
             }
 
             var userdata = snapshot.data!.data();

@@ -356,15 +356,33 @@ class _userInputState extends State<userInput> {
                                       .map(
                                         (item) => Padding(
                                           padding: const EdgeInsets.all(10.0),
-                                          child: Center(
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.file(
-                                                item,
-                                                fit: BoxFit.cover,
+                                          child: Stack(
+                                            children: [
+                                              Center(
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  child: Image.file(
+                                                    item,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
+                                              Align(
+                                                alignment: Alignment.topRight,
+                                                child: IconButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        image.remove(item);
+                                                      });
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.close,
+                                                      color: Colors.white,
+                                                      size: 40,
+                                                    )),
+                                              )
+                                            ],
                                           ),
                                         ),
                                       )

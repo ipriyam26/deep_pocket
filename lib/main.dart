@@ -1,3 +1,4 @@
+import 'package:deep_pocket_1/screens/edit_post.dart';
 import 'package:deep_pocket_1/screens/edit_profile.dart';
 import 'package:deep_pocket_1/screens/club/club_detail_screen.dart';
 import 'package:deep_pocket_1/screens/club/clubs_screen.dart';
@@ -25,6 +26,8 @@ import 'package:deep_pocket_1/screens/tabs_screen.dart';
 import 'package:deep_pocket_1/screens/update_profile.dart';
 import 'package:deep_pocket_1/screens/user_input.dart';
 import 'package:deep_pocket_1/screens/verification_screen.dart';
+import 'package:deep_pocket_1/testfire.dart';
+
 import 'package:deep_pocket_1/widgets/post_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +89,8 @@ class MyApp extends StatelessWidget {
             schoolScreen.route: (ctx) => schoolScreen(),
             facultyPage.route: (ctx) => facultyPage(),
             editProfile.route: (ctx) => editProfile(),
-            postPage.route: (ctx) => postPage()
+            postPage.route: (ctx) => postPage(),
+            editPost.route: (ctx) => editPost(),
           }),
     );
   }
