@@ -43,7 +43,7 @@ class postPage extends StatelessWidget {
 
     final document =
         MapArgms['document'] as QueryDocumentSnapshot<Map<String, dynamic>>;
-    final loggeinUser = MapArgms['user'] as UserModel;
+    final loggeinUser = MapArgms['user'];
     // getLoggedUser();
     final id = document.id;
     final ctime = document.data()['Time'];

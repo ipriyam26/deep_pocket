@@ -57,7 +57,7 @@ class _feedScreenState extends State<feedScreen> {
             ));
   }
 
-  QueryDocumentSnapshot<Map<String, dynamic>>? enddoc;
+
   int currentMax = 5;
   Stream<QuerySnapshot<Map<String, dynamic>>> getposts() {
     _scrollController.addListener(() {

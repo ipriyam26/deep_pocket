@@ -25,153 +25,72 @@ class _profileScreenState extends State<profileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
         title: const Text("User Profile"),
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
             await FirebaseAuth.instance.signOut();
-            runApp(MaterialApp(
+            runApp(const MaterialApp(
               home: LoginScreen(),
             ));
           },
           child: const Icon(Icons.add)),
-      body: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection("users")
-              .doc(user!.uid)
-              .snapshots(),
-          builder: (context,
-              AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-            if (snapshot.hasError) {
-              return Text('Something went wrong');
-            }
+      body: SingleChildScrollView(
+        child: Container(
+          // height: MediaQuery.of(context).size.height,
+          child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(user!.uid)
+                  .snapshots(),
+              builder: (context,
+                  AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
+                      snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('Something went wrong');
+                }
 
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                      child: Container(
+                    height: 50,
+                    width: 50,
+                    child: const CupertinoActivityIndicator(),
+                  ));
+                }
+
+                var userdata = snapshot.data!.data();
+                return SingleChildScrollView(
                   child: Container(
-                height: 50,
-                width: 50,
-                child: CupertinoActivityIndicator(),
-              ));
-            }
-
-            var userdata = snapshot.data!.data();
-            return SingleChildScrollView(
-              child: Container(
-                  child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(
-                        MediaQuery.of(context).size.height * 0.01),
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.grey)),
-                    height: MediaQuery.of(context).size.height * 0.27,
-                    child: Column(
-                      children: [
-                        userImageName(
-                          name: userdata!['Name'],
-                          Image: userdata['Image'],
-                          college: userdata['CollegeName'],
+                      child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(
+                            MediaQuery.of(context).size.height * 0.01),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey)),
+                        height: MediaQuery.of(context).size.height * 0.27,
+                        child: Column(
+                          children: [
+                            userImageName(
+                              name: userdata!['Name'],
+                              Image: userdata['Image'],
+                              enrollmentNo: userdata["enrollmentNo"],
+                              college: userdata['CollegeName'],
+                            ),
+                            editprofile(),
+                          ],
                         ),
-                        editprofile(),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.23,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [headingColumn2(), Credentials()],
-                    ),
-                  ),
-                  RecentAbout(),
-                ],
-              )),
-            );
-          }),
-    );
-  }
-}
-
-class Credentials extends StatelessWidget {
-  const Credentials({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: MediaQuery.of(context).size.height * 0.18,
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.star_outline,
-                  color: Colors.grey,
-                ),
-                label: const Text(
-                  "Add your Skill",
-                  style: TextStyle(fontSize: 12),
-                )),
-            TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.book_sharp,
-                  color: Colors.grey,
-                ),
-                label: const Text(
-                  "Add education credentials",
-                  style: TextStyle(fontSize: 12),
-                )),
-            TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.sports_esports_outlined,
-                  color: Colors.grey,
-                ),
-                label: const Text(
-                  "Add your hobbies",
-                  style: TextStyle(fontSize: 12),
-                )),
-          ],
-        ));
-  }
-}
-
-class headingColumn2 extends StatelessWidget {
-  const headingColumn2({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.007),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-              "Credentials & Highlights",
-              style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.035,
-              decoration:
-                  BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
-              child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.edit,
-                    size: 13,
-                    color: Colors.white,
+                      ),
+                      RecentAbout(userdata: userdata),
+                    ],
                   )),
-            )
-          ],
-        ));
+                );
+              }),
+        ),
+      ),
+    );
   }
 }
 
@@ -187,11 +106,18 @@ class editprofile extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(50))),
           width: MediaQuery.of(context).size.width * 0.7,
           child: ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(primary: Colors.black),
             onPressed: () {
               Navigator.pushNamed(context, editProfile.route);
             },
-            icon: Icon(Icons.edit),
-            label: Text("Edit Profile"),
+            icon: const Icon(
+              Icons.edit,
+              color: Colors.pink,
+            ),
+            label: const Text(
+              "Edit Profile",
+              // style: TextStyle(color: Colors.pink),
+            ),
           ),
         ),
         IconButton(onPressed: () {}, icon: Icon(Icons.share))
@@ -205,11 +131,13 @@ class userImageName extends StatelessWidget {
     required this.name,
     required this.Image,
     required this.college,
+    required this.enrollmentNo,
   });
 
   final String name;
   final String Image;
   final String college;
+  final String enrollmentNo;
 
   @override
   Widget build(BuildContext context) {
@@ -245,10 +173,45 @@ class userImageName extends StatelessWidget {
                     minFontSize: 20,
                     maxFontSize: 23,
                   ),
-                  Text(
-                    college,
-                    style: const TextStyle(
-                        fontSize: 17, fontStyle: FontStyle.italic),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Text(
+                            "EnrollNo. : ",
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          AutoSizeText(
+                            enrollmentNo,
+                            style: const TextStyle(),
+                            maxFontSize: 18,
+                            minFontSize: 16,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Institute : ",
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            college,
+                            style: const TextStyle(
+                              fontSize: 17,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                   // SizedBox(height:MediaQuery.of(context).size.height ,)
                 ],
