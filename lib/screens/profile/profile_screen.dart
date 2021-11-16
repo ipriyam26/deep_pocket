@@ -1,15 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_pocket_1/screens/edit_profile.dart';
-import 'package:deep_pocket_1/screens/login.dart';
+import 'package:deep_pocket_1/screens/profile/edit_profile.dart';
+import 'package:deep_pocket_1/screens/login-signup/login.dart';
 
 import 'package:deep_pocket_1/widgets/recent_about.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../models/user_model.dart';
+import '../../models/user_model.dart';
 
 class profileScreen extends StatefulWidget {
   @override

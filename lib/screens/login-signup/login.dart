@@ -1,7 +1,7 @@
 // import 'package:email_password_login/screens/home_screen.dart';
 // import 'package:email_password_login/screens/registration_screen.dart';
 import 'package:deep_pocket_1/main.dart';
-import 'package:deep_pocket_1/screens/signup.dart';
+import 'package:deep_pocket_1/screens/login-signup/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

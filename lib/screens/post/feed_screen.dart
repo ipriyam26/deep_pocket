@@ -5,8 +5,8 @@ import 'package:deep_pocket_1/models/data_feed.dart';
 
 import 'package:deep_pocket_1/models/user_model.dart';
 
-import 'package:deep_pocket_1/screens/new_post_page.dart';
-import 'package:deep_pocket_1/screens/user_input.dart';
+import 'package:deep_pocket_1/screens/post/new_post_page.dart';
+import 'package:deep_pocket_1/screens/post/user_input.dart';
 
 import 'package:deep_pocket_1/widgets/post_widget.dart';
 

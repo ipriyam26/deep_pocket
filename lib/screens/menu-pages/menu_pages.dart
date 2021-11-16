@@ -120,7 +120,7 @@ class menuButton extends StatelessWidget {
       },
       child: Card(
         color: randomColor(),
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(25))),
         child: Container(
           // margin: EdgeInsets.symmetric(horizontal: Mwidth * 0.01),
@@ -129,7 +129,7 @@ class menuButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(25)),
+                borderRadius: const BorderRadius.all(Radius.circular(25)),
                 child: CachedNetworkImage(
                     placeholder: (context, url) => const SizedBox(
                         height: 50,
@@ -140,10 +140,11 @@ class menuButton extends StatelessWidget {
                     width: Mwidth * 0.46,
                     fit: BoxFit.fill),
               ),
-              VerticalDivider(),
+              const VerticalDivider(),
               AutoSizeText(
                 name,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
                 minFontSize: 15,
                 maxFontSize: 20,
               )

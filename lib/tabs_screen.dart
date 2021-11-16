@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/mock_data.dart';
 import 'package:deep_pocket_1/models/user_model.dart';
-import 'package:deep_pocket_1/screens/feed_screen.dart';
-import 'package:deep_pocket_1/screens/menu_pages.dart';
-import 'package:deep_pocket_1/screens/user_input.dart';
+import 'package:deep_pocket_1/screens/post/feed_screen.dart';
+import 'package:deep_pocket_1/screens/menu-pages/menu_pages.dart';
+import 'package:deep_pocket_1/screens/post/user_input.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'profile_screen.dart';
+import 'screens/profile/profile_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   TabsScreen({Key? key}) : super(key: key);

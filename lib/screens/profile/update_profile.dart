@@ -4,8 +4,8 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/api_integration_imgur.dart';
-import 'package:deep_pocket_1/screens/login.dart';
-import 'package:deep_pocket_1/screens/tabs_screen.dart';
+import 'package:deep_pocket_1/screens/login-signup/login.dart';
+import 'package:deep_pocket_1/tabs_screen.dart';
 // import 'package:email_password_login/model/user_model.dart';
 // import 'package:email_password_login/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,8 +14,8 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../models/user_model.dart';
-import 'verification_screen.dart';
+import '../../models/user_model.dart';
+import '../login-signup/verification_screen.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({Key? key}) : super(key: key);

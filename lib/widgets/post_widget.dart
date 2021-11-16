@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_pocket_1/screens/edit_post.dart';
+import 'package:deep_pocket_1/screens/post/edit_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,8 +71,11 @@ class _postCardState extends State<postCard> {
         // color: Colors.amberAccent,
         // height: widget.MHeight * 0.5,
         // width: MWidth * 0.9,
-        margin: EdgeInsets.symmetric(
-            horizontal: widget.MWidth * 0.01, vertical: widget.MHeight * 0.01),
+        margin: EdgeInsets.only(
+            left: widget.MWidth * 0.02,
+            right: widget.MWidth * 0.02,
+            top: widget.MHeight * 0.01,
+            bottom: widget.MHeight * 0.01),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -104,7 +107,7 @@ class _postCardState extends State<postCard> {
                     widget.title.toString(),
                     style: const TextStyle(
                       fontWeight: FontWeight.w700,
-                      fontSize: 15,
+                      fontSize: 17,
                     ),
                   ),
                   Container(
@@ -274,8 +277,8 @@ class firstColumn extends StatelessWidget {
             children: [
               ClipOval(
                 child: Container(
-                  height: MWidth * 0.15,
-                  width: MWidth * 0.15,
+                  height: MWidth * 0.16,
+                  width: MWidth * 0.16,
                   color: Colors.grey,
                   child: CachedNetworkImage(
                     placeholder: (context, url) =>
@@ -294,8 +297,8 @@ class firstColumn extends StatelessWidget {
                   AutoSizeText(
                     name.toString(),
                     style: const TextStyle(fontWeight: FontWeight.bold),
-                    maxFontSize: 22,
-                    minFontSize: 20,
+                    maxFontSize: 19,
+                    minFontSize: 18,
                   ),
                   AutoSizeText(
                     time.toString(),
@@ -319,14 +322,15 @@ class firstColumn extends StatelessWidget {
 
 // This menu button widget updates a _selection field (of type ,
 // not shown here).
-              if (AuthorUID == currentUserId)
-                sheet(
-                  id: id,
-                  imageList: imageList,
-                  title: title,
-                  tag: tag,
-                  body: body,
-                ),
+              AuthorUID == currentUserId
+                  ? sheet(
+                      id: id,
+                      imageList: imageList,
+                      title: title,
+                      tag: tag,
+                      body: body,
+                    )
+                  : SizedBox(width: MWidth * 0.1)
             ],
           )
         ],
@@ -356,7 +360,7 @@ class _sheetState extends State<sheet> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      icon: Icon(Icons.more_vert),
+      icon: const Icon(Icons.more_vert),
       onSelected: (String result) async {
         result == 'Edit'
             ? Navigator.pushNamed(context, editPost.route, arguments: {
@@ -376,18 +380,18 @@ class _sheetState extends State<sheet> {
           value: "Edit",
           child: TextButton.icon(
               onPressed: null,
-              icon: Icon(Icons.edit),
-              label: Text("Edit", style: TextStyle(color: Colors.black))),
+              icon: const Icon(Icons.edit),
+              label: const Text("Edit", style: TextStyle(color: Colors.black))),
         ),
         PopupMenuItem(
           value: "Delete",
           child: TextButton.icon(
               onPressed: null,
-              icon: Icon(
+              icon: const Icon(
                 Icons.delete_outline,
                 color: Colors.red,
               ),
-              label: Text(
+              label: const Text(
                 "Delete",
                 style: TextStyle(color: Colors.black),
               )),

@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../models/user_model.dart';
+import '../../models/user_model.dart';
 
 class editProfile extends StatefulWidget {
   static const route = 'editProfile';
