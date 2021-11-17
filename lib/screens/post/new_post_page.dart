@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deep_pocket_1/admin.dart';
 import 'package:deep_pocket_1/models/user_model.dart';
 import 'package:deep_pocket_1/widgets/post_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
@@ -122,110 +124,154 @@ class postPage extends StatelessWidget {
                                             // color: Colors.amber,
 
                                             // padding: EdgeInsets.symmetric(horizontal: MWidth * 0.05),
-                                            child: ListTile(
-                                              // horizontalTitleGap: 1,
-                                              minVerticalPadding: 0,
+                                            child: GetBuilder(
+                                                init: userRoleController(),
+                                                builder: (userRoleController
+                                                    roleController) {
+                                                  return ListTile(
+                                                    // horizontalTitleGap: 1,
+                                                    minVerticalPadding: 0,
 
-                                              leading: ClipOval(
-                                                child: Container(
-                                                  padding: EdgeInsets.all(2),
-                                                  color: Colors.black,
-                                                  child: ClipOval(
-                                                    child: Container(
-                                                      height: MWidth * 0.13,
-                                                      width: MWidth * 0.13,
-                                                      color: Colors.grey,
-                                                      child: CachedNetworkImage(
-                                                        placeholder: (context,
-                                                                url) =>
-                                                            Container(
-                                                                child: Image.asset(
-                                                                    'assets/person.png')),
-                                                        imageUrl:
-                                                            comment.data()[
-                                                                'AuthorPic'],
-                                                        fit: BoxFit.cover,
+                                                    leading: ClipOval(
+                                                      child: Container(
+                                                        padding:
+                                                            EdgeInsets.all(2),
+                                                        color: Colors.black,
+                                                        child: ClipOval(
+                                                          child: Container(
+                                                            height:
+                                                                MWidth * 0.13,
+                                                            width:
+                                                                MWidth * 0.13,
+                                                            color: Colors.grey,
+                                                            child:
+                                                                CachedNetworkImage(
+                                                              placeholder: (context,
+                                                                      url) =>
+                                                                  Container(
+                                                                      child: Image
+                                                                          .asset(
+                                                                              'assets/person.png')),
+                                                              imageUrl: comment
+                                                                      .data()[
+                                                                  'AuthorPic'],
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
 
-                                              trailing: comment
-                                                          .data()['AuthorID'] ==
-                                                      userdata!['uid']
-                                                  ? PopupMenuButton(
-                                                      icon: const Icon(
-                                                          Icons.more_vert),
-                                                      onSelected: (String
-                                                          result) async {
-                                                        await FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                "Comments")
-                                                            .doc(comment.id)
-                                                            .delete();
-                                                      },
-                                                      itemBuilder: (BuildContext
-                                                              context) =>
-                                                          [
-                                                        PopupMenuItem(
-                                                          value: "Delete",
-                                                          child: TextButton.icon(
-                                                              onPressed: null,
-                                                              icon: const Icon(
+                                                    trailing: (comment.data()[
+                                                                    'AuthorID'] ==
+                                                                userdata![
+                                                                    'uid']) ||
+                                                            (roleController
+                                                                .specialAccess!
+                                                                .contains(
+                                                                    user!.uid))
+                                                        ? PopupMenuButton(
+                                                            icon: const Icon(
                                                                 Icons
-                                                                    .delete_outline,
-                                                                color:
-                                                                    Colors.red,
+                                                                    .more_vert),
+                                                            onSelected: (String
+                                                                result) async {
+                                                              await FirebaseFirestore
+                                                                  .instance
+                                                                  .collection(
+                                                                      "Comments")
+                                                                  .doc(comment
+                                                                      .id)
+                                                                  .delete();
+                                                              await FirebaseFirestore
+                                                                  .instance
+                                                                  .collection(
+                                                                      "Posts")
+                                                                  .doc(comment
+                                                                          .data()[
+                                                                      "PostID"])
+                                                                  .update({
+                                                                "Comments":
+                                                                    document.data()[
+                                                                            'Comments'] -
+                                                                        1
+                                                              });
+                                                            },
+                                                            itemBuilder:
+                                                                (BuildContext
+                                                                        context) =>
+                                                                    [
+                                                              PopupMenuItem(
+                                                                value: "Delete",
+                                                                child: TextButton
+                                                                    .icon(
+                                                                        onPressed:
+                                                                            null,
+                                                                        icon:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .delete_outline,
+                                                                          color:
+                                                                              Colors.red,
+                                                                        ),
+                                                                        label:
+                                                                            const Text(
+                                                                          "Delete",
+                                                                          style:
+                                                                              TextStyle(color: Colors.black),
+                                                                        )),
                                                               ),
-                                                              label: const Text(
-                                                                "Delete",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                              )),
+                                                            ],
+                                                          )
+                                                        : SizedBox(
+                                                            width:
+                                                                MWidth * 0.05,
+                                                          ),
+                                                    title: Row(
+                                                      children: [
+                                                        Text(
+                                                          comment
+                                                              .data()[
+                                                                  'AuthorName']
+                                                              .toString()
+                                                              .split(" ")[0],
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Color(
+                                                                0xff36454f),
+                                                          ),
                                                         ),
+                                                        Text(
+                                                          "   " + time,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 12,
+                                                            color: Color(
+                                                                0xff36454f),
+                                                          ),
+                                                        )
                                                       ],
-                                                    )
-                                                  : SizedBox(
-                                                      width: MWidth * 0.05,
                                                     ),
-                                              title: Row(
-                                                children: [
-                                                  Text(
-                                                    comment.data()[
-                                                            'AuthorName'] +
-                                                        "   ",
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Color(0xff36454f),
+                                                    // horizontalTitleGap: 0,
+                                                    subtitle: ReadMoreText(
+                                                      comment.data()[
+                                                          'CommentText'],
+                                                      trimLines: 2,
+                                                      colorClickableText:
+                                                          Colors.pink,
+                                                      trimMode: TrimMode.Line,
+                                                      // trimCollapsedText: '..Read More',
+                                                      style: const TextStyle(
+                                                          fontSize: 14),
+                                                      trimExpandedText: ' Less',
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    "   " + time,
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
-                                                      color: Color(0xff36454f),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              // horizontalTitleGap: 0,
-                                              subtitle: ReadMoreText(
-                                                comment.data()['CommentText'],
-                                                trimLines: 2,
-                                                colorClickableText: Colors.pink,
-                                                trimMode: TrimMode.Line,
-                                                // trimCollapsedText: '..Read More',
-                                                style: TextStyle(fontSize: 14),
-                                                trimExpandedText: ' Less',
-                                              ),
 
-                                              isThreeLine: true,
-                                            ),
+                                                    isThreeLine: true,
+                                                  );
+                                                }),
                                           ),
                                         );
                                       }).toList()),
@@ -357,6 +403,7 @@ class postCardCall extends StatelessWidget {
     return Hero(
       tag: "xcross",
       child: postCard(
+          Anonymous: document.data()['Anonymous'] ?? false,
           AuthorUID: document.data()['AuthorUID'],
           NotinFeed: true,
           MHeight: MHeight,

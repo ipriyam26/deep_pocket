@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/api_integration_imgur.dart';
 import 'package:deep_pocket_1/screens/post/new_post_page.dart';
 
 import 'package:deep_pocket_1/widgets/post_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,7 +27,7 @@ class RecentAbout extends StatefulWidget {
 class _RecentAboutState extends State<RecentAbout> {
   ScrollController _scrollController = ScrollController();
 
-  bool recent = false;
+  bool recent = true;
   int currentMax = 3;
   bool _editing = false;
   Stream<QuerySnapshot<Map<String, dynamic>>> getposts() {
@@ -114,7 +116,35 @@ class _RecentAboutState extends State<RecentAbout> {
                       ),
                     );
                   }
-
+                  if (snapshot.data!.docs.length == 0) {
+                    return Container(
+                      child: Center(
+                          child: Column(
+                        children: [
+                          CachedNetworkImage(
+                            fadeInDuration: const Duration(microseconds: 0),
+                            fadeOutDuration: const Duration(microseconds: 0),
+                            placeholder: (context, url) =>
+                                const CupertinoActivityIndicator(),
+                            imageUrl:
+                                "https://media.giphy.com/media/l3q2SlRG7lKR3BCVO/giphy.gif",
+                            fit: BoxFit.fitWidth,
+                            height: Mwidth * 0.8,
+                          ),
+                          const Text(
+                            "Post Something To See",
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      )
+                          // child: Image.network(
+                          //   "https://media.giphy.com/media/l3q2SlRG7lKR3BCVO/giphy.gif",
+                          //   // height: Mwidth * 0.6,
+                          // ),
+                          ),
+                    );
+                  }
                   return Container(
                     // height: MediaQuery.of(context).size.height,
                     child: ListView.builder(
@@ -122,46 +152,60 @@ class _RecentAboutState extends State<RecentAbout> {
                       controller: _scrollController,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) => Center(
-                        child: InkWell(
-                          splashColor: Colors.black,
-                          onTap: () {
-                            Navigator.pushNamed(context, postPage.route,
-                                arguments: {
-                                  'document': snapshot.data!.docs[index],
-                                  'user': widget.userdata,
-                                });
-                          },
-                          child: postCard(
-                            AuthorUID:
-                                snapshot.data!.docs[index].data()['AuthorUID'],
-                            MHeight: MediaQuery.of(context).size.height,
-                            MWidth: MediaQuery.of(context).size.width,
-                            imagesList:
-                                snapshot.data!.docs[index].data()['ImageLinks'],
-                            name:
-                                snapshot.data!.docs[index].data()['AuthorName'],
-                            AuthorImage: snapshot.data!.docs[index]
-                                .data()['AuthorProfilePic'],
-                            title: snapshot.data!.docs[index].data()['Title'],
-                            body: snapshot.data!.docs[index].data()['Body'],
-                            time: DateFormat.jm().format(DateTime.parse(snapshot
-                                .data!.docs[index]
-                                .data()['Time']
-                                .toDate()
-                                .toString())),
-                            likes: snapshot.data!.docs[index].data()['Likes'],
-                            comments:
-                                snapshot.data!.docs[index].data()['Comments'],
-                            date: snapshot.data!.docs[index].data()['Date'],
-                            tag: snapshot.data!.docs[index].data()['Tag'],
-                            id: snapshot.data!.docs[index].id,
-                            LikedBy:
-                                snapshot.data!.docs[index].data()['LikedBy'],
-                            NotinFeed: false,
-                          ),
-                        ),
-                      ),
+                      itemBuilder: (context, index) => (snapshot
+                                  .data!.docs[index]
+                                  .data()['Anonymous'] ??
+                              false)
+                          ? Container(
+                              height: 1,
+                            )
+                          : Center(
+                              child: InkWell(
+                                splashColor: Colors.black,
+                                onTap: () {
+                                  Navigator.pushNamed(context, postPage.route,
+                                      arguments: {
+                                        'document': snapshot.data!.docs[index],
+                                        'user': widget.userdata,
+                                      });
+                                },
+                                child: postCard(
+                                  Anonymous: snapshot.data!.docs[index]
+                                          .data()['Anonymous'] ??
+                                      false,
+                                  AuthorUID: snapshot.data!.docs[index]
+                                      .data()['AuthorUID'],
+                                  MHeight: MediaQuery.of(context).size.height,
+                                  MWidth: MediaQuery.of(context).size.width,
+                                  imagesList: snapshot.data!.docs[index]
+                                      .data()['ImageLinks'],
+                                  name: snapshot.data!.docs[index]
+                                      .data()['AuthorName'],
+                                  AuthorImage: snapshot.data!.docs[index]
+                                      .data()['AuthorProfilePic'],
+                                  title: snapshot.data!.docs[index]
+                                      .data()['Title'],
+                                  body:
+                                      snapshot.data!.docs[index].data()['Body'],
+                                  time: DateFormat.jm().format(DateTime.parse(
+                                      snapshot.data!.docs[index]
+                                          .data()['Time']
+                                          .toDate()
+                                          .toString())),
+                                  likes: snapshot.data!.docs[index]
+                                      .data()['Likes'],
+                                  comments: snapshot.data!.docs[index]
+                                      .data()['Comments'],
+                                  date:
+                                      snapshot.data!.docs[index].data()['Date'],
+                                  tag: snapshot.data!.docs[index].data()['Tag'],
+                                  id: snapshot.data!.docs[index].id,
+                                  LikedBy: snapshot.data!.docs[index]
+                                      .data()['LikedBy'],
+                                  NotinFeed: false,
+                                ),
+                              ),
+                            ),
                     ),
                   );
                 })
@@ -329,8 +373,14 @@ class ListGrid extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      Image.network(
-                                        list[index],
+                                      CachedNetworkImage(
+                                        fadeInDuration:
+                                            const Duration(microseconds: 0),
+                                        fadeOutDuration:
+                                            const Duration(microseconds: 2),
+                                        placeholder: (context, url) =>
+                                            const CupertinoActivityIndicator(),
+                                        imageUrl: list[index],
                                         fit: BoxFit.cover,
                                         height: Mheight * 0.07,
                                       ),
@@ -388,8 +438,14 @@ class ListGrid extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Image.network(
-                                  list[index],
+                                CachedNetworkImage(
+                                  fadeInDuration:
+                                      const Duration(microseconds: 0),
+                                  fadeOutDuration:
+                                      const Duration(microseconds: 2),
+                                  placeholder: (context, url) =>
+                                      const CupertinoActivityIndicator(),
+                                  imageUrl: list[index],
                                   fit: BoxFit.cover,
                                   height: Mheight * 0.07,
                                 ),

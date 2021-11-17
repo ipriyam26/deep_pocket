@@ -4,11 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/data_feed.dart';
 
 import 'package:deep_pocket_1/models/user_model.dart';
+import 'package:deep_pocket_1/screens/login-signup/login.dart';
 
 import 'package:deep_pocket_1/screens/post/new_post_page.dart';
 import 'package:deep_pocket_1/screens/post/user_input.dart';
 
 import 'package:deep_pocket_1/widgets/post_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +58,6 @@ class _feedScreenState extends State<feedScreen> {
               )),
             ));
   }
-
 
   int currentMax = 5;
   Stream<QuerySnapshot<Map<String, dynamic>>> getposts() {
@@ -106,6 +107,27 @@ class _feedScreenState extends State<feedScreen> {
           backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
           title: const Text("Home"),
           actions: [
+            // TextButton(
+            //     onPressed: () {
+            //       FirebaseFirestore.instance
+            //           .collection("Roles")
+            //           .doc("Admin")P
+            //           .set({
+            //         'User': [loggedInuser.uid]
+            //       }).then((value) => print("ADMIN NOW"));
+            //     },
+            //     child: Text("Admin")),
+            TextButton(
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  runApp(const MaterialApp(
+                    home: LoginScreen(),
+                  ));
+                },
+                child: const Text(
+                  "Sign Out",
+                  style: TextStyle(color: Colors.white),
+                )),
             TextButton(
                 onPressed: () => {filterSheet(context)},
                 child: const Text(
@@ -138,50 +160,48 @@ class _feedScreenState extends State<feedScreen> {
                   child: ListView.builder(
                       controller: _scrollController,
                       itemCount: snapshot.data!.docs.length + 1,
-                      itemBuilder: (context, index) =>
-                          index == snapshot.data!.docs.length
-                              ? const CupertinoActivityIndicator()
-                              : Center(
-                                  child: InkWell(
-                                    splashColor: Colors.black,
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, postPage.route,
-                                          arguments: {
-                                            'document':
-                                                snapshot.data!.docs[index],
-                                            'user': loggedInuser,
-                                          });
-                                    },
-                                    child: Container(
-                                        child: postCard(
-                                            AuthorUID: snapshot.data!.docs[index]
-                                                .data()['AuthorUID'],
-                                            MHeight: MHeight,
-                                            NotinFeed: false,
-                                            MWidth: MWidth,
-                                            imagesList: snapshot.data!.docs[index]
-                                                .data()['ImageLinks'],
-                                            id: snapshot.data!.docs[index].id,
-                                            LikedBy: snapshot.data!.docs[index]
-                                                .data()['LikedBy'],
-                                            name: snapshot.data!.docs[index]
-                                                .data()['AuthorName'],
-                                            AuthorImage: snapshot
-                                                .data!.docs[index]
-                                                .data()['AuthorProfilePic'],
-                                            title: snapshot.data!.docs[index]
-                                                .data()['Title'],
-                                            body: snapshot.data!.docs[index]
-                                                .data()['Body'],
-                                            time: DateFormat.jm()
-                                                .format(DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString())),
-                                            likes: snapshot.data!.docs[index].data()['Likes'],
-                                            comments: snapshot.data!.docs[index].data()['Comments'],
-                                            date: snapshot.data!.docs[index].data()['Date'],
-                                            tag: snapshot.data!.docs[index].data()['Tag'])),
-                                  ),
-                                )));
+                      itemBuilder: (context, index) => index ==
+                              snapshot.data!.docs.length
+                          ? const CupertinoActivityIndicator()
+                          : Center(
+                              child: InkWell(
+                                splashColor: Colors.black,
+                                onTap: () {
+                                  Navigator.pushNamed(context, postPage.route,
+                                      arguments: {
+                                        'document': snapshot.data!.docs[index],
+                                        'user': loggedInuser,
+                                      });
+                                },
+                                child: Container(
+                                    child: postCard(
+                                        AuthorUID: snapshot.data!.docs[index]
+                                            .data()['AuthorUID'],
+                                        MHeight: MHeight,
+                                        Anonymous: snapshot.data!.docs[index]
+                                                .data()['Anonymous'] ??
+                                            false,
+                                        NotinFeed: false,
+                                        MWidth: MWidth,
+                                        imagesList: snapshot.data!.docs[index]
+                                            .data()['ImageLinks'],
+                                        id: snapshot.data!.docs[index].id,
+                                        LikedBy: snapshot.data!.docs[index]
+                                            .data()['LikedBy'],
+                                        name: snapshot.data!.docs[index]
+                                            .data()['AuthorName'],
+                                        AuthorImage: snapshot.data!.docs[index]
+                                            .data()['AuthorProfilePic'],
+                                        title: snapshot.data!.docs[index]
+                                            .data()['Title'],
+                                        body: snapshot.data!.docs[index].data()['Body'],
+                                        time: DateFormat.jm().format(DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString())),
+                                        likes: snapshot.data!.docs[index].data()['Likes'],
+                                        comments: snapshot.data!.docs[index].data()['Comments'],
+                                        date: snapshot.data!.docs[index].data()['Date'],
+                                        tag: snapshot.data!.docs[index].data()['Tag'])),
+                              ),
+                            )));
             }));
   }
 }

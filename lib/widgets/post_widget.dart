@@ -2,10 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deep_pocket_1/admin.dart';
 import 'package:deep_pocket_1/screens/post/edit_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import 'package:readmore/readmore.dart';
 
@@ -14,6 +16,8 @@ class postCard extends StatefulWidget {
   final currentuser = FirebaseAuth.instance.currentUser;
 
   List<dynamic>? LikedBy;
+
+  final bool Anonymous;
 
   postCard({
     Key? key,
@@ -33,6 +37,7 @@ class postCard extends StatefulWidget {
     required this.id,
     required this.LikedBy,
     required this.NotinFeed,
+    required this.Anonymous,
   }) : super(key: key);
 
   final dynamic tag;
@@ -80,6 +85,7 @@ class _postCardState extends State<postCard> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             firstColumn(
+              Anonymous: widget.Anonymous,
               id: widget.id,
               imageList: widget.imagesList,
               title: widget.title,
@@ -243,7 +249,7 @@ class firstColumn extends StatelessWidget {
   final String id;
   final String title;
   final String body;
-
+  final bool Anonymous;
   const firstColumn({
     Key? key,
     required this.MWidth,
@@ -258,6 +264,7 @@ class firstColumn extends StatelessWidget {
     required this.imageList,
     required this.title,
     required this.body,
+    required this.Anonymous,
   }) : super(key: key);
 
   final dynamic date;
@@ -269,73 +276,142 @@ class firstColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              ClipOval(
-                child: Container(
-                  height: MWidth * 0.16,
-                  width: MWidth * 0.16,
-                  color: Colors.grey,
-                  child: CachedNetworkImage(
-                    placeholder: (context, url) =>
-                        Container(child: Image.asset('assets/person.png')),
-                    imageUrl: AuthorImage.toString(),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: MWidth * 0.03,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AutoSizeText(
-                    name.toString(),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                    maxFontSize: 19,
-                    minFontSize: 18,
-                  ),
-                  AutoSizeText(
-                    time.toString(),
-                    style: const TextStyle(color: Colors.grey, fontSize: 14),
-                  )
-                ],
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Chip(
-                label: Text(
-                  tag,
-                  style: const TextStyle(color: Colors.orange, fontSize: 12),
-                ),
-                backgroundColor: Colors.black,
-              ),
-
-              // This is the type used by the popup menu below.
-
-// This menu button widget updates a _selection field (of type ,
-// not shown here).
-              AuthorUID == currentUserId
-                  ? sheet(
-                      id: id,
-                      imageList: imageList,
-                      title: title,
-                      tag: tag,
-                      body: body,
+    return GetBuilder(
+        init: userRoleController(),
+        builder: (userRoleController roleController) {
+          return Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    (Anonymous &&
+                            roleController.specialAccess!
+                                .contains(currentUserId))
+                        ? ClipOval(
+                            child: Container(
+                              height: MWidth * 0.16,
+                              width: MWidth * 0.16,
+                              color: Colors.grey,
+                              child: CachedNetworkImage(
+                                placeholder: (context, url) => Container(
+                                    child: Image.asset('assets/person.png')),
+                                imageUrl: AuthorImage.toString(),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : Anonymous
+                            ? ClipOval(
+                                child: Container(
+                                  height: MWidth * 0.16,
+                                  width: MWidth * 0.16,
+                                  color: Colors.grey,
+                                  child: Container(
+                                      child: Image.asset(
+                                    'assets/person.png',
+                                    fit: BoxFit.cover,
+                                  )),
+                                ),
+                              )
+                            : ClipOval(
+                                child: Container(
+                                  height: MWidth * 0.16,
+                                  width: MWidth * 0.16,
+                                  color: Colors.grey,
+                                  child: CachedNetworkImage(
+                                    placeholder: (context, url) => Container(
+                                        child:
+                                            Image.asset('assets/person.png')),
+                                    imageUrl: AuthorImage.toString(),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                    SizedBox(
+                      width: MWidth * 0.03,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            (Anonymous)
+                                ? const AutoSizeText(
+                                    'Anonymous',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                    maxFontSize: 19,
+                                    minFontSize: 18,
+                                  )
+                                : AutoSizeText(
+                                    name.toString(),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                    maxFontSize: 19,
+                                    minFontSize: 18,
+                                  ),
+                            if (Anonymous &&
+                                roleController.specialAccess!
+                                    .contains(currentUserId))
+                              AutoSizeText(
+                                "(${name.toString()})",
+                                style: const TextStyle(color: Colors.black),
+                                maxFontSize: 19,
+                                minFontSize: 8,
+                              )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            if (roleController.instructor!.contains(AuthorUID))
+                              AutoSizeText(
+                                "Instructor   ".toUpperCase(),
+                              ),
+                            AutoSizeText(
+                              time.toString(),
+                              style: const TextStyle(
+                                  color: Colors.grey, fontSize: 14),
+                            ),
+                          ],
+                        )
+                      ],
                     )
-                  : SizedBox(width: MWidth * 0.1)
-            ],
-          )
-        ],
-      ),
-    );
+                  ],
+                ),
+                Row(
+                  children: [
+                    Chip(
+                      label: Text(
+                        tag,
+                        style:
+                            const TextStyle(color: Colors.orange, fontSize: 12),
+                      ),
+                      backgroundColor: Colors.black,
+                    ),
+
+                    // This is the type used by the popup menu below.
+
+                    // This menu button widget updates a _selection field (of type ,
+                    // not shown here).
+                    (AuthorUID == currentUserId) ||
+                            roleController.specialAccess!
+                                .contains(currentUserId)
+                        ? sheet(
+                            id: id,
+                            imageList: imageList,
+                            title: title,
+                            tag: tag,
+                            body: body,
+                          )
+                        : SizedBox(width: MWidth * 0.1)
+                  ],
+                )
+              ],
+            ),
+          );
+        });
   }
 }
 

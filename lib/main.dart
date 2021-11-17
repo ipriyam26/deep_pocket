@@ -1,3 +1,4 @@
+import 'package:deep_pocket_1/screens/noticeboard/notice_create.dart';
 import 'package:deep_pocket_1/screens/post/edit_post.dart';
 import 'package:deep_pocket_1/screens/profile/edit_profile.dart';
 import 'package:deep_pocket_1/screens/club/club_detail_screen.dart';
@@ -91,6 +92,7 @@ class MyApp extends StatelessWidget {
             editProfile.route: (ctx) => editProfile(),
             postPage.route: (ctx) => postPage(),
             editPost.route: (ctx) => editPost(),
+            createNotice.route: (ctx) => createNotice()
           }),
     );
   }

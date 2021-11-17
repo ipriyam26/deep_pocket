@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notice_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +12,7 @@ class noticeCard extends StatelessWidget {
     required this.newNotice,
   }) : super(key: key);
 
-  final notice newNotice;
+  final QueryDocumentSnapshot<Map<String, dynamic>> newNotice;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class noticeCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    Department[newNotice.depNo],
+                    newNotice.data()['Department'],
                     style: const TextStyle(
                         fontSize: 20,
                         color: Colors.white,
@@ -45,7 +46,8 @@ class noticeCard extends StatelessWidget {
                   Text(
                     // DateFormat.Hm().format(newNotice[i].date) +
                     //     " " +
-                    DateFormat('d MMM y').format(newNotice.date),
+                    DateFormat('d MMM y').format(DateTime.parse(
+                        newNotice.data()['Time'].toDate().toString())),
                     style: const TextStyle(color: Colors.white),
                   ),
                   SizedBox(
@@ -55,7 +57,7 @@ class noticeCard extends StatelessWidget {
                     // color: Colors.amber,
                     width: MSize.width * 0.7,
                     child: AutoSizeText(
-                      newNotice.title,
+                      newNotice.data()['Title'],
                       textAlign: TextAlign.start,
                       style: const TextStyle(
                           fontSize: 18,
@@ -70,7 +72,8 @@ class noticeCard extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    DateFormat.Hm().format(newNotice.date),
+                    DateFormat.Hm().format(DateTime.parse(
+                        newNotice.data()['Time'].toDate().toString())),
                     style: const TextStyle(color: Colors.white),
                   ),
                   IconButton(

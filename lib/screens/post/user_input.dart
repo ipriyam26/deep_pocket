@@ -33,6 +33,8 @@ class _userInputState extends State<userInput> {
   List<File> image = [];
   var _chosenValue = 'all';
 
+  bool makeAnonymous = false;
+
   final titleController = TextEditingController();
   final bodyController = TextEditingController();
   // CollectionReference userCollection =
@@ -83,6 +85,8 @@ class _userInputState extends State<userInput> {
       'Likes': 0,
       'Comments': 0,
       'Tag': _chosenValue,
+      'LikedBy': [],
+      "Anonymous": makeAnonymous,
     };
     await FirebaseFirestore.instance
         .collection("Posts")
@@ -133,331 +137,322 @@ class _userInputState extends State<userInput> {
     final Mheight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xff171717),
-          title: const Text('Ask a Question'),
-          actions: [IconButton(onPressed: submitted, icon: Icon(Icons.send))],
-        ),
-        backgroundColor: const Color(0xff080808),
-        body: Stack(
-          children: [
-            StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection("users")
-                    .doc(user!.uid)
-                    .get()
-                    .asStream(),
-                builder: (context,
-                    AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
-                        snapshot) {
-                  if (!snapshot.hasData) {
-                    return CircularProgressIndicator();
-                  }
-                  var userdata = snapshot.data!.data();
+      appBar: AppBar(
+        backgroundColor: Color(0xff171717),
+        title: const Text('Ask a Question'),
+        actions: [IconButton(onPressed: submitted, icon: Icon(Icons.send))],
+      ),
+      backgroundColor: const Color(0xff080808),
+      body: Stack(
+        children: [
+          StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(user!.uid)
+                  .get()
+                  .asStream(),
+              builder: (context,
+                  AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
+                      snapshot) {
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator();
+                }
+                var userdata = snapshot.data!.data();
 
-                  return Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 18.0, vertical: 25),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: Mheight * 0.10,
-                          // color: Colors.amber,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              userdata!['Image'] == null
-                                  ? ClipOval(
-                                      child: Container(
-                                        color: Colors.grey,
-                                        width: MWidth * 0.2,
-                                        height: MWidth * 0.2,
-                                      ),
-                                    )
-                                  : ClipOval(
-                                      child: Image.network(
-                                        userdata['Image'],
-                                        width: MWidth * 0.2,
-                                        height: MWidth * 0.2,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                              SizedBox(
-                                width: MWidth * 0.05,
-                              ),
-                              Container(
-                                // color: Colors.amber,
-                                width: MWidth * 0.65,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    AutoSizeText(
-                                      userdata['Name'],
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                      maxFontSize: 28,
-                                      minFontSize: 24,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          "Select a Tag:",
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        SizedBox(
-                                          width: MWidth * 0.05,
-                                        ),
-                                        DropdownButton<String>(
-                                          focusColor: Colors.black,
-                                          value: _chosenValue,
-                                          dropdownColor: Colors.black,
-                                          elevation: 0,
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                          ),
-                                          iconEnabledColor: Colors.orange,
-                                          items:
-                                              Tag.map<DropdownMenuItem<String>>(
-                                                  (String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Container(
-                                                child: Text(
-                                                  value,
-                                                  style: const TextStyle(
-                                                      color: Colors.orange),
-                                                ),
-                                              ),
-                                            );
-                                          }).toList(),
-                                          onChanged: (String? value) {
-                                            setState(() {
-                                              _chosenValue = value.toString();
-                                            });
-                                          },
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: Mheight * 0.03,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                return Container(
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 18.0, vertical: 25),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: Mheight * 0.10,
+                        // color: Colors.amber,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              height: Mheight * 0.08,
-                              child: TextFormField(
-                                maxLines: null,
-                                minLines: null,
-                                expands: true,
-                                controller: titleController,
-                                maxLength: 80,
-                                autocorrect: false,
-                                scrollPadding:
-                                    EdgeInsets.symmetric(horizontal: 20),
-                                // onChanged: (value){
-                                //   titleController = value;
-
-                                validator: (value) {
-                                  if (value!.length <= 20) {
-                                    return ("Title should be at least 20 Characters");
-                                  }
-                                },
-                                // },
-
-                                decoration: const InputDecoration(
-                                    errorStyle: TextStyle(color: Colors.red),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
+                            userdata!['Image'] == null
+                                ? ClipOval(
+                                    child: Container(
+                                      color: Colors.grey,
+                                      width: MWidth * 0.2,
+                                      height: MWidth * 0.2,
                                     ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
+                                  )
+                                : ClipOval(
+                                    child: Image.network(
+                                      userdata['Image'],
+                                      width: MWidth * 0.2,
+                                      height: MWidth * 0.2,
+                                      fit: BoxFit.cover,
                                     ),
-                                    hintText: "Title",
-                                    hintStyle: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                    )),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
+                                  ),
                             SizedBox(
-                              height: Mheight * 0.01,
+                              width: MWidth * 0.05,
                             ),
                             Container(
-                              height: Mheight * 0.17,
-                              child: TextFormField(
-                                maxLength: 500,
-                                maxLines: null,
-                                minLines: null,
-                                expands: true,
-                                controller: bodyController,
-                                autocorrect: false,
-                                decoration: const InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                    ),
-                                    hintText:
-                                        "Describe what you are talking about",
-                                    hintStyle: TextStyle(
+                              // color: Colors.amber,
+                              width: MWidth * 0.65,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  AutoSizeText(
+                                    userdata['Name'],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.white,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w400,
-                                    )),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                ),
+                                    ),
+                                    maxFontSize: 28,
+                                    minFontSize: 24,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "Select a Tag:",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        width: MWidth * 0.05,
+                                      ),
+                                      DropdownButton<String>(
+                                        focusColor: Colors.black,
+                                        value: _chosenValue,
+                                        dropdownColor: Colors.black,
+                                        elevation: 0,
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
+                                        iconEnabledColor: Colors.orange,
+                                        items:
+                                            Tag.map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Container(
+                                              child: Text(
+                                                value,
+                                                style: const TextStyle(
+                                                    color: Colors.orange),
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (String? value) {
+                                          setState(() {
+                                            _chosenValue = value.toString();
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            )
+                            ),
                           ],
                         ),
-                        SizedBox(
-                          height: Mheight * 0.02,
-                        ),
-                        image.isNotEmpty
-                            ? Container(
-                                height: Mheight * 0.28,
-                                child: CarouselSlider(
-                                  options: CarouselOptions(
-                                    aspectRatio: 4.5 / 3,
-                                    viewportFraction: 0.95,
-                                    enlargeCenterPage: false,
-                                    enableInfiniteScroll: false,
-                                    autoPlay: false,
+                      ),
+                      SizedBox(
+                        height: Mheight * 0.03,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: Mheight * 0.08,
+                            child: TextFormField(
+                              maxLines: null,
+                              minLines: null,
+                              expands: true,
+                              controller: titleController,
+                              maxLength: 80,
+                              autocorrect: false,
+                              scrollPadding:
+                                  EdgeInsets.symmetric(horizontal: 20),
+                              // onChanged: (value){
+                              //   titleController = value;
+
+                              validator: (value) {
+                                if (value!.length <= 20) {
+                                  return ("Title should be at least 20 Characters");
+                                }
+                              },
+                              // },
+
+                              decoration: const InputDecoration(
+                                  errorStyle: TextStyle(color: Colors.red),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
                                   ),
-                                  items: image
-                                      .map(
-                                        (item) => Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Stack(
-                                            children: [
-                                              Center(
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  child: Image.file(
-                                                    item,
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  hintText: "Title",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                  )),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: Mheight * 0.01,
+                          ),
+                          Container(
+                            height: Mheight * 0.17,
+                            child: TextFormField(
+                              maxLength: 500,
+                              maxLines: null,
+                              minLines: null,
+                              expands: true,
+                              controller: bodyController,
+                              autocorrect: false,
+                              decoration: const InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  hintText:
+                                      "Describe what you are talking about",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400,
+                                  )),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                                fontSize: 13,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Make Anonymous:",
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          ),
+                          Switch(
+                              // inactiveThumbColor: Colors.blue,
+                              activeTrackColor: Colors.pink,
+                              inactiveTrackColor: Colors.grey,
+                              activeColor: Colors.pink,
+                              value: makeAnonymous,
+                              onChanged: (value) {
+                                setState(() {
+                                  makeAnonymous = value;
+                                  value = !value;
+                                });
+                              }),
+                        ],
+                      ),
+                      SizedBox(
+                        height: Mheight * 0.02,
+                      ),
+                      image.isNotEmpty
+                          ? Container(
+                              height: Mheight * 0.28,
+                              child: CarouselSlider(
+                                options: CarouselOptions(
+                                  aspectRatio: 4.5 / 3,
+                                  viewportFraction: 0.95,
+                                  enlargeCenterPage: false,
+                                  enableInfiniteScroll: false,
+                                  autoPlay: false,
+                                ),
+                                items: image
+                                    .map(
+                                      (item) => Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Stack(
+                                          children: [
+                                            Center(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                child: Image.file(
+                                                  item,
+                                                  fit: BoxFit.cover,
                                                 ),
                                               ),
-                                              Align(
-                                                alignment: Alignment.topRight,
-                                                child: IconButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        image.remove(item);
-                                                      });
-                                                    },
-                                                    icon: const Icon(
-                                                      Icons.close,
-                                                      color: Colors.white,
-                                                      size: 40,
-                                                    )),
-                                              )
-                                            ],
-                                          ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.topRight,
+                                              child: IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      image.remove(item);
+                                                    });
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.close,
+                                                    color: Colors.white,
+                                                    size: 40,
+                                                  )),
+                                            )
+                                          ],
                                         ),
-                                      )
-                                      .toList(),
-                                ),
-                              )
-                            : InkWell(
-                                onTap: uploadImage,
-                                splashColor: Colors.white,
-                                child: Icon(
-                                  Icons.add_a_photo,
-                                  size: Mheight * 0.18,
-                                  color: Colors.white,
-                                ),
+                                      ),
+                                    )
+                                    .toList(),
                               ),
-                        if (image.isNotEmpty)
-                          Container(
-                            width: double.maxFinite,
-                            alignment: Alignment.bottomRight,
-                            child: InkWell(
+                            )
+                          : InkWell(
                               onTap: uploadImage,
                               splashColor: Colors.white,
-                              child: const Icon(
+                              child: Icon(
                                 Icons.add_a_photo,
-                                // Icons.add_a_photo,
-                                size: 30,
+                                size: Mheight * 0.18,
                                 color: Colors.white,
                               ),
                             ),
+                      if (image.isNotEmpty)
+                        Container(
+                          width: double.maxFinite,
+                          alignment: Alignment.bottomRight,
+                          child: InkWell(
+                            onTap: uploadImage,
+                            splashColor: Colors.white,
+                            child: const Icon(
+                              Icons.add_a_photo,
+                              // Icons.add_a_photo,
+                              size: 30,
+                              color: Colors.white,
+                            ),
                           ),
-                      ],
-                    ),
-                  );
-                }),
-            if (_posting)
-              Container(
-                color: Colors.black.withOpacity(0.7),
-                child: Center(
-                  child: Container(
-                    height: Mheight * 0.1,
-                    width: Mheight * 0.1,
-                    child: CircularProgressIndicator(
-                      color: Colors.orange,
-                      strokeWidth: 7,
-                    ),
+                        ),
+                    ],
+                  ),
+                );
+              }),
+          if (_posting)
+            Container(
+              color: Colors.black.withOpacity(0.7),
+              child: Center(
+                child: Container(
+                  height: Mheight * 0.1,
+                  width: Mheight * 0.1,
+                  child: CircularProgressIndicator(
+                    color: Colors.orange,
+                    strokeWidth: 7,
                   ),
                 ),
-              )
-          ],
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: Colors.orange,
-          onPressed: submitted,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          label: Container(
-            width: MWidth * 0.8,
-            // width: double.maxFinite,
-            alignment: Alignment.center,
-            // alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(
-                  Icons.send,
-                  color: Colors.black,
-                  size: 30,
-                ),
-                Text(
-                  "  Post",
-                  style: TextStyle(color: Colors.black, fontSize: 20),
-                ),
-              ],
-            ),
-          ),
-        ));
+              ),
+            )
+        ],
+      ),
+    );
   }
 
   Future<void> _pickImageCamera() async {
