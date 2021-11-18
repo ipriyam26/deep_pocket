@@ -9,6 +9,7 @@ import 'package:deep_pocket_1/screens/freecourse/freecourses_screen.dart';
 import 'package:deep_pocket_1/screens/internship/interships_screen.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notiboard_home.dart';
 import 'package:deep_pocket_1/screens/resources/resources_tab_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class mbutton {
@@ -69,13 +70,13 @@ class Menu extends StatelessWidget {
     final Mheight = MediaQuery.of(context).size.height;
     final Mwidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color(0xfff5f5dc),
+      backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
       body: SafeArea(
           child: GridView.builder(
               padding: EdgeInsets.symmetric(horizontal: Mwidth * 0.03),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 5,
-                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
                   crossAxisCount: 2,
                   childAspectRatio: 5 / 4.8),
               itemCount: menu.length,
@@ -129,22 +130,27 @@ class menuButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(25)),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25)),
                 child: CachedNetworkImage(
+                    fadeInDuration: const Duration(microseconds: 0),
+                    fadeOutDuration: const Duration(microseconds: 0),
                     placeholder: (context, url) => const SizedBox(
                         height: 50,
                         width: 50,
-                        child: CircularProgressIndicator()),
+                        child: CupertinoActivityIndicator()),
                     imageUrl: image,
                     height: Mheight * 0.165,
                     width: Mwidth * 0.46,
                     fit: BoxFit.fill),
               ),
-              const VerticalDivider(),
               AutoSizeText(
                 name,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 19,
+                    color: Colors.white),
                 minFontSize: 15,
                 maxFontSize: 20,
               )

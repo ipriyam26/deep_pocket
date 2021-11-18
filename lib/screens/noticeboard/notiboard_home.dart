@@ -159,7 +159,7 @@ class _noticeBoardState extends State<noticeBoard> {
             appBar: AppBar(
                 title: const Text("Noticeboard"),
                 actions: [
-                  if (usercontroller.instructor!
+                  if (usercontroller.specialAccess!
                       .contains(FirebaseAuth.instance.currentUser!.uid))
                     IconButton(
                         onPressed: () {

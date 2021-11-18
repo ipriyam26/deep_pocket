@@ -1,4 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/screens/event/event_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,7 +15,7 @@ class eventCard extends StatelessWidget {
     // required this.i,
   }) : super(key: key);
 
-  final event upcomingEvent;
+  final QueryDocumentSnapshot<Map<String, dynamic>> upcomingEvent;
   final MHeight;
 
   @override
@@ -34,7 +37,7 @@ class eventCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: NetworkImage(upcomingEvent.imgsrc),
+                image: NetworkImage(upcomingEvent['Image']),
               ),
             ),
             child: Column(
@@ -53,28 +56,37 @@ class eventCard extends StatelessWidget {
                             bottom: MediaQuery.of(context).size.width * 0.05),
                         height: MHeight * 0.7 * 0.6 * 0.15,
                         width: MediaQuery.of(context).size.width * 0.25 +
-                            (upcomingEvent.host.length - 2) *
+                            (upcomingEvent['HostImage'].length - 2) *
                                 MediaQuery.of(context).size.width *
                                 0.08,
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: upcomingEvent.host.length,
+                            itemCount: upcomingEvent['HostImage'].length,
                             itemBuilder: (context, i) => Align(
                                   child: Container(
-                                      width: MHeight * 0.7 * 0.6 * 0.14,
-                                      height: MHeight * 0.7 * 0.6 * 0.14,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          width: 2,
-                                          color: Colors.white,
+                                    width: MHeight * 0.7 * 0.6 * 0.14,
+                                    height: MHeight * 0.7 * 0.6 * 0.14,
+                                    child: ClipOval(
+                                      child: Container(
+                                        padding: EdgeInsets.all(2),
+                                        color: Colors.white,
+                                        child: ClipOval(
+                                          child: CachedNetworkImage(
+                                            fadeInDuration:
+                                                const Duration(microseconds: 0),
+                                            fadeOutDuration:
+                                                const Duration(microseconds: 2),
+                                            placeholder: (context, url) =>
+                                                const CupertinoActivityIndicator(),
+                                            imageUrl: upcomingEvent['HostImage']
+                                                    [i]
+                                                .toString(),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(
-                                              upcomingEvent.host[i].img),
-                                        ),
-                                      )),
+                                      ),
+                                    ),
+                                  ),
                                   widthFactor: 0.8,
                                 )),
                       ),
@@ -90,13 +102,20 @@ class eventCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              upcomingEvent.date.day.toString(),
+                              DateTime.parse(upcomingEvent['StartingDate']
+                                      .toDate()
+                                      .toString())
+                                  .day
+                                  .toString(),
                               style: const TextStyle(
                                   fontSize: 28, fontWeight: FontWeight.bold),
                             ),
                             Text(
                               DateFormat('MMMM', 'en_US')
-                                  .format(upcomingEvent.date)
+                                  .format(DateTime.parse(
+                                      upcomingEvent['StartingDate']
+                                          .toDate()
+                                          .toString()))
                                   .substring(0, 3)
                                   .toUpperCase(),
                               style: const TextStyle(
@@ -120,14 +139,14 @@ class eventCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            upcomingEvent.Name,
+                            upcomingEvent['Org'],
                             style: const TextStyle(
                                 fontSize: 17,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w400),
                           ),
                           Text(
-                            upcomingEvent.title,
+                            upcomingEvent['Title'],
                             style: const TextStyle(
                                 fontSize: 24,
                                 color: Colors.white,
@@ -135,10 +154,6 @@ class eventCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // IconButton(
-                      //     onPressed: () {},
-                      //     icon: const Icon(Icons.favorite_outline,
-                      //         size: 35, color: Colors.redAccent))
                     ],
                   ),
                 )

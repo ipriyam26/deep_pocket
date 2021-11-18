@@ -43,248 +43,281 @@ class postPage extends StatelessWidget {
     final MapArgms =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
-    final document =
-        MapArgms['document'] as QueryDocumentSnapshot<Map<String, dynamic>>;
+    final documentid = MapArgms['documentid'] as String;
     final loggeinUser = MapArgms['user'];
     // getLoggedUser();
-    final id = document.id;
-    final ctime = document.data()['Time'];
-
-    final dtime = DateTime.parse(ctime.toDate().toString());
-
-    final time = DateFormat.jm().format(dtime);
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              postCardCall(
-                  MHeight: MHeight,
-                  MWidth: MWidth,
-                  document: document,
-                  time: time),
-              Container(
-                padding: EdgeInsets.all(MWidth * 0.01),
-                child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection("users")
-                        .doc(user!.uid)
-                        .snapshots(),
-                    builder: (context,
-                        AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
-                            snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      var userdata = snapshot.data!.data();
+        child: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("Posts")
+                .doc(documentid)
+                .snapshots(),
+            builder: (context,
+                AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
+                    snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.orange,
+                  ),
+                );
+              }
+              final document = snapshot.data;
+              final id = document!.id;
+              final ctime = document.data()!['Time'];
 
-                      return Column(
-                        children: [
-                          UserComment(
-                              MWidth: MWidth,
-                              userdata: userdata,
-                              MHeight: MHeight,
-                              commentText: commentText,
-                              id: id,
-                              document: document),
-                          StreamBuilder(
-                              stream: FirebaseFirestore.instance
-                                  .collection("Comments")
-                                  .where('PostID', isEqualTo: id)
-                                  .snapshots(),
-                              builder: (context,
-                                  AsyncSnapshot<
-                                          QuerySnapshot<Map<String, dynamic>>>
-                                      snapshot) {
-                                if (!snapshot.hasData) {
-                                  return Center();
-                                }
-                                return Container(
-                                  // height: MHeight,
-                                  child: ListView(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      padding: EdgeInsets.zero,
-                                      children: snapshot.data!.docs
-                                          .map<Widget>((comment) {
-                                        final dtime = DateTime.parse(comment
-                                            .data()['Time']
-                                            .toDate()
-                                            .toString());
+              final dtime = DateTime.parse(ctime.toDate().toString());
 
-                                        final time =
-                                            DateFormat.jm().format(dtime);
-                                        return Card(
-                                          elevation: 0,
-                                          child: Container(
-                                            // color: Colors.amber,
+              final time = DateFormat.jm().format(dtime);
+              return SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    postCardCall(
+                        MHeight: MHeight,
+                        MWidth: MWidth,
+                        document: document,
+                        time: time),
+                    Container(
+                      padding: EdgeInsets.all(MWidth * 0.01),
+                      child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(user!.uid)
+                              .snapshots(),
+                          builder: (context,
+                              AsyncSnapshot<
+                                      DocumentSnapshot<Map<String, dynamic>>>
+                                  snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            var userdata = snapshot.data!.data();
 
-                                            // padding: EdgeInsets.symmetric(horizontal: MWidth * 0.05),
-                                            child: GetBuilder(
-                                                init: userRoleController(),
-                                                builder: (userRoleController
-                                                    roleController) {
-                                                  return ListTile(
-                                                    // horizontalTitleGap: 1,
-                                                    minVerticalPadding: 0,
+                            return Column(
+                              children: [
+                                UserComment(
+                                    MWidth: MWidth,
+                                    userdata: userdata,
+                                    MHeight: MHeight,
+                                    commentText: commentText,
+                                    id: id,
+                                    document: document),
+                                StreamBuilder(
+                                    stream: FirebaseFirestore.instance
+                                        .collection("Comments")
+                                        .where('PostID', isEqualTo: id)
+                                        .snapshots(),
+                                    builder: (context,
+                                        AsyncSnapshot<
+                                                QuerySnapshot<
+                                                    Map<String, dynamic>>>
+                                            snapshot) {
+                                      if (!snapshot.hasData) {
+                                        return Center();
+                                      }
+                                      return Container(
+                                        // height: MHeight,
+                                        child: ListView(
+                                            shrinkWrap: true,
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            padding: EdgeInsets.zero,
+                                            children: snapshot.data!.docs
+                                                .map<Widget>((comment) {
+                                              final dtime = DateTime.parse(
+                                                  comment
+                                                      .data()['Time']
+                                                      .toDate()
+                                                      .toString());
 
-                                                    leading: ClipOval(
-                                                      child: Container(
-                                                        padding:
-                                                            EdgeInsets.all(2),
-                                                        color: Colors.black,
-                                                        child: ClipOval(
-                                                          child: Container(
-                                                            height:
-                                                                MWidth * 0.13,
-                                                            width:
-                                                                MWidth * 0.13,
-                                                            color: Colors.grey,
-                                                            child:
-                                                                CachedNetworkImage(
-                                                              placeholder: (context,
-                                                                      url) =>
-                                                                  Container(
-                                                                      child: Image
-                                                                          .asset(
-                                                                              'assets/person.png')),
-                                                              imageUrl: comment
-                                                                      .data()[
-                                                                  'AuthorPic'],
-                                                              fit: BoxFit.cover,
+                                              final time =
+                                                  DateFormat.jm().format(dtime);
+                                              return Card(
+                                                elevation: 0,
+                                                child: Container(
+                                                  // color: Colors.amber,
+
+                                                  // padding: EdgeInsets.symmetric(horizontal: MWidth * 0.05),
+                                                  child: GetBuilder(
+                                                      init:
+                                                          userRoleController(),
+                                                      builder:
+                                                          (userRoleController
+                                                              roleController) {
+                                                        return ListTile(
+                                                          // horizontalTitleGap: 1,
+                                                          minVerticalPadding: 0,
+
+                                                          leading: ClipOval(
+                                                            child: Container(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(2),
+                                                              color:
+                                                                  Colors.black,
+                                                              child: ClipOval(
+                                                                child:
+                                                                    Container(
+                                                                  height:
+                                                                      MWidth *
+                                                                          0.13,
+                                                                  width:
+                                                                      MWidth *
+                                                                          0.13,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  child:
+                                                                      CachedNetworkImage(
+                                                                    placeholder: (context,
+                                                                            url) =>
+                                                                        Container(
+                                                                            child:
+                                                                                Image.asset('assets/person.png')),
+                                                                    imageUrl: comment
+                                                                            .data()[
+                                                                        'AuthorPic'],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ),
-                                                    ),
 
-                                                    trailing: (comment.data()[
-                                                                    'AuthorID'] ==
-                                                                userdata![
-                                                                    'uid']) ||
-                                                            (roleController
-                                                                .specialAccess!
-                                                                .contains(
-                                                                    user!.uid))
-                                                        ? PopupMenuButton(
-                                                            icon: const Icon(
-                                                                Icons
-                                                                    .more_vert),
-                                                            onSelected: (String
-                                                                result) async {
-                                                              await FirebaseFirestore
-                                                                  .instance
-                                                                  .collection(
-                                                                      "Comments")
-                                                                  .doc(comment
-                                                                      .id)
-                                                                  .delete();
-                                                              await FirebaseFirestore
-                                                                  .instance
-                                                                  .collection(
-                                                                      "Posts")
-                                                                  .doc(comment
-                                                                          .data()[
-                                                                      "PostID"])
-                                                                  .update({
-                                                                "Comments":
-                                                                    document.data()[
-                                                                            'Comments'] -
-                                                                        1
-                                                              });
-                                                            },
-                                                            itemBuilder:
-                                                                (BuildContext
-                                                                        context) =>
-                                                                    [
-                                                              PopupMenuItem(
-                                                                value: "Delete",
-                                                                child: TextButton
-                                                                    .icon(
-                                                                        onPressed:
-                                                                            null,
-                                                                        icon:
-                                                                            const Icon(
-                                                                          Icons
-                                                                              .delete_outline,
-                                                                          color:
-                                                                              Colors.red,
-                                                                        ),
-                                                                        label:
-                                                                            const Text(
-                                                                          "Delete",
-                                                                          style:
-                                                                              TextStyle(color: Colors.black),
-                                                                        )),
+                                                          trailing: (comment.data()[
+                                                                          'AuthorID'] ==
+                                                                      userdata![
+                                                                          'uid']) ||
+                                                                  (roleController
+                                                                      .specialAccess!
+                                                                      .contains(
+                                                                          user!
+                                                                              .uid))
+                                                              ? deleteComment(
+                                                                  comment:
+                                                                      comment,
+                                                                  document:
+                                                                      document,
+                                                                )
+                                                              : SizedBox(
+                                                                  width:
+                                                                      MWidth *
+                                                                          0.05,
+                                                                ),
+                                                          title: Row(
+                                                            children: [
+                                                              Text(
+                                                                comment
+                                                                    .data()[
+                                                                        'AuthorName']
+                                                                    .toString()
+                                                                    .split(
+                                                                        " ")[0],
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Color(
+                                                                      0xff36454f),
+                                                                ),
                                                               ),
+                                                              Text(
+                                                                "   " + time,
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Color(
+                                                                      0xff36454f),
+                                                                ),
+                                                              )
                                                             ],
-                                                          )
-                                                        : SizedBox(
-                                                            width:
-                                                                MWidth * 0.05,
                                                           ),
-                                                    title: Row(
-                                                      children: [
-                                                        Text(
-                                                          comment
-                                                              .data()[
-                                                                  'AuthorName']
-                                                              .toString()
-                                                              .split(" ")[0],
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Color(
-                                                                0xff36454f),
+                                                          // horizontalTitleGap: 0,
+                                                          subtitle:
+                                                              ReadMoreText(
+                                                            comment.data()[
+                                                                'CommentText'],
+                                                            trimLines: 2,
+                                                            colorClickableText:
+                                                                Colors.pink,
+                                                            trimMode:
+                                                                TrimMode.Line,
+                                                            // trimCollapsedText: '..Read More',
+                                                            style:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        14),
+                                                            trimExpandedText:
+                                                                ' Less',
                                                           ),
-                                                        ),
-                                                        Text(
-                                                          "   " + time,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 12,
-                                                            color: Color(
-                                                                0xff36454f),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    // horizontalTitleGap: 0,
-                                                    subtitle: ReadMoreText(
-                                                      comment.data()[
-                                                          'CommentText'],
-                                                      trimLines: 2,
-                                                      colorClickableText:
-                                                          Colors.pink,
-                                                      trimMode: TrimMode.Line,
-                                                      // trimCollapsedText: '..Read More',
-                                                      style: const TextStyle(
-                                                          fontSize: 14),
-                                                      trimExpandedText: ' Less',
-                                                    ),
 
-                                                    isThreeLine: true,
-                                                  );
-                                                }),
-                                          ),
-                                        );
-                                      }).toList()),
-                                );
-                              }),
-                        ],
-                      );
-                    }),
-              )
-            ],
-          ),
-        ),
+                                                          isThreeLine: true,
+                                                        );
+                                                      }),
+                                                ),
+                                              );
+                                            }).toList()),
+                                      );
+                                    }),
+                              ],
+                            );
+                          }),
+                    )
+                  ],
+                ),
+              );
+            }),
       ),
+    );
+  }
+}
+
+class deleteComment extends StatelessWidget {
+  const deleteComment({
+    Key? key,
+    required this.comment,
+    required this.document,
+  }) : super(key: key);
+
+  final QueryDocumentSnapshot<Map<String, dynamic>> comment;
+  final DocumentSnapshot<Map<String, dynamic>>? document;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+      icon: const Icon(Icons.more_vert),
+      onSelected: (String result) async {
+        await FirebaseFirestore.instance
+            .collection("Comments")
+            .doc(comment.id)
+            .delete();
+        await FirebaseFirestore.instance
+            .collection("Posts")
+            .doc(comment.data()["PostID"])
+            .update({"Comments": document!.data()!['Comments'] - 1});
+      },
+      itemBuilder: (BuildContext context) => [
+        PopupMenuItem(
+          value: "Delete",
+          child: TextButton.icon(
+              onPressed: null,
+              icon: const Icon(
+                Icons.delete_outline,
+                color: Colors.red,
+              ),
+              label: const Text(
+                "Delete",
+                style: TextStyle(color: Colors.black),
+              )),
+        ),
+      ],
     );
   }
 }
@@ -305,10 +338,12 @@ class UserComment extends StatelessWidget {
   final double MHeight;
   final TextEditingController commentText;
   final String id;
-  final QueryDocumentSnapshot<Map<String, dynamic>> document;
+  final DocumentSnapshot<Map<String, dynamic>>? document;
 
   @override
   Widget build(BuildContext context) {
+    int commentNo = document!.data()!['Comments'];
+
     return Container(
       // color: Colors.amber,
       padding: EdgeInsets.symmetric(horizontal: MWidth * 0.02),
@@ -348,7 +383,7 @@ class UserComment extends StatelessWidget {
               scrollPadding: EdgeInsets.zero,
               minLines: null,
               onSubmitted: (value) async {
-                if (value.length > 5) {
+                if (value.length > 2) {
                   await FirebaseFirestore.instance.collection("Comments").add({
                     'AuthorID': userdata!['uid'],
                     'PostID': id,
@@ -358,15 +393,16 @@ class UserComment extends StatelessWidget {
                     'CommentText': value,
                     'Likes': 0
                   });
+                  commentNo += 1;
                   await FirebaseFirestore.instance
                       .collection("Posts")
                       .doc(id)
-                      .update({'Comments': document.data()['Comments'] + 1});
+                      .update({'Comments': commentNo});
                   commentText.clear();
                   Fluttertoast.showToast(msg: "Comment posted!!!");
                 } else {
                   Fluttertoast.showToast(
-                      msg: "Comment too-short atleast 5 characters");
+                      msg: "Comment too-short atleast 2 characters");
                 }
               },
               textInputAction: TextInputAction.done,
@@ -395,7 +431,7 @@ class postCardCall extends StatelessWidget {
 
   final double MHeight;
   final double MWidth;
-  final QueryDocumentSnapshot<Map<String, dynamic>> document;
+  final DocumentSnapshot<Map<String, dynamic>>? document;
   final String time;
 
   @override
@@ -403,23 +439,23 @@ class postCardCall extends StatelessWidget {
     return Hero(
       tag: "xcross",
       child: postCard(
-          Anonymous: document.data()['Anonymous'] ?? false,
-          AuthorUID: document.data()['AuthorUID'],
+          Anonymous: document!.data()!['Anonymous'] ?? false,
+          AuthorUID: document!.data()!['AuthorUID'],
           NotinFeed: true,
           MHeight: MHeight,
           MWidth: MWidth,
-          imagesList: document.data()['ImageLinks'],
-          id: document.id,
-          LikedBy: document.data()['LikedBy'],
-          name: document.data()['AuthorName'],
-          AuthorImage: document.data()['AuthorProfilePic'],
-          title: document.data()['Title'],
-          body: document.data()['Body'],
+          imagesList: document!.data()!['ImageLinks'],
+          id: document!.id,
+          LikedBy: document!.data()!['LikedBy'],
+          name: document!.data()!['AuthorName'],
+          AuthorImage: document!.data()!['AuthorProfilePic'],
+          title: document!.data()!['Title'],
+          body: document!.data()!['Body'],
           time: time,
-          likes: document.data()['Likes'],
-          comments: document.data()['Comments'],
-          date: document.data()['Date'],
-          tag: document.data()['Tag']),
+          likes: document!.data()!['Likes'],
+          comments: document!.data()!['Comments'],
+          date: document!.data()!['Date'],
+          tag: document!.data()!['Tag']),
     );
   }
 }

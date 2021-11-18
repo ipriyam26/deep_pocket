@@ -65,6 +65,14 @@ class _profileScreenState extends State<profileScreen> {
                           child: const CupertinoActivityIndicator(),
                         ));
                       }
+                      if (!snapshot.hasData) {
+                        return Center(
+                            child: Container(
+                          height: 50,
+                          width: 50,
+                          child: const CupertinoActivityIndicator(),
+                        ));
+                      }
 
                       var userdata = snapshot.data!.data();
                       return SingleChildScrollView(
@@ -80,10 +88,13 @@ class _profileScreenState extends State<profileScreen> {
                               child: Column(
                                 children: [
                                   userImageName(
-                                    name: userdata!['Name'],
-                                    Image: userdata['Image'],
-                                    enrollmentNo: userdata["enrollmentNo"],
-                                    college: userdata['CollegeName'],
+                                    name: userdata!['Name'] ?? "Add Name",
+                                    Image: userdata['Image'] ??
+                                        "https://imgur.com/a/8eGSOON",
+                                    enrollmentNo: userdata["enrollmentNo"] ??
+                                        "Add Enrollment",
+                                    college: userdata['CollegeName'] ??
+                                        "Add College",
                                   ),
                                   editprofile(),
                                 ],

@@ -119,6 +119,10 @@ class _feedScreenState extends State<feedScreen> {
             //     child: Text("Admin")),
             TextButton(
                 onPressed: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs.clear();
+
                   await FirebaseAuth.instance.signOut();
                   runApp(const MaterialApp(
                     home: LoginScreen(),
@@ -160,48 +164,50 @@ class _feedScreenState extends State<feedScreen> {
                   child: ListView.builder(
                       controller: _scrollController,
                       itemCount: snapshot.data!.docs.length + 1,
-                      itemBuilder: (context, index) => index ==
-                              snapshot.data!.docs.length
-                          ? const CupertinoActivityIndicator()
-                          : Center(
-                              child: InkWell(
-                                splashColor: Colors.black,
-                                onTap: () {
-                                  Navigator.pushNamed(context, postPage.route,
-                                      arguments: {
-                                        'document': snapshot.data!.docs[index],
-                                        'user': loggedInuser,
-                                      });
-                                },
-                                child: Container(
-                                    child: postCard(
-                                        AuthorUID: snapshot.data!.docs[index]
-                                            .data()['AuthorUID'],
-                                        MHeight: MHeight,
-                                        Anonymous: snapshot.data!.docs[index]
-                                                .data()['Anonymous'] ??
-                                            false,
-                                        NotinFeed: false,
-                                        MWidth: MWidth,
-                                        imagesList: snapshot.data!.docs[index]
-                                            .data()['ImageLinks'],
-                                        id: snapshot.data!.docs[index].id,
-                                        LikedBy: snapshot.data!.docs[index]
-                                            .data()['LikedBy'],
-                                        name: snapshot.data!.docs[index]
-                                            .data()['AuthorName'],
-                                        AuthorImage: snapshot.data!.docs[index]
-                                            .data()['AuthorProfilePic'],
-                                        title: snapshot.data!.docs[index]
-                                            .data()['Title'],
-                                        body: snapshot.data!.docs[index].data()['Body'],
-                                        time: DateFormat.jm().format(DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString())),
-                                        likes: snapshot.data!.docs[index].data()['Likes'],
-                                        comments: snapshot.data!.docs[index].data()['Comments'],
-                                        date: snapshot.data!.docs[index].data()['Date'],
-                                        tag: snapshot.data!.docs[index].data()['Tag'])),
-                              ),
-                            )));
+                      itemBuilder: (context, index) =>
+                          index == snapshot.data!.docs.length
+                              ? const CupertinoActivityIndicator()
+                              : Center(
+                                  child: InkWell(
+                                    splashColor: Colors.black,
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, postPage.route,
+                                          arguments: {
+                                            'documentid':
+                                                snapshot.data!.docs[index].id,
+                                            'user': loggedInuser,
+                                          });
+                                    },
+                                    child: Container(
+                                        child: postCard(
+                                            AuthorUID: snapshot.data!.docs[index]
+                                                .data()['AuthorUID'],
+                                            MHeight: MHeight,
+                                            Anonymous: snapshot.data!.docs[index]
+                                                    .data()['Anonymous'] ??
+                                                false,
+                                            NotinFeed: false,
+                                            MWidth: MWidth,
+                                            imagesList: snapshot.data!.docs[index]
+                                                .data()['ImageLinks'],
+                                            id: snapshot.data!.docs[index].id,
+                                            LikedBy: snapshot.data!.docs[index]
+                                                .data()['LikedBy'],
+                                            name: snapshot.data!.docs[index]
+                                                .data()['AuthorName'],
+                                            AuthorImage: snapshot.data!.docs[index]
+                                                .data()['AuthorProfilePic'],
+                                            title: snapshot.data!.docs[index]
+                                                .data()['Title'],
+                                            body: snapshot.data!.docs[index].data()['Body'],
+                                            time: DateFormat.jm().format(DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString())),
+                                            likes: snapshot.data!.docs[index].data()['Likes'],
+                                            comments: snapshot.data!.docs[index].data()['Comments'],
+                                            date: snapshot.data!.docs[index].data()['Date'],
+                                            tag: snapshot.data!.docs[index].data()['Tag'])),
+                                  ),
+                                )));
             }));
   }
 }

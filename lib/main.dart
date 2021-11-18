@@ -1,3 +1,4 @@
+import 'package:deep_pocket_1/screens/event/create_event.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notice_create.dart';
 import 'package:deep_pocket_1/screens/post/edit_post.dart';
 import 'package:deep_pocket_1/screens/profile/edit_profile.dart';
@@ -65,7 +66,7 @@ class MyApp extends StatelessWidget {
                 selectionColor: Colors.yellow,
                 selectionHandleColor: Colors.blue),
           ),
-          home: TabsScreen(),
+          home: test_fire(),
           debugShowCheckedModeBanner: false,
           routes: {
             userInput.route: (ctx) => userInput(),
@@ -92,7 +93,8 @@ class MyApp extends StatelessWidget {
             editProfile.route: (ctx) => editProfile(),
             postPage.route: (ctx) => postPage(),
             editPost.route: (ctx) => editPost(),
-            createNotice.route: (ctx) => createNotice()
+            createNotice.route: (ctx) => createNotice(),
+            createEvent.route: (ctx) => createEvent()
           }),
     );
   }

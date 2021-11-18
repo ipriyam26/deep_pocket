@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/screens/event/mock_event.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -10,12 +13,13 @@ class eventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MSize = MediaQuery.of(context).size;
-    final details = ModalRoute.of(context)!.settings.arguments as event;
+    final details = ModalRoute.of(context)!.settings.arguments
+        as QueryDocumentSnapshot<Map<String, dynamic>>;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(27, 18, 18, 1),
       appBar: AppBar(
           title: Text(
-            details.title,
+            details['Title'],
           ),
           backgroundColor: Color.fromRGBO(16, 15, 1, 1)),
       body: Column(
@@ -23,7 +27,7 @@ class eventScreen extends StatelessWidget {
           Stack(
             children: [
               Image.network(
-                details.imgsrc,
+                details['Image'],
                 height: MSize.height * 0.7 * 0.6,
                 width: MSize.width,
                 fit: BoxFit.fill,
@@ -53,7 +57,7 @@ class eventScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        details.Name,
+                        details['Org'],
                         style: const TextStyle(
                             fontSize: 17,
                             color: Colors.white,
@@ -63,7 +67,7 @@ class eventScreen extends StatelessWidget {
                         height: MSize.height * 0.01,
                       ),
                       Text(
-                        details.title,
+                        details['Title'],
                         style: const TextStyle(
                             fontSize: 35,
                             color: Colors.white,
@@ -113,7 +117,7 @@ class aboutEvent extends StatelessWidget {
   }) : super(key: key);
 
   final Size MSize;
-  final event details;
+  final QueryDocumentSnapshot<Map<String, dynamic>> details;
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +141,7 @@ class aboutEvent extends StatelessWidget {
           SizedBox(
             height: MSize.height * 0.7 * 0.6 * 0.04,
           ),
-          Text(details.description,
+          Text(details['Description'],
               style: const TextStyle(
                   fontSize: 17,
                   color: Colors.white,
@@ -156,7 +160,7 @@ class dateHost extends StatelessWidget {
   }) : super(key: key);
 
   final Size MSize;
-  final event details;
+  final QueryDocumentSnapshot<Map<String, dynamic>> details;
 
   @override
   Widget build(BuildContext context) {
@@ -171,13 +175,18 @@ class dateHost extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(DateFormat('d MMM y').format(details.date),
+              Text(
+                  DateFormat('d MMM y').format(DateTime.parse(
+                      details['StartingDate'].toDate().toString())),
                   style: const TextStyle(
                       fontSize: 23,
                       color: Colors.white,
                       fontWeight: FontWeight.w300)),
-              if (details.endDate != null)
-                Text(" - " + DateFormat('d MMM y').format(details.endDate!),
+              if (details['EndingDate'] != null)
+                Text(
+                    " - " +
+                        DateFormat('d MMM y').format(DateTime.parse(
+                            details['EndingDate'].toDate().toString())),
                     style: const TextStyle(
                         fontSize: 23,
                         color: Colors.white,
@@ -185,8 +194,12 @@ class dateHost extends StatelessWidget {
             ],
           ),
           SizedBox(height: MSize.height * 0.01),
-          if (DateFormat('EEEE').format(details.date) == 'Saturday' ||
-              DateFormat('EEEE').format(details.date) == 'Sunday')
+          if (DateFormat('EEEE').format(DateTime.parse(
+                      details['StartingDate'].toDate().toString())) ==
+                  'Saturday' ||
+              DateFormat('EEEE').format(DateTime.parse(
+                      details['StartingDate'].toDate().toString())) ==
+                  'Sunday')
             const SizedBox(
               width: double.maxFinite,
               child: Text('Weekend',
@@ -222,28 +235,37 @@ class dateHost extends StatelessWidget {
             // color: Colors.pink,
             height: MSize.height * 0.2,
             child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: details.host.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: details['HostImage'].length,
                 itemBuilder: (context, i) => ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Container(
                         height: MSize.height * 0.055,
                         width: MSize.height * 0.055,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          image: DecorationImage(
-                            fit: BoxFit.scaleDown,
-                            image: NetworkImage(details.host[i].img),
+                        child: ClipOval(
+                          child: Container(
+                            padding: EdgeInsets.all(2),
+                            color: Colors.white,
+                            child: ClipOval(
+                              child: CachedNetworkImage(
+                                fadeInDuration: const Duration(microseconds: 0),
+                                fadeOutDuration:
+                                    const Duration(microseconds: 2),
+                                placeholder: (context, url) =>
+                                    const CupertinoActivityIndicator(),
+                                imageUrl: details['HostImage'][i].toString(),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                      title: Text(details.host[i].Name,
+                      title: Text(details['HostName'][i],
                           style: const TextStyle(
                               // fontSize: 17,
                               color: Colors.white,
                               fontWeight: FontWeight.w400)),
-                      subtitle: Text(details.host[i].designation,
+                      subtitle: Text(details['HostRole'][i],
                           style: const TextStyle(
                               // fontSize: 17,
                               color: Colors.grey,

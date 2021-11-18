@@ -165,7 +165,8 @@ class _RecentAboutState extends State<RecentAbout> {
                                 onTap: () {
                                   Navigator.pushNamed(context, postPage.route,
                                       arguments: {
-                                        'document': snapshot.data!.docs[index],
+                                        'documentid':
+                                            snapshot.data!.docs[index].id,
                                         'user': widget.userdata,
                                       });
                                 },

@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deep_pocket_1/screens/faculty/faculty_page.dart';
 import 'package:deep_pocket_1/screens/faculty/faculty_screen.dart';
 import 'package:deep_pocket_1/screens/faculty/school_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'faculty_model.dart';
@@ -232,13 +233,15 @@ class deansCard extends StatelessWidget {
                                     height: MWidth * 0.2,
                                     width: MWidth * 0.2,
                                     child: CachedNetworkImage(
+                                      fadeInDuration:
+                                          const Duration(microseconds: 0),
+                                      fadeOutDuration:
+                                          const Duration(microseconds: 0),
                                       placeholder: (context, url) => Container(
                                           height: MWidth * 0.1,
                                           width: MWidth * 0.1,
                                           child:
-                                              const CircularProgressIndicator(
-                                            color: Colors.grey,
-                                          )),
+                                              const CupertinoActivityIndicator()),
                                       imageUrl: head[i].Image,
                                     ),
                                   ),
@@ -311,9 +314,11 @@ class cardList extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: CachedNetworkImage(
+                    fadeInDuration: const Duration(microseconds: 0),
+                    fadeOutDuration: const Duration(microseconds: 0),
                     placeholder: (context, url) => Container(
                         height: MHeight * 0.02,
-                        child: const CircularProgressIndicator()),
+                        child: const CupertinoActivityIndicator()),
                     imageUrl: sch.Image,
                   ),
                 )),
