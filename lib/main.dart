@@ -66,12 +66,12 @@ class MyApp extends StatelessWidget {
                 selectionColor: Colors.yellow,
                 selectionHandleColor: Colors.blue),
           ),
-          home: test_fire(),
+          home: TabsScreen(),
           debugShowCheckedModeBanner: false,
           routes: {
             userInput.route: (ctx) => userInput(),
             feedScreen.route: (ctx) => feedScreen(),
-            verification.route: (ctx) => verification(),
+
             clubsScreen.route: (ctx) => clubsScreen(),
             // eventSreen.route: (ctx) => eventSreen(),
             facultyScreen.route: (ctx) => facultyScreen(),

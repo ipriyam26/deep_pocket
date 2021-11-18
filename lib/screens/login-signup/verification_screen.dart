@@ -1,18 +1,15 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_pocket_1/main.dart';
-import 'package:deep_pocket_1/models/api_integration_imgur.dart';
-import 'package:deep_pocket_1/models/user_model.dart';
-import 'package:deep_pocket_1/tabs_screen.dart';
 import 'package:deep_pocket_1/screens/profile/update_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class verification extends StatefulWidget {
-  verification({Key? key}) : super(key: key);
+  final String password;
+
+  verification({Key? key, required this.password}) : super(key: key);
   static const route = 'verfication-screen';
   @override
   _verificationState createState() => _verificationState();
@@ -29,7 +26,7 @@ class _verificationState extends State<verification> {
     user = auth.currentUser;
     user!.sendEmailVerification();
     Timer.periodic(const Duration(seconds: 2), (timer) {
-      checkVerification();
+      checkVerification(password: widget.password);
     });
     super.initState();
   }
@@ -90,10 +87,15 @@ class _verificationState extends State<verification> {
     );
   }
 
-  Future<void> checkVerification() async {
+  Future<void> checkVerification({required String password}) async {
     user = auth.currentUser;
     await user!.reload();
     if (user!.emailVerified) {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+
+      localStorage.setString('email', user!.email!);
+      localStorage.setString('password', password);
+
       Navigator.pushAndRemoveUntil(
           (context),
           MaterialPageRoute(builder: (context) => UpdateProfileScreen()),

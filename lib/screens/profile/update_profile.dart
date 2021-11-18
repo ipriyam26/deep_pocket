@@ -202,109 +202,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             borderRadius: BorderRadius.circular(20),
           ),
         ));
-
-    //email field
-    // final emailField = TextFormField(
-    //     autofocus: false,
-    //     style: TextStyle(color: Colors.white),
-    //     controller: emailEditingController,
-    //     keyboardType: TextInputType.emailAddress,
-    //     validator: (value) {
-    //       if (value!.isEmpty) {
-    //         return ("Please Enter Your Email");
-    //       }
-    //       // reg expression for email validation
-    //       if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-    //           .hasMatch(value)) {
-    //         return ("Please Enter a valid email");
-    //       }
-    //       return null;
-    //     },
-    //     onSaved: (value) {
-    //       emailEditingController.text = value!;
-    //     },
-    //     textInputAction: TextInputAction.next,
-    //     decoration: InputDecoration(
-    //       hintStyle: TextStyle(color: Colors.white),
-    //       prefixIcon: Icon(
-    //         Icons.mail,
-    //         color: Colors.white,
-    //       ),
-    //       filled: true,
-    //       fillColor: Colors.black,
-    //       contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-    //       hintText: "Email",
-    //       border: OutlineInputBorder(
-    //         borderRadius: BorderRadius.circular(20),
-    //       ),
-    //     ));
-
-    // //password field
-    // final passwordField = TextFormField(
-    //     autofocus: false,
-    //     controller: passwordEditingController,
-    //     style: TextStyle(color: Colors.white),
-    //     obscureText: true,
-    //     validator: (value) {
-    //       RegExp regex =  RegExp(r'^.{6,}$');
-    //       if (value!.isEmpty) {
-    //         return ("Password is required for login");
-    //       }
-    //       if (!regex.hasMatch(value)) {
-    //         return ("Enter Valid Password(Min. 6 Character)");
-    //       }
-    //     },
-    //     onSaved: (value) {
-    //       passwordEditingController.text = value!;
-    //     },
-    //     textInputAction: TextInputAction.next,
-    //     decoration: InputDecoration(
-    //       hintStyle: TextStyle(color: Colors.white),
-    //       prefixIcon: Icon(
-    //         Icons.vpn_key,
-    //         color: Colors.white,
-    //       ),
-    //       filled: true,
-    //       fillColor: Colors.black,
-    //       contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-    //       hintText: "Password",
-    //       border: OutlineInputBorder(
-    //         borderRadius: BorderRadius.circular(20),
-    //       ),
-    //     ));
-
-    //confirm password field
-    // final confirmPasswordField = TextFormField(
-    //     autofocus: false,
-    //     controller: confirmPasswordEditingController,
-    //     style: TextStyle(color: Colors.white),
-    //     obscureText: true,
-    //     validator: (value) {
-    //       if (confirmPasswordEditingController.text !=
-    //           passwordEditingController.text) {
-    //         return "Password don't match";
-    //       }
-    //       return null;
-    //     },
-    //     onSaved: (value) {
-    //       confirmPasswordEditingController.text = value!;
-    //     },
-    //     textInputAction: TextInputAction.done,
-    //     decoration: InputDecoration(
-    //       hintStyle: TextStyle(color: Colors.white),
-    //       prefixIcon: Icon(
-    //         Icons.vpn_key,
-    //         color: Colors.white,
-    //       ),
-    //       filled: true,
-    //       fillColor: Colors.black,
-    //       contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-    //       hintText: "Confirm Password",
-    //       border: OutlineInputBorder(
-    //         borderRadius: BorderRadius.circular(20),
-    //       ),
-    //     ));
-
     final profileImageU = Stack(
       alignment: Alignment.bottomRight,
       children: [
@@ -448,25 +345,30 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       isLoading = true;
     });
     UserModel userModel = UserModel();
-    var link = await API_Manager().postImage(imageLink!);
+    String? link;
+    if (imageLink != null) {
+      link = await API_Manager().postImage(imageLink!);
+    }
 
     // writing all the values
     userModel.email = user!.email;
     userModel.uid = user.uid;
     userModel.Name = NameEditingController.text;
-    userModel.Image = link;
+    userModel.Image = link ??
+        "https://i.dlpng.com/static/png/5780540-person-icon-person-icon-silhouette-transparent-png-370x370-icon-person-820_450_preview.png";
+    ;
     userModel.CollegeName = collegeEditingController.text;
     userModel.enrollmentNo = enrollmentNoEditingController.text;
 
     await firebaseFirestore
         .collection("users")
         .doc(user.uid)
-        .set(userModel.toMap());
+        .update(userModel.toMap());
     Fluttertoast.showToast(msg: "Profile Updated successfully :) ");
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => TabsScreen()),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
         (route) => false);
   }
 }

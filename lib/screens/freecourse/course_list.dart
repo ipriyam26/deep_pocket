@@ -1,7 +1,11 @@
+import 'package:deep_pocket_1/get_course.dart';
+import 'package:deep_pocket_1/models/course_read.dart';
+import 'package:deep_pocket_1/read_data.dart';
 import 'package:flutter/material.dart';
 
 import 'package:deep_pocket_1/screens/freecourse/freecourse_mock.dart';
 import 'package:deep_pocket_1/screens/freecourse/freecourse_widgets.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 
 class courseList extends StatelessWidget {
   static const route = "/freeCources/courseList";
@@ -25,18 +29,23 @@ class courselistWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MSize = MediaQuery.of(context).size;
-    final fieldName = ModalRoute.of(context)!.settings.arguments;
-    final courses = mockCourse()
-        .mockcourse
-        .where((element) => element.field == fieldName)
-        .toList();
-    return Container(
-      height: MSize.height * 0.9,
-      child: ListView.builder(
-          itemCount: courses.length,
-          itemBuilder: (context, i) => courseListCard(
-                course: courses[i],
-              )),
-    );
+    final path = ModalRoute.of(context)!.settings.arguments as String;
+
+    return FutureBuilder(
+        future: sendData().ReadJsonData(path),
+        builder: (context, AsyncSnapshot<List<Course>> courses) {
+          if (!courses.hasData) {
+            return SafeArea(child: Center(child: CircularProgressIndicator()));
+          }
+          return Container(
+            height: MSize.height * 0.9,
+            child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: courses.data!.length,
+                itemBuilder: (context, index) => courseListCard(
+                      course: courses.data![index],
+                    )),
+          );
+        });
   }
 }

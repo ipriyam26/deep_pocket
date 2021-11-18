@@ -106,7 +106,7 @@ class ModelCatagory {
         Name: "Physical Science",
         Image:
             "https://as1.ftcdn.net/v2/jpg/02/83/02/20/1000_F_283022057_IZyCv1yKu1VpjdmUNjPb0Sa4bSHIKFsS.jpg",
-        Path: "json-files/Physical Science and Engineering..json"),
+        Path: "json-files/Physical Science and Engineering.json"),
     Catagory(
         Name: "Physics",
         Image:
@@ -123,4 +123,8 @@ class ModelCatagory {
             "https://as2.ftcdn.net/v2/jpg/02/82/23/85/1000_F_282238593_CkPvvJn0svz9T3aQRoV8CgUT5K0mSwwV.jpg",
         Path: "json-files/Social Sciences.json"),
   ];
+
+  List<Catagory> get courseE {
+    return [...modelCatagory];
+  }
 }

@@ -94,7 +94,7 @@ flutter:
     - assets/person.png
     - assets/logo.png
     - assets/empty.gif
-    - jsondata/coursesJ.json
+    - jsondata/course_new.json
     - json-files/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

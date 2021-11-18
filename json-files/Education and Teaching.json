@@ -432,22 +432,6 @@
     "image": "https://prod-discovery.edx-cdn.org/media/course/image/0e575a39-da1e-4e33-bb3b-e96cc6ffc58e-8372a9a276c1.small.png"
   },
   {
-    "name": "Instructional Design with Orchestration Graphs",
-    "level": "Advanced",
-    "desciption": "",
-    "catagory": "Education & Teaching",
-    "subCatagory": "Others",
-    "time": "Estimated 5 weeks",
-    "provider": "EPFLx",
-    "source": "edx",
-    "Audit": "Free",
-    "certificate": "Optional upgrade available",
-    "courseLink": "https://www.edx.org/course/instructional-design-with-orchestration-graphs",
-    "enrolled": "After a course session ends, it will be",
-    "rating": 4.4,
-    "image": "https://prod-discovery.edx-cdn.org/media/course/image/6dc1fddd-2f5a-499d-bd70-cbf220efdf7c-91a70ea08771.small.jpeg"
-  },
-  {
     "name": "Teaching Science and Engineering",
     "level": "Advanced",
     "desciption": "This MOOC is designed to help doctoral teaching assistants develop their teaching skills in scientific and engineering disciplines at university level. The MOOC will address what to do when you teach as well as explaining why these approaches work.",

@@ -2,6 +2,9 @@ import 'dart:io';
 
 // import 'package:email_password_login/model/user_model.dart';
 // import 'package:email_password_login/screens/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deep_pocket_1/models/api_integration_imgur.dart';
+import 'package:deep_pocket_1/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -485,32 +488,40 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   postDetailsToFirestore() async {
-    // calling our firestore
-    // calling our user model
-    // sedning these values
-
-    // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    // User? user = _auth.currentUser;
-
-    // UserModel userModel = UserModel();
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+    setState(() {
+      isLoading = true;
+    });
+    UserModel userModel = UserModel();
     // var link = await API_Manager().postImage(imageLink!);
 
-    // // writing all the values
-    // userModel.email = user!.email;
-    // userModel.uid = user.uid;
-    // userModel.Name = NameEditingController.text;
-    // userModel.Image = link;
+    // writing all the values
+    userModel.email = user!.email;
+    userModel.uid = user.uid;
+    userModel.Name = "Add Name";
+    userModel.Image =
+        "https://i.dlpng.com/static/png/5780540-person-icon-person-icon-silhouette-transparent-png-370x370-icon-person-820_450_preview.png";
+    userModel.CollegeName = "Add College";
+    userModel.enrollmentNo = "Add Enrollment";
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .set(userModel.toMap());
 
     Fluttertoast.showToast(msg: "Account created successfully :) ");
     localStorage = await SharedPreferences.getInstance();
 
-    localStorage.setString('email', emailEditingController.text.toString());
-    localStorage.setString(
-        'password', passwordEditingController.text.toString());
+    // localStorage.setString('email', emailEditingController.text.toString());
+    // localStorage.setString(
+    //     'password', passwordEditingController.text.toString());
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => verification()),
+        MaterialPageRoute(
+            builder: (context) => verification(
+                password: passwordEditingController.text.toString())),
         (route) => false);
   }
 }

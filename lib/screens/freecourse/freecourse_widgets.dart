@@ -1,4 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:deep_pocket_1/get_course.dart';
+
+import 'package:deep_pocket_1/models/course_read.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:deep_pocket_1/models/freecourses_models.dart';
@@ -6,33 +11,24 @@ import 'package:deep_pocket_1/screens/freecourse/course_list.dart';
 import 'package:deep_pocket_1/screens/freecourse/course_screen.dart';
 import 'package:deep_pocket_1/screens/freecourse/freecourse_mock.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+
+import 'catagory_model.dart';
 
 class courseButton extends StatelessWidget {
-  // const courseButton({
-  // Key? key,
   courseButton({
     required this.courses,
-    // required this.i,
   });
-  // }) : super(key: key);
 
-  final freecourses_models courses;
-  // final i;
-  // final Msize;
+  final Catagory courses;
 
   @override
   Widget build(BuildContext context) {
     final MSize = MediaQuery.of(context).size;
-    final number = mockCourse().mockcourse.where((element) {
-      if (courses.Name == element.field) {
-        return true;
-      }
-      return false;
-    }).length;
     return InkWell(
       splashColor: Colors.black,
       onTap: () {
-        Navigator.pushNamed(context, courseList.route, arguments: courses.Name);
+        Navigator.pushNamed(context, courseList.route, arguments: courses.Path);
       },
       child: Card(
         // color: const Color(0xff8ac4ff),
@@ -45,34 +41,42 @@ class courseButton extends StatelessWidget {
             // decoration: BoxDecoration(border: Border.all()),
             // height: MSize.height * 0.2,
             // width: MSize.height * 0.2,
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+            child: Stack(
           children: [
-            Image.asset(
-              courses.imgsrc,
-              height: MSize.height * 0.1,
-              width: MSize.height * 0.1,
-              color: const Color(0xff00A6A6),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: CachedNetworkImage(
+                placeholder: (context, url) =>
+                    Container(child: CupertinoActivityIndicator()),
+                imageUrl: courses.Image,
+                height: MSize.height * 0.20,
+                width: MSize.width * 0.435,
+                fit: BoxFit.fitHeight,
+              ),
             ),
-            const SizedBox(
-              height: 7,
-            ),
-            Text(
-              courses.Name,
-              style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(
-              height: 7,
-            ),
-            AutoSizeText(
-              number.toString() + " courses",
-              style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xff696767),
-                  fontWeight: FontWeight.w500),
+            Container(
+              // color: Colors.pink,
+              height: MSize.height * 0.20,
+              width: MSize.width * 0.435,
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                padding: EdgeInsets.only(bottom: MSize.height * 0.01),
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.5),
+                    borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
+                width: MSize.width * 0.435,
+                child: AutoSizeText(
+                  courses.Name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w500),
+                  maxFontSize: 22,
+                  minFontSize: 20,
+                  maxLines: 2,
+                ),
+              ),
             )
           ],
         )),
@@ -83,7 +87,7 @@ class courseButton extends StatelessWidget {
 
 class courseListCard extends StatelessWidget {
   courseListCard({required this.course});
-  final courseMock course;
+  final Course course;
   @override
   Widget build(BuildContext context) {
     final MSize = MediaQuery.of(context).size;
@@ -109,7 +113,8 @@ class courseListCard extends StatelessWidget {
                 padding: EdgeInsets.only(
                     left: MSize.width * 0.02, right: MSize.width * 0.01),
                 child: Image.network(
-                  course.image,
+                  course.image ??
+                      "https://www.freevector.com/uploads/vector/preview/31305/Revision_Freevector_School-Stationary_Background_Mf0421-01.jpg",
                   fit: BoxFit.contain,
                   height: MSize.height * 0.11,
                   width: MSize.height * 0.11,
@@ -129,7 +134,7 @@ class courseListCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     AutoSizeText(
-                      course.name,
+                      course.name!,
                       style: const TextStyle(
                           fontSize: 18,
                           color: Colors.black,
@@ -140,21 +145,10 @@ class courseListCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          skillLevel[course.skillLevel],
+                          course.level ?? "Not Defined",
                           style:
                               const TextStyle(fontSize: 14, color: Colors.grey),
                         ),
-                        SizedBox(
-                          width: MSize.width * 0.03,
-                        ),
-                        const Icon(
-                          Icons.watch_later_outlined,
-                          size: 16,
-                          color: Colors.grey,
-                        ),
-                        Text(" " + course.hours.toString() + " hr",
-                            style: const TextStyle(
-                                fontSize: 14, color: Colors.grey)),
                       ],
                     ),
                     Row(
@@ -165,7 +159,7 @@ class courseListCard extends StatelessWidget {
                           color: Colors.yellow,
                         ),
                         Text(
-                          '${course.rating} (${(course.ratingNo / 1000).round()}k)',
+                          '${course.rating ?? 4}',
                           style: const TextStyle(
                             fontSize: 12,
                           ),
@@ -178,12 +172,15 @@ class courseListCard extends StatelessWidget {
                           size: 12,
                           color: Colors.grey,
                         ),
-                        Text(
-                          course.enrolled.toStringAsFixed(2) + " Enrolled",
-                          style: const TextStyle(
-                            fontSize: 12,
+                        if (course.enrolled != null)
+                          Text(
+                            course.enrolled.toString().split(" ")[0] +
+                                " " +
+                                course.enrolled.toString().split(" ")[2],
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
                       ],
                     )
                   ],
