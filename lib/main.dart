@@ -27,6 +27,7 @@ import 'package:deep_pocket_1/screens/resources/resources_tab_screen.dart';
 import 'package:deep_pocket_1/tabs_screen.dart';
 
 import 'package:deep_pocket_1/screens/post/user_input.dart';
+import 'package:deep_pocket_1/widgets/fullscreen_image.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +92,8 @@ class MyApp extends StatelessWidget {
             postPage.route: (ctx) => postPage(),
             editPost.route: (ctx) => editPost(),
             createNotice.route: (ctx) => createNotice(),
-            createEvent.route: (ctx) => createEvent()
+            createEvent.route: (ctx) => createEvent(),
+            fullImage.route: (ctx) => fullImage(),
           }),
     );
   }

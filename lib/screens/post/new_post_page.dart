@@ -1,41 +1,24 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/admin.dart';
-import 'package:deep_pocket_1/models/user_model.dart';
+
 import 'package:deep_pocket_1/widgets/post_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+
 import 'package:readmore/readmore.dart';
 
 class postPage extends StatelessWidget {
   static const route = '/feed-screen/postPage';
   final commentText = TextEditingController();
   final user = FirebaseAuth.instance.currentUser;
-
-  // UserModel loggeinUser = UserModel();
-
-  // Future<void> getLoggedUser() async {
-  //   final logtry = await FirebaseFirestore.instance
-  //       .collection("users")
-  //       .doc(user!.uid)
-  //       .get();
-  //   final data = logtry.data();
-
-  //   loggeinUser = UserModel(
-  //     uid: user!.uid,
-  //     email: data!['email'],
-  //     enrollmentNo: data['enrollmentNo'],
-  //     Name: data['Name'],
-  //     Image: data['Image'],
-  //     CollegeName: data['CollegeName'],
-  //   );
-  // }
-
+  
   @override
   Widget build(BuildContext context) {
     final MHeight = MediaQuery.of(context).size.height;
@@ -44,7 +27,7 @@ class postPage extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     final documentid = MapArgms['documentid'] as String;
-    final loggeinUser = MapArgms['user'];
+
     // getLoggedUser();
 
     return Scaffold(
@@ -118,153 +101,132 @@ class postPage extends StatelessWidget {
                                                     Map<String, dynamic>>>
                                             snapshot) {
                                       if (!snapshot.hasData) {
-                                        return Center();
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
                                       }
-                                      return Container(
-                                        // height: MHeight,
-                                        child: ListView(
-                                            shrinkWrap: true,
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            padding: EdgeInsets.zero,
-                                            children: snapshot.data!.docs
-                                                .map<Widget>((comment) {
-                                              final dtime = DateTime.parse(
-                                                  comment
-                                                      .data()['Time']
-                                                      .toDate()
-                                                      .toString());
+                                      return ListView(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          padding: EdgeInsets.zero,
+                                          children: snapshot.data!.docs
+                                              .map<Widget>((comment) {
+                                            final dtime = DateTime.parse(comment
+                                                .data()['Time']
+                                                .toDate()
+                                                .toString());
 
-                                              final time =
-                                                  DateFormat.jm().format(dtime);
-                                              return Card(
-                                                elevation: 0,
-                                                child: Container(
-                                                  // color: Colors.amber,
+                                            final time =
+                                                DateFormat.jm().format(dtime);
+                                            return Card(
+                                              elevation: 0,
+                                              child: GetBuilder(
+                                                  init: userRoleController(),
+                                                  builder: (userRoleController
+                                                      roleController) {
+                                                    return ListTile(
+                                                      // horizontalTitleGap: 1,
+                                                      minVerticalPadding: 0,
 
-                                                  // padding: EdgeInsets.symmetric(horizontal: MWidth * 0.05),
-                                                  child: GetBuilder(
-                                                      init:
-                                                          userRoleController(),
-                                                      builder:
-                                                          (userRoleController
-                                                              roleController) {
-                                                        return ListTile(
-                                                          // horizontalTitleGap: 1,
-                                                          minVerticalPadding: 0,
-
-                                                          leading: ClipOval(
+                                                      leading: ClipOval(
+                                                        child: Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(2),
+                                                          color: Colors.black,
+                                                          child: ClipOval(
                                                             child: Container(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(2),
+                                                              height:
+                                                                  MWidth * 0.13,
+                                                              width:
+                                                                  MWidth * 0.13,
                                                               color:
-                                                                  Colors.black,
-                                                              child: ClipOval(
-                                                                child:
-                                                                    Container(
-                                                                  height:
-                                                                      MWidth *
-                                                                          0.13,
-                                                                  width:
-                                                                      MWidth *
-                                                                          0.13,
-                                                                  color: Colors
-                                                                      .grey,
-                                                                  child:
-                                                                      CachedNetworkImage(
-                                                                    placeholder: (context,
-                                                                            url) =>
-                                                                        Container(
-                                                                            child:
-                                                                                Image.asset('assets/person.png')),
-                                                                    imageUrl: comment
-                                                                            .data()[
-                                                                        'AuthorPic'],
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                  ),
-                                                                ),
+                                                                  Colors.grey,
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    Image.asset(
+                                                                        'assets/person.png'),
+                                                                imageUrl: comment
+                                                                        .data()[
+                                                                    'AuthorPic'],
+                                                                fit: BoxFit
+                                                                    .cover,
                                                               ),
                                                             ),
                                                           ),
+                                                        ),
+                                                      ),
 
-                                                          trailing: (comment.data()[
-                                                                          'AuthorID'] ==
-                                                                      userdata![
-                                                                          'uid']) ||
-                                                                  (roleController
-                                                                      .specialAccess!
-                                                                      .contains(
-                                                                          user!
-                                                                              .uid))
-                                                              ? deleteComment(
-                                                                  comment:
-                                                                      comment,
-                                                                  document:
-                                                                      document,
-                                                                )
-                                                              : SizedBox(
-                                                                  width:
-                                                                      MWidth *
-                                                                          0.05,
-                                                                ),
-                                                          title: Row(
-                                                            children: [
-                                                              Text(
-                                                                comment
-                                                                    .data()[
-                                                                        'AuthorName']
-                                                                    .toString()
-                                                                    .split(
-                                                                        " ")[0],
-                                                                style:
-                                                                    const TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: Color(
-                                                                      0xff36454f),
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                "   " + time,
-                                                                style:
-                                                                    const TextStyle(
-                                                                  fontSize: 12,
-                                                                  color: Color(
-                                                                      0xff36454f),
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                          // horizontalTitleGap: 0,
-                                                          subtitle:
-                                                              ReadMoreText(
-                                                            comment.data()[
-                                                                'CommentText'],
-                                                            trimLines: 2,
-                                                            colorClickableText:
-                                                                Colors.pink,
-                                                            trimMode:
-                                                                TrimMode.Line,
-                                                            // trimCollapsedText: '..Read More',
+                                                      trailing: (comment.data()[
+                                                                      'AuthorID'] ==
+                                                                  userdata![
+                                                                      'uid']) ||
+                                                              (roleController
+                                                                  .specialAccess!
+                                                                  .contains(
+                                                                      user!
+                                                                          .uid))
+                                                          ? deleteComment(
+                                                              comment: comment,
+                                                              document:
+                                                                  document,
+                                                            )
+                                                          : SizedBox(
+                                                              width:
+                                                                  MWidth * 0.05,
+                                                            ),
+                                                      title: Row(
+                                                        children: [
+                                                          Text(
+                                                            comment
+                                                                .data()[
+                                                                    'AuthorName']
+                                                                .toString()
+                                                                .split(" ")[0],
                                                             style:
                                                                 const TextStyle(
-                                                                    fontSize:
-                                                                        14),
-                                                            trimExpandedText:
-                                                                ' Less',
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: Color(
+                                                                  0xff36454f),
+                                                            ),
                                                           ),
+                                                          Text(
+                                                            "   " + time,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 12,
+                                                              color: Color(
+                                                                  0xff36454f),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      // horizontalTitleGap: 0,
+                                                      subtitle: ReadMoreText(
+                                                        comment.data()[
+                                                            'CommentText'],
+                                                        trimLines: 2,
+                                                        colorClickableText:
+                                                            Colors.pink,
+                                                        trimMode: TrimMode.Line,
+                                                        // trimCollapsedText: '..Read More',
+                                                        style: const TextStyle(
+                                                            fontSize: 14),
+                                                        trimExpandedText:
+                                                            ' Less',
+                                                      ),
 
-                                                          isThreeLine: true,
-                                                        );
-                                                      }),
-                                                ),
-                                              );
-                                            }).toList()),
-                                      );
+                                                      isThreeLine: true,
+                                                    );
+                                                  }),
+                                            );
+                                          }).toList());
                                     }),
                               ],
                             );
@@ -355,7 +317,7 @@ class UserComment extends StatelessWidget {
               // height: MHeight * 0.11,
               child: ClipOval(
             child: Container(
-              padding: EdgeInsets.all(2),
+              padding: const EdgeInsets.all(2),
               color: Colors.black,
               child: ClipOval(
                 child: Container(
@@ -364,7 +326,7 @@ class UserComment extends StatelessWidget {
                   color: Colors.grey,
                   child: CachedNetworkImage(
                     placeholder: (context, url) =>
-                        Container(child: Image.asset('assets/person.png')),
+                        Image.asset('assets/person.png'),
                     imageUrl: userdata!['Image'],
                     fit: BoxFit.cover,
                   ),
@@ -372,7 +334,7 @@ class UserComment extends StatelessWidget {
               ),
             ),
           )),
-          Container(
+          SizedBox(
             height: MHeight * 0.07,
             width: MWidth * 0.75,
             child: TextField(
