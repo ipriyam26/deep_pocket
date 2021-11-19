@@ -1,3 +1,4 @@
+import 'package:deep_pocket_1/models/course_read.dart';
 import 'package:deep_pocket_1/screens/freecourse/freecourse_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class enrollCard extends StatelessWidget {
 
   final double MHeight;
 
-  final courseMock course;
+  final Course course;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +31,6 @@ class enrollCard extends StatelessWidget {
           children: [
             enrollCard1(MHeight: MHeight, Mwidth: Mwidth, course: course),
             enrollCard2(MHeight: MHeight, Mwidth: Mwidth),
-            const Divider(
-              thickness: 1,
-            ),
-            enrollCard3(MHeight: MHeight, course: course),
           ],
         ),
       ),

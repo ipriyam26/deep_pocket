@@ -19,7 +19,7 @@ class freeCources extends StatelessWidget {
                 fontSize: 23,
                 fontWeight: FontWeight.bold,
               )),
-          backgroundColor: const Color(0xff00A6A6),
+          backgroundColor: Colors.black,
         ),
         backgroundColor: const Color(0xFFFFF0E2),
         body: SingleChildScrollView(

@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
 
+import 'package:deep_pocket_1/models/course_read.dart';
 import 'package:deep_pocket_1/screens/freecourse/freecourse_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -16,12 +17,11 @@ class courseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double MHeight = MediaQuery.of(context).size.height;
     double MWeight = MediaQuery.of(context).size.width;
-    final courseMock course =
-        ModalRoute.of(context)!.settings.arguments as courseMock;
+    final course = ModalRoute.of(context)!.settings.arguments as Course;
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xff00A6A6),
-          title: Text(course.field),
+          backgroundColor: Colors.black,
+          title: Text(course.provider ?? "Not Defined"),
         ),
         body: Container(
           child: Stack(
@@ -50,35 +50,10 @@ class courseScreen extends StatelessWidget {
                       SizedBox(
                         height: MHeight * 0.02,
                       ),
-                      CarouselSlider(
-                        options: CarouselOptions(
-                            initialPage: 1,
-                            viewportFraction: 0.83,
-                            // aspectRatio: 16 / 11,
-                            enableInfiniteScroll: false,
-                            height: MHeight * 0.55),
-                        items: [0, 1, 2].map((i) {
-                          return Builder(
-                            builder: (BuildContext context) {
-                              return Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                // decoration: BoxDecoration(color: Colors.amber),
-                                child: i == 0
-                                    ? instructureCard(
-                                        MHeight: MHeight,
-                                        instructoR: course.instructors,
-                                      )
-                                    : i == 1
-                                        ? enrollCard(
-                                            MHeight: MHeight, course: course)
-                                        : reviewCard(
-                                            MHeight: MHeight,
-                                            review: course.userReview),
-                              );
-                            },
-                          );
-                        }).toList(),
+                      Container(
+                        height: MHeight * 0.55,
+                        width: MWeight * 0.9,
+                        child: enrollCard(course: course, MHeight: MHeight),
                       )
                     ],
                   ))

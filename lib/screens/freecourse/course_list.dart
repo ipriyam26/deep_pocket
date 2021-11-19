@@ -14,7 +14,7 @@ class courseList extends StatelessWidget {
     return Scaffold(
         backgroundColor: const Color(0xFFFFF0E2),
         appBar: AppBar(
-          backgroundColor: const Color(0xff00A6A6),
+          backgroundColor: Colors.black,
           title: const Text("Courses"),
         ),
         body: const SingleChildScrollView(child: courselistWidget()));
@@ -37,6 +37,7 @@ class courselistWidget extends StatelessWidget {
           if (!courses.hasData) {
             return SafeArea(child: Center(child: CircularProgressIndicator()));
           }
+          print(courses.data!.length);
           return Container(
             height: MSize.height * 0.9,
             child: ListView.builder(

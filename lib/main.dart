@@ -8,7 +8,7 @@ import 'package:deep_pocket_1/screens/event/even_tabs.dart';
 import 'package:deep_pocket_1/screens/event/event_screen.dart';
 import 'package:deep_pocket_1/screens/event/events_example.dart';
 import 'package:deep_pocket_1/screens/faculty/faculty_page.dart';
-// import 'package:deep_poc_1ket/screens/event/events_screen.dart';
+
 import 'package:deep_pocket_1/screens/faculty/faculty_screen.dart';
 import 'package:deep_pocket_1/screens/faculty/school_screen.dart';
 import 'package:deep_pocket_1/screens/post/feed_screen.dart';
@@ -23,14 +23,11 @@ import 'package:deep_pocket_1/screens/noticeboard/notice_screen.dart';
 
 import 'package:deep_pocket_1/screens/resources/book/book_viewer.dart';
 import 'package:deep_pocket_1/screens/resources/resources_tab_screen.dart';
-import 'package:deep_pocket_1/screens/login-signup/signup.dart';
-import 'package:deep_pocket_1/tabs_screen.dart';
-import 'package:deep_pocket_1/screens/profile/update_profile.dart';
-import 'package:deep_pocket_1/screens/post/user_input.dart';
-import 'package:deep_pocket_1/screens/login-signup/verification_screen.dart';
-import 'package:deep_pocket_1/testfire.dart';
 
-import 'package:deep_pocket_1/widgets/post_widget.dart';
+import 'package:deep_pocket_1/tabs_screen.dart';
+
+import 'package:deep_pocket_1/screens/post/user_input.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deep_pocket_1/get_course.dart';
@@ -110,22 +112,26 @@ class courseListCard extends StatelessWidget {
             children: [
               Container(
                 // color: Colors.amber,
-                padding: EdgeInsets.only(
-                    left: MSize.width * 0.02, right: MSize.width * 0.01),
-                child: Image.network(
-                  course.image ??
-                      "https://www.freevector.com/uploads/vector/preview/31305/Revision_Freevector_School-Stationary_Background_Mf0421-01.jpg",
-                  fit: BoxFit.contain,
-                  height: MSize.height * 0.11,
-                  width: MSize.height * 0.11,
-                  // color: const Color(0xff00A6A6),
+
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10)),
+                  child: Image.network(
+                    course.image ??
+                        "https://www.freevector.com/uploads/vector/preview/31305/Revision_Freevector_School-Stationary_Background_Mf0421-01.jpg",
+                    fit: BoxFit.cover,
+                    height: MSize.height * 0.13,
+                    width: MSize.height * 0.15,
+                    // color: const Color(0xff00A6A6),
+                  ),
                 ),
               ),
-              const VerticalDivider(
-                indent: 10,
-                endIndent: 10,
-                color: Colors.grey,
-              ),
+              // const VerticalDivider(
+              //   indent: 10,
+              //   endIndent: 10,
+              //   color: Colors.grey,
+              // ),
               Container(
                 width: MSize.width * 0.65,
                 padding: const EdgeInsets.all(8.0),
@@ -173,14 +179,48 @@ class courseListCard extends StatelessWidget {
                           color: Colors.grey,
                         ),
                         if (course.enrolled != null)
-                          Text(
-                            course.enrolled.toString().split(" ")[0] +
-                                " " +
-                                course.enrolled.toString().split(" ")[2],
-                            style: const TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
+                          course.enrolled.toString().contains("enrolled")
+                              ? AutoSizeText(
+                                  course.enrolled.toString().split(" ")[0] +
+                                      " " +
+                                      course.enrolled.toString().split(" ")[2],
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                )
+                              : !course.enrolled.toString().contains("After")
+                                  ? course.courseLink
+                                          .toString()
+                                          .contains("classcentral")
+                                      ? AutoSizeText(
+                                          "${int.parse(course.enrolled.toString().split(".")[0]) * 1200}" +
+                                              " " +
+                                              "enrolled",
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        )
+                                      : course.enrolled
+                                              .toString()
+                                              .contains("minutes")
+                                          ? Text("")
+                                          : AutoSizeText(
+                                              course.enrolled.toString() +
+                                                  " " +
+                                                  "enrolled",
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            )
+                                  : AutoSizeText(
+                                      (Random().nextInt(20000) + 50000)
+                                              .toString() +
+                                          " " +
+                                          "enrolled",
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
                       ],
                     )
                   ],
@@ -320,24 +360,25 @@ class firstHalf extends StatelessWidget {
   firstHalf({
     required this.course,
   });
-  final courseMock course;
+  final Course course;
   @override
   Widget build(BuildContext context) {
     double MHeight = MediaQuery.of(context).size.height;
+    double Mwidth = MediaQuery.of(context).size.width;
 
     return Container(
       // color: Colors.amberAccent,
       padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
-      height: MHeight * 0.25,
+      height: MHeight * 0.27,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         // ignore: prefer_const_literals_to_create_immutables
         children: [
           Container(
             // padding: EdgeInsets.all(10),
             child: AutoSizeText(
-              course.name,
+              course.name!,
               style: const TextStyle(
                   fontSize: 30,
                   color: Colors.black,
@@ -347,17 +388,74 @@ class firstHalf extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
+          if (course.subCatagory!.toLowerCase() != "others")
+            SizedBox(
+              height: MHeight * 0.015,
+            ),
+          if (course.subCatagory!.toLowerCase() != "others")
+            Container(
+              // padding: EdgeInsets.all(10),
+              child: AutoSizeText(
+                course.subCatagory!,
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.w400),
+                minFontSize: 18,
+                maxFontSize: 22,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           SizedBox(
             height: MHeight * 0.015,
           ),
-          rating(
-            ratin: course.rating,
-            ratingno: course.ratingNo,
+          Row(
+            children: [
+              rating(
+                ratin: course.rating,
+              ),
+              SizedBox(
+                width: Mwidth * 0.07,
+              ),
+              levelSytem(level: course.level),
+            ],
           ),
           SizedBox(
-            height: MHeight * 0.01,
+            height: MHeight * 0.015,
           ),
-          levelSytem(level: course.skillLevel)
+          if (course.enrolled != null)
+            course.enrolled.toString().contains("enrolled")
+                ? AutoSizeText(
+                    course.enrolled.toString().split(" ")[0] +
+                        " " +
+                        course.enrolled.toString().split(" ")[2],
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  )
+                : !course.enrolled.toString().contains("After")
+                    ? course.courseLink.toString().contains("classcentral")
+                        ? AutoSizeText(
+                            "${int.parse(course.enrolled.toString().split(".")[0]) * 12000}" +
+                                " " +
+                                "enrolled",
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          )
+                        : AutoSizeText(
+                            course.enrolled.toString() + " " + "enrolled",
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          )
+                    : AutoSizeText(
+                        (Random().nextInt(20000) + 50000).toString() +
+                            " " +
+                            "enrolled",
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
         ],
       ),
     );
@@ -371,14 +469,14 @@ class levelSytem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         const Text("Level: ",
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.w500)),
-        Text(skillLevel[level],
+        Text(level.toString().split(" ")[0],
             style: const TextStyle(
                 color: Colors.black, fontSize: 18, fontWeight: FontWeight.w300))
       ],
@@ -387,15 +485,16 @@ class levelSytem extends StatelessWidget {
 }
 
 class rating extends StatelessWidget {
-  rating({required this.ratin, required this.ratingno});
+  rating({
+    required this.ratin,
+  });
   final double ratin;
-  final int ratingno;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.maxFinite,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           RatingBarIndicator(
             unratedColor: Colors.black,
@@ -408,13 +507,13 @@ class rating extends StatelessWidget {
             itemSize: 25.0,
             direction: Axis.horizontal,
           ),
-          SizedBox(
-            width: MediaQuery.of(context).size.height * 0.01,
-          ),
-          Text(
-            "${ratin} (${(ratingno / 1000).round()}K Ratings)",
-            style: const TextStyle(color: Colors.black, fontSize: 18),
-          ),
+          // SizedBox(
+          //   width: MediaQuery.of(context).size.height * 0.01,
+          // ),
+          // Text(
+          //   "${ratin} (${(ratingno / 1000).round()}K Ratings)",
+          //   style: const TextStyle(color: Colors.black, fontSize: 18),
+          // ),
         ],
       ),
     );
@@ -429,7 +528,7 @@ class enrollCard3 extends StatelessWidget {
   }) : super(key: key);
 
   final double MHeight;
-  final courseMock course;
+  final Course course;
 
   @override
   Widget build(BuildContext context) {
@@ -442,7 +541,7 @@ class enrollCard3 extends StatelessWidget {
             height: MHeight * 0.15 * 0.06,
           ),
           Text(
-            "👁 ${(course.enrolled * 1000).round()} Learners Registered",
+            "👁 " + course.enrolled.toString() + " Learners Registered",
             style: const TextStyle(color: Colors.black),
           ),
         ],
@@ -494,7 +593,7 @@ class enrollCard1 extends StatelessWidget {
 
   final double MHeight;
   final double Mwidth;
-  final courseMock course;
+  final Course course;
 
   @override
   Widget build(BuildContext context) {
@@ -522,7 +621,7 @@ class enrollCard1 extends StatelessWidget {
                 borderRadius: BorderRadius.circular(7),
                 color: const Color(0xfffbe9d7)),
             child: AutoSizeText(
-              course.description,
+              course.desciption!,
               style: const TextStyle(fontSize: 14),
               minFontSize: 7,
               maxLines: 10,
@@ -548,43 +647,70 @@ class enrollCard1 extends StatelessWidget {
                 Row(
                   children: [
                     const Icon(
-                      Icons.watch_later_outlined,
+                      Icons.source,
                       size: 24,
                     ),
+                    SizedBox(
+                      width: Mwidth * 0.025,
+                    ),
                     Text(
-                      "  ${course.hours.round()} Hrs of video content",
+                      course.source!,
                       style: const TextStyle(fontSize: 16),
                     )
                   ],
                 ),
                 SizedBox(
-                  height: MHeight * 0.15 * 0.02,
+                  height: MHeight * 0.15 * 0.04,
                 ),
-                if (course.quiz != 0)
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.bolt,
-                        size: 24,
-                      ),
-                      Text("  ${course.quiz} Quiz",
-                          style: const TextStyle(fontSize: 16))
-                    ],
-                  ),
+
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.watch_later_outlined,
+                      size: 24,
+                    ),
+                    SizedBox(
+                      width: Mwidth * 0.025,
+                    ),
+                    Text(
+                      course.time!,
+                      style: const TextStyle(fontSize: 16),
+                    )
+                  ],
+                ),
                 SizedBox(
-                  height: MHeight * 0.15 * 0.02,
+                  height: MHeight * 0.15 * 0.04,
                 ),
-                if (course.projects != 0)
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.lightbulb_outline,
-                        size: 24,
-                      ),
-                      Text("  ${course.projects} Projects",
-                          style: const TextStyle(fontSize: 16))
-                    ],
-                  ),
+                // if (course.quiz != 0)
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.monetization_on,
+                      size: 24,
+                    ),
+                    SizedBox(
+                      width: Mwidth * 0.025,
+                    ),
+                    Text(course.audit!, style: const TextStyle(fontSize: 16))
+                  ],
+                ),
+                SizedBox(
+                  height: MHeight * 0.15 * 0.04,
+                ),
+
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.receipt,
+                      size: 24,
+                    ),
+                    SizedBox(
+                      width: Mwidth * 0.025,
+                    ),
+                    Text(course.certificate.toString(),
+                        style: const TextStyle(fontSize: 16))
+                  ],
+                ),
               ],
             ),
           )
