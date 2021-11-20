@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/admin.dart';
+import 'package:deep_pocket_1/screens/profile/search_profile_screen.dart';
 
 import 'package:deep_pocket_1/widgets/post_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,7 +19,7 @@ class postPage extends StatelessWidget {
   static const route = '/feed-screen/postPage';
   final commentText = TextEditingController();
   final user = FirebaseAuth.instance.currentUser;
-  
+
   @override
   Widget build(BuildContext context) {
     final MHeight = MediaQuery.of(context).size.height;
@@ -180,20 +181,33 @@ class postPage extends StatelessWidget {
                                                             ),
                                                       title: Row(
                                                         children: [
-                                                          Text(
-                                                            comment
-                                                                .data()[
-                                                                    'AuthorName']
-                                                                .toString()
-                                                                .split(" ")[0],
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color: Color(
-                                                                  0xff36454f),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              Navigator.pushNamed(
+                                                                  context,
+                                                                  searchProfileScreen
+                                                                      .route,
+                                                                  arguments: comment
+                                                                      .data()[
+                                                                          'AuthorID']
+                                                                      .toString());
+                                                            },
+                                                            child: Text(
+                                                              comment
+                                                                  .data()[
+                                                                      'AuthorName']
+                                                                  .toString()
+                                                                  .split(
+                                                                      " ")[0],
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                color: Color(
+                                                                    0xff36454f),
+                                                              ),
                                                             ),
                                                           ),
                                                           Text(

@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/admin.dart';
 import 'package:deep_pocket_1/screens/post/edit_post.dart';
+import 'package:deep_pocket_1/screens/profile/search_profile_screen.dart';
 import 'package:deep_pocket_1/widgets/fullscreen_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,6 +73,8 @@ class _postCardState extends State<postCard> {
     } catch (e) {
       liked = false;
     }
+    int currentIndex = 0;
+    final CarouselController _controller = CarouselController();
 
     return Card(
       child: ClipRRect(
@@ -138,17 +141,22 @@ class _postCardState extends State<postCard> {
               ),
               if (widget.imagesList.length > 0)
                 Container(
-                  height: widget.MHeight * 0.28,
-                  padding: EdgeInsets.all(widget.MHeight * 0.005),
+                  height: widget.MHeight * 0.33,
+                  padding: EdgeInsets.all(widget.MHeight * 0.002),
                   // color: Colors.amber,
                   child: CarouselSlider(
+                    carouselController: _controller,
                     options: CarouselOptions(
-                      aspectRatio: 4.5 / 3,
-                      viewportFraction: 1,
-                      enlargeCenterPage: true,
-                      enableInfiniteScroll: false,
-                      autoPlay: false,
-                    ),
+                        aspectRatio: 4.5 / 3,
+                        viewportFraction: 1,
+                        enlargeCenterPage: true,
+                        enableInfiniteScroll: false,
+                        autoPlay: false,
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            currentIndex = index;
+                          });
+                        }),
                     items: widget.imagesList
                         .map(
                           (item) => GestureDetector(
@@ -361,21 +369,35 @@ class firstColumn extends StatelessWidget {
                                     maxFontSize: 19,
                                     minFontSize: 18,
                                   )
-                                : AutoSizeText(
-                                    name.toString(),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                    maxFontSize: 19,
-                                    minFontSize: 18,
+                                : GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, searchProfileScreen.route,
+                                          arguments: AuthorUID);
+                                    },
+                                    child: AutoSizeText(
+                                      name.toString().split(" ")[0],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                      maxFontSize: 19,
+                                      minFontSize: 18,
+                                    ),
                                   ),
                             if (Anonymous &&
                                 roleController.specialAccess!
                                     .contains(currentUserId))
-                              AutoSizeText(
-                                "(${name.toString()})",
-                                style: const TextStyle(color: Colors.black),
-                                maxFontSize: 19,
-                                minFontSize: 8,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, searchProfileScreen.route,
+                                      arguments: AuthorUID);
+                                },
+                                child: AutoSizeText(
+                                  "(${name.toString().split(" ")[0]})",
+                                  style: const TextStyle(color: Colors.black),
+                                  maxFontSize: 19,
+                                  minFontSize: 8,
+                                ),
                               )
                           ],
                         ),

@@ -4,6 +4,7 @@ import 'package:deep_pocket_1/models/user_model.dart';
 import 'package:deep_pocket_1/screens/post/feed_screen.dart';
 import 'package:deep_pocket_1/screens/menu-pages/menu_pages.dart';
 import 'package:deep_pocket_1/screens/post/user_input.dart';
+import 'package:deep_pocket_1/screens/profile/search_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -18,22 +19,13 @@ class TabsScreen extends StatefulWidget {
   _TabsScreenState createState() => _TabsScreenState();
 }
 
-// class _TabsScreenState extends State<TabsScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       bottomNavigationBar: ,
-//       body: ,
-//     );
-//   }
-// }
-
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
     feedScreen(),
+    // SearchUser(),
     Menu(),
     // userInput(),
     profileScreen(),
@@ -79,6 +71,12 @@ class _TabsScreenState extends State<TabsScreen> {
                   activeIcon: Icon(Icons.space_dashboard, size: 30),
                   label: '',
                 ),
+                // BottomNavigationBarItem(
+                //   backgroundColor: Colors.white,
+                //   icon: Icon(Icons.search, size: 30),
+                //   activeIcon: Icon(Icons.search_outlined, size: 30),
+                //   label: '',
+                // ),
                 BottomNavigationBarItem(
                   backgroundColor: Colors.white,
                   icon: Icon(Icons.pages_outlined, size: 30),
@@ -109,23 +107,7 @@ class _TabsScreenState extends State<TabsScreen> {
               unselectedItemColor: Colors.white,
               onTap: _onItemTapped,
             ),
-          )
-
-          //  pages[_selectedindex]['Body'] as Widget,
-          // bottomNavigationBar: CurvedNavigationBar(
-          //   height: 60,
-          //   color: Colors.blue,
-          //   backgroundColor: Colors.white,
-          //   buttonBackgroundColor: Colors.blue,
-          //   items: const <Widget>[
-          //     Icon(Icons.category, color: Colors.white, size: 30),
-          //     Icon(Icons.person, color: Colors.white, size: 30),
-          //     // Icon(Icons.compare_arrows, size: 30),
-          //   ],
-          //   onTap: (index) {
-          //     return _selectedpage(index);
-          //   },
-          ),
+          )),
     );
   }
 }

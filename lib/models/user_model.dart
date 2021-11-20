@@ -5,25 +5,28 @@ class UserModel {
   String? Image;
   String? CollegeName;
   String? enrollmentNo;
+  List<String>? searchItems;
 
-  UserModel(
-      {this.uid,
-      this.email,
-      this.Name,
-      this.enrollmentNo,
-      this.CollegeName,
-      this.Image});
+  UserModel({
+    this.uid,
+    this.email,
+    this.Name,
+    this.enrollmentNo,
+    this.CollegeName,
+    this.Image,
+    this.searchItems,
+  });
 
   // receiving data from server
   factory UserModel.fromMap(map) {
     return UserModel(
-      uid: map['uid'],
-      email: map['email'],
-      Name: map['Name'],
-      enrollmentNo: map['enrollmentNo'],
-      CollegeName: map['CollegeName'],
-      Image: map['Image'],
-    );
+        uid: map['uid'],
+        email: map['email'],
+        Name: map['Name'],
+        enrollmentNo: map['enrollmentNo'],
+        CollegeName: map['CollegeName'],
+        Image: map['Image'],
+        searchItems: map['searchItems']);
   }
 
   // sending data to our server
@@ -35,6 +38,7 @@ class UserModel {
       'enrollmentNo': enrollmentNo,
       'CollegeName': CollegeName,
       'Image': Image,
+      'searchItems': searchItems
     };
   }
 }

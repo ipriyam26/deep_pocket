@@ -8,6 +8,7 @@ import 'package:deep_pocket_1/screens/login-signup/login.dart';
 
 import 'package:deep_pocket_1/screens/post/new_post_page.dart';
 import 'package:deep_pocket_1/screens/post/user_input.dart';
+import 'package:deep_pocket_1/screens/profile/search_user.dart';
 
 import 'package:deep_pocket_1/widgets/post_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -107,16 +108,11 @@ class _feedScreenState extends State<feedScreen> {
           backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
           title: const Text("Home"),
           actions: [
-            // TextButton(
-            //     onPressed: () {
-            //       FirebaseFirestore.instance
-            //           .collection("Roles")
-            //           .doc("Admin")P
-            //           .set({
-            //         'User': [loggedInuser.uid]
-            //       }).then((value) => print("ADMIN NOW"));
-            //     },
-            //     child: Text("Admin")),
+            IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, SearchUser.route);
+                },
+                icon: Icon(Icons.search)),
             TextButton(
                 onPressed: () async {
                   SharedPreferences prefs =

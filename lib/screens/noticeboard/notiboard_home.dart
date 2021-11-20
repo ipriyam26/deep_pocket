@@ -32,7 +32,7 @@ class _noticeBoardState extends State<noticeBoard> {
   DateTime? _selected;
   DateTime? _selectedBefore;
   bool _isSearching = false;
-  String? search;
+  String search = '';
   var currentmax = 20;
   Stream<QuerySnapshot<Map<String, dynamic>>> getStream() {
     _scrollController.addListener(() {
@@ -85,6 +85,16 @@ class _noticeBoardState extends State<noticeBoard> {
     return Notice.orderBy("Time", descending: true)
         .limit(currentmax)
         .snapshots();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getSearchStream() {
+    final Notice = FirebaseFirestore.instance.collection("Notices");
+
+    return Notice.where("searchItems", arrayContainsAny: [
+      search,
+      search.toLowerCase(),
+      search.toUpperCase()
+    ]).snapshots();
   }
 
   int _value = -1;
@@ -165,10 +175,17 @@ class _noticeBoardState extends State<noticeBoard> {
                         onPressed: () {
                           Navigator.pushNamed(context, createNotice.route);
                         },
-                        icon: Icon(Icons.add)),
+                        icon: const Icon(Icons.add)),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isSearching = !_isSearching;
+                        });
+                      },
+                      icon: const Icon(Icons.search)),
                   Builder(
                     builder: (context) => IconButton(
-                      icon: Icon(Icons.filter_list),
+                      icon: const Icon(Icons.filter_list),
                       onPressed: () => Scaffold.of(context).openEndDrawer(),
                     ),
                   )
@@ -406,7 +423,7 @@ class _noticeBoardState extends State<noticeBoard> {
               ),
             )),
             body: StreamBuilder(
-                stream: getStream(),
+                stream: _isSearching ? getSearchStream() : getStream(),
                 builder: (context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                         snapshot) {
@@ -422,15 +439,16 @@ class _noticeBoardState extends State<noticeBoard> {
                           child: Column(
                             children: [
                               TextField(
+                                autocorrect: false,
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 18),
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.search_outlined,
                                       color: Colors.black),
-                                  prefix: Text('Search: ',
-                                      style: TextStyle(color: Colors.black)),
                                   filled: true,
                                   fillColor: Colors.white,
                                 ),
-                                onSubmitted: (value) {
+                                onSubmitted: (String value) {
                                   setState(() {
                                     search = value;
                                   });

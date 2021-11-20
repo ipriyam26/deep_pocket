@@ -1,39 +1,70 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:deep_pocket_1/getcourse.dart';
-// import 'package:deep_pocket_1/models/course_read.dart';
-// import 'package:deep_pocket_1/read_data.dart';
-// import 'package:deep_pocket_1/screens/event/get_event.dart';
-// import 'package:deep_pocket_1/widgets/read_moredata.dart';
-// import 'package:flutter/material.dart';
-// import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
-// class test_fire extends StatefulWidget {
-//   const test_fire({Key? key}) : super(key: key);
+class testFire extends StatelessWidget {
+  const testFire({Key? key}) : super(key: key);
 
-//   @override
-//   State<test_fire> createState() => _test_fireState();
-// }
+  Future<QuerySnapshot<Map<String, dynamic>>> search() async {
+    return await FirebaseFirestore.instance.collection("Notices").get();
+  }
 
-// Future<void> printdata() async {
-//   List<Course> data = await sendmoreData().ReadJsonMoreData();
-//   for (int i = 0; i < data.length; i++) {
-//     print(data[i].name);
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: FutureBuilder(
+            future: search(),
+            builder: (context,
+                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
 
-// class _test_fireState extends State<test_fire> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("YOLO"),
-//       ),
-//       body: Container(
-//         child: ElevatedButton(
-//           child: Text("efef"),
-//           onPressed: printdata,
-//         ),
-//       ),
-//     );
-//   }
-// }
+              return ElevatedButton(
+                onPressed: () async {
+                  for (int i = 0; i < snapshot.data!.docs.length; i++) {
+                    List<String> value = snapshot.data!.docs[i]
+                        .data()['Title']
+                        .split(" ")
+                        .toList();
+                    List<String> yolo = snapshot.data!.docs[i]
+                        .data()['Body']
+                        .split(" ")
+                        .toList();
+                    List<String> name = searchItem(value);
+                    List<String> enrollment = searchItem(yolo);
+
+                    List<String> finale = [
+                      ...name,
+                      ...enrollment,
+                      ...value,
+                      ...yolo
+                    ];
+                    await FirebaseFirestore.instance
+                        .collection("Notices")
+                        .doc(snapshot.data!.docs[i].id)
+                        .update({'searchItems': finale});
+                    print("Done : " + snapshot.data!.docs[i].data()['Title']);
+                  }
+                },
+                child: Text("Press"),
+              );
+            }),
+      ),
+    );
+  }
+
+  List<String> searchItem(List<String> value) {
+    List<String> data = [];
+    String word = "";
+    for (int i = 0; i < value.length; i++) {
+      // for (int j = 0; j <= i; j++) {
+      word = word + " " + value[i];
+      // }
+      data.add(word);
+    }
+    return data;
+  }
+}

@@ -287,6 +287,24 @@ class _editProfileState extends State<editProfile> {
                                         setState(() {
                                           _waiting = true;
                                         });
+
+                                        List<String> value =
+                                            NameEditingController.text
+                                                .split("")
+                                                .toList();
+                                        List<String> yolo =
+                                            enrollmentNoEditingController.text
+                                                .split("")
+                                                .toList();
+                                        List<String> name = searchItem(value);
+                                        List<String> enrollment =
+                                            searchItem(yolo);
+
+                                        List<String> finale = [
+                                          ...name,
+                                          ...enrollment
+                                        ];
+
                                         await db
                                             .collection("users")
                                             .doc(user!.uid)
@@ -295,7 +313,9 @@ class _editProfileState extends State<editProfile> {
                                           'CollegeName':
                                               collegeEditingController.text,
                                           'enrollmentNo':
-                                              enrollmentNoEditingController.text
+                                              enrollmentNoEditingController
+                                                  .text,
+                                          'searchItems': finale,
                                         });
 
                                         Navigator.pop(context);
@@ -318,6 +338,18 @@ class _editProfileState extends State<editProfile> {
         ),
       ),
     );
+  }
+
+  List<String> searchItem(List<String> value) {
+    List<String> data = [];
+    String word = "";
+    for (int i = 0; i < value.length; i++) {
+      // for (int j = 0; j <= i; j++) {
+      word = word + "" + value[i];
+      // }
+      data.add(word);
+    }
+    return data;
   }
 
   Future<void> _pickImageCamera() async {

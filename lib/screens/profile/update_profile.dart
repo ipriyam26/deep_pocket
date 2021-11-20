@@ -334,6 +334,18 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     );
   }
 
+  List<String> searchItem(List<String> value) {
+    List<String> data = [];
+    String word = "";
+    for (int i = 0; i < value.length; i++) {
+      // for (int j = 0; j <= i; j++) {
+      word = word + "" + value[i];
+      // }
+      data.add(word);
+    }
+    return data;
+  }
+
   postDetailsToFirestore() async {
     // calling our firestore
     // calling our user model
@@ -360,6 +372,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     userModel.CollegeName = collegeEditingController.text;
     userModel.enrollmentNo = enrollmentNoEditingController.text;
 
+    List<String> value = NameEditingController.text.split("").toList();
+    List<String> yolo = enrollmentNoEditingController.text.split("").toList();
+    List<String> name = searchItem(value);
+    List<String> enrollment = searchItem(yolo);
+
+    List<String> finale = [...name, ...enrollment];
+    userModel.searchItems = finale;
     await firebaseFirestore
         .collection("users")
         .doc(user.uid)
