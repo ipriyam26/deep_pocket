@@ -1,16 +1,16 @@
+// ignore_for_file: non_constant_identifier_names, avoid_print, camel_case_types, use_key_in_widget_constructors
+
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/api_integration_imgur.dart';
-import 'package:deep_pocket_1/models/image_upload.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 
 class userInput extends StatefulWidget {
   static const route = '/user-input';
@@ -41,7 +41,7 @@ class _userInputState extends State<userInput> {
   //     FirebaseFirestore.instance.collection("users");
 
   int cata = 0;
-  int _value = 0;
+
   double radius = 18;
   List<String> ImageLink = [];
   bool _posting = false;
@@ -100,7 +100,6 @@ class _userInputState extends State<userInput> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     titleController.dispose();
     bodyController.dispose();
     super.dispose();
@@ -110,19 +109,19 @@ class _userInputState extends State<userInput> {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return Container(
+          return SizedBox(
             height: MediaQuery.of(context).size.height * 0.15,
             child: Column(
               children: [
                 // IconButton(onPressed: _pickImage, icon: icon)
                 TextButton.icon(
                     onPressed: _pickImage,
-                    icon: Icon(Icons.image),
-                    label: Text("Open Gallery")),
+                    icon: const Icon(Icons.image),
+                    label: const Text("Open Gallery")),
                 TextButton.icon(
                     onPressed: _pickImageCamera,
-                    icon: Icon(Icons.camera),
-                    label: Text("Take A Picture")),
+                    icon: const Icon(Icons.camera),
+                    label: const Text("Take A Picture")),
               ],
             ),
           );
@@ -138,9 +137,11 @@ class _userInputState extends State<userInput> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff171717),
+        backgroundColor: const Color(0xff171717),
         title: const Text('Ask a Question'),
-        actions: [IconButton(onPressed: submitted, icon: Icon(Icons.send))],
+        actions: [
+          IconButton(onPressed: submitted, icon: const Icon(Icons.send))
+        ],
       ),
       backgroundColor: const Color(0xff080808),
       body: Stack(
@@ -166,7 +167,7 @@ class _userInputState extends State<userInput> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         height: Mheight * 0.10,
                         // color: Colors.amber,
                         child: Row(
@@ -191,7 +192,7 @@ class _userInputState extends State<userInput> {
                             SizedBox(
                               width: MWidth * 0.05,
                             ),
-                            Container(
+                            SizedBox(
                               // color: Colors.amber,
                               width: MWidth * 0.65,
                               child: Column(
@@ -231,12 +232,10 @@ class _userInputState extends State<userInput> {
                                                 (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
-                                            child: Container(
-                                              child: Text(
-                                                value,
-                                                style: const TextStyle(
-                                                    color: Colors.orange),
-                                              ),
+                                            child: Text(
+                                              value,
+                                              style: const TextStyle(
+                                                  color: Colors.orange),
                                             ),
                                           );
                                         }).toList(),
@@ -260,7 +259,7 @@ class _userInputState extends State<userInput> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             height: Mheight * 0.08,
                             child: TextFormField(
                               maxLines: null,
@@ -270,7 +269,7 @@ class _userInputState extends State<userInput> {
                               maxLength: 80,
                               autocorrect: false,
                               scrollPadding:
-                                  EdgeInsets.symmetric(horizontal: 20),
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               // onChanged: (value){
                               //   titleController = value;
 
@@ -305,7 +304,7 @@ class _userInputState extends State<userInput> {
                           SizedBox(
                             height: Mheight * 0.01,
                           ),
-                          Container(
+                          SizedBox(
                             height: Mheight * 0.17,
                             child: TextFormField(
                               maxLength: 500,
@@ -361,7 +360,7 @@ class _userInputState extends State<userInput> {
                         height: Mheight * 0.02,
                       ),
                       image.isNotEmpty
-                          ? Container(
+                          ? SizedBox(
                               height: Mheight * 0.28,
                               child: CarouselSlider(
                                 options: CarouselOptions(
@@ -440,10 +439,10 @@ class _userInputState extends State<userInput> {
             Container(
               color: Colors.black.withOpacity(0.7),
               child: Center(
-                child: Container(
+                child: SizedBox(
                   height: Mheight * 0.1,
                   width: Mheight * 0.1,
-                  child: CircularProgressIndicator(
+                  child: const CircularProgressIndicator(
                     color: Colors.orange,
                     strokeWidth: 7,
                   ),

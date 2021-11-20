@@ -1,8 +1,8 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: camel_case_types, non_constant_identifier_names
 
-import 'package:deep_pocket_1/screens/faculty/faculty_model.dart';
 import 'package:deep_pocket_1/screens/faculty/faculty_widgets.dart';
+
+import 'package:flutter/material.dart';
 
 class school {
   String name;
@@ -16,6 +16,8 @@ class school {
 
 class facultyScreen extends StatefulWidget {
   static const route = '/facultyScreen';
+
+  const facultyScreen({Key? key}) : super(key: key);
 
   @override
   State<facultyScreen> createState() => _facultyScreenState();
@@ -47,14 +49,7 @@ class _facultyScreenState extends State<facultyScreen> {
     final MHeight = MediaQuery.of(context).size.height;
     final MWidth = MediaQuery.of(context).size.width;
     bool _isSearching = false;
-    var teacherSearch;
-    String? search;
-    if (_isSearching != false) {
-      teacherSearch = Faculty_mock()
-          .mockF
-          .where((teacher) => teacher.Name.contains(search!))
-          .toList();
-    }
+    if (_isSearching != false) {}
     return Scaffold(
         backgroundColor: const Color(0xFFFFF0E2),
         body: Column(
@@ -73,7 +68,7 @@ class _facultyScreenState extends State<facultyScreen> {
             SizedBox(
               height: MHeight * 0.01,
             ),
-            Container(
+            SizedBox(
               height: MHeight * 0.8,
               child: ListView.builder(
                   padding: EdgeInsets.zero,
