@@ -13,7 +13,7 @@ class clubDetail extends StatelessWidget {
     var details = ModalRoute.of(context)!.settings.arguments as club;
     var MSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: Column(
         children: [
           stackDetail(details: details, MSize: MSize),

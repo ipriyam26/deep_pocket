@@ -256,7 +256,8 @@ class ListGrid extends StatelessWidget {
       children: [
         Text(
           title + "s",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
         ),
         SizedBox(
           height: Mheight * 0.01,

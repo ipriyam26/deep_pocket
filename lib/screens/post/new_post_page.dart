@@ -32,6 +32,7 @@ class postPage extends StatelessWidget {
     // getLoggedUser();
 
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: StreamBuilder(
             stream: FirebaseFirestore.instance
@@ -121,6 +122,8 @@ class postPage extends StatelessWidget {
                                             final time =
                                                 DateFormat.jm().format(dtime);
                                             return Card(
+                                              color: const Color.fromRGBO(
+                                                  11, 10, 10, 1),
                                               elevation: 0,
                                               child: GetBuilder(
                                                   init: userRoleController(),
@@ -205,8 +208,8 @@ class postPage extends StatelessWidget {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                color: Color(
-                                                                    0xff36454f),
+                                                                color: Colors
+                                                                    .white,
                                                               ),
                                                             ),
                                                           ),
@@ -215,8 +218,8 @@ class postPage extends StatelessWidget {
                                                             style:
                                                                 const TextStyle(
                                                               fontSize: 12,
-                                                              color: Color(
-                                                                  0xff36454f),
+                                                              color:
+                                                                  Colors.grey,
                                                             ),
                                                           )
                                                         ],
@@ -230,8 +233,11 @@ class postPage extends StatelessWidget {
                                                             Colors.pink,
                                                         trimMode: TrimMode.Line,
                                                         // trimCollapsedText: '..Read More',
-                                                        style: const TextStyle(
-                                                            fontSize: 14),
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.white
+                                                                .withOpacity(
+                                                                    0.7)),
                                                         trimExpandedText:
                                                             ' Less',
                                                       ),
@@ -268,7 +274,10 @@ class deleteComment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      icon: const Icon(Icons.more_vert),
+      icon: const Icon(
+        Icons.more_vert,
+        color: Colors.white,
+      ),
       onSelected: (String result) async {
         await FirebaseFirestore.instance
             .collection("Comments")
@@ -381,12 +390,19 @@ class UserComment extends StatelessWidget {
                       msg: "Comment too-short atleast 2 characters");
                 }
               },
+              style: TextStyle(
+                color: Colors.white,
+              ),
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(
                       horizontal: MWidth * 0.03, vertical: MHeight * 0.01),
                   hintText: "Add a Comment...",
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                  ),
                   border: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
                       borderRadius: BorderRadius.all(Radius.circular(5)))),
             ),
           ),

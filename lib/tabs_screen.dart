@@ -47,67 +47,59 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureProvider<UserModel>(
-      initialData:
-          UserModel(Name: "Loading", Image: "loading", CollegeName: "loading"),
+      initialData: UserModel(),
       create: (_) => getUserData(),
       child: Scaffold(
-          // appBar: AppBar(
-          //   title: Text(pages[_selectedindex]['Title'].toString()),
-          // ),
-          drawer: const Drawer(
-              // Populate the Drawer in the next step.
-              ),
           body: Scaffold(
-            body: Center(
-              child: _widgetOptions.elementAt(_selectedIndex),
+        body: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
+          // backgroundColor: const Color.fromRGBO(16, 15, 14, 1) ,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon: Icon(Icons.space_dashboard_outlined, size: 30),
+              activeIcon: Icon(Icons.space_dashboard, size: 30),
+              label: '',
             ),
-            bottomNavigationBar: BottomNavigationBar(
-              backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
-              // backgroundColor: const Color.fromRGBO(16, 15, 14, 1) ,
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  backgroundColor: Colors.white,
-                  icon: Icon(Icons.space_dashboard_outlined, size: 30),
-                  activeIcon: Icon(Icons.space_dashboard, size: 30),
-                  label: '',
-                ),
-                // BottomNavigationBarItem(
-                //   backgroundColor: Colors.white,
-                //   icon: Icon(Icons.search, size: 30),
-                //   activeIcon: Icon(Icons.search_outlined, size: 30),
-                //   label: '',
-                // ),
-                BottomNavigationBarItem(
-                  backgroundColor: Colors.white,
-                  icon: Icon(Icons.pages_outlined, size: 30),
-                  activeIcon: Icon(Icons.pages, size: 30),
-                  label: '',
-                ),
-                // BottomNavigationBarItem(
-                //   icon: Icon(
-                //     Icons.add,
-                //     size: 30,
-                //   ),
-                //   activeIcon: Icon(Icons.add_circle, size: 30),
-                //   label: '',
-                // ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person_outline, size: 30),
-                  activeIcon: Icon(
-                    Icons.person,
-                    size: 30,
-                  ),
-                  label: '',
-                ),
-              ],
-              selectedIconTheme:
-                  IconThemeData(size: 32, color: Colors.pink[800]),
-              currentIndex: _selectedIndex,
-              // selectedItemColor: Colors.pink[800],
-              unselectedItemColor: Colors.white,
-              onTap: _onItemTapped,
+            // BottomNavigationBarItem(
+            //   backgroundColor: Colors.white,
+            //   icon: Icon(Icons.search, size: 30),
+            //   activeIcon: Icon(Icons.search_outlined, size: 30),
+            //   label: '',
+            // ),
+            BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon: Icon(Icons.pages_outlined, size: 30),
+              activeIcon: Icon(Icons.pages, size: 30),
+              label: '',
             ),
-          )),
+            // BottomNavigationBarItem(
+            //   icon: Icon(
+            //     Icons.add,
+            //     size: 30,
+            //   ),
+            //   activeIcon: Icon(Icons.add_circle, size: 30),
+            //   label: '',
+            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline, size: 30),
+              activeIcon: Icon(
+                Icons.person,
+                size: 30,
+              ),
+              label: '',
+            ),
+          ],
+          selectedIconTheme: IconThemeData(size: 32, color: Colors.pink[800]),
+          currentIndex: _selectedIndex,
+          // selectedItemColor: Colors.pink[800],
+          unselectedItemColor: Colors.white,
+          onTap: _onItemTapped,
+        ),
+      )),
     );
   }
 }

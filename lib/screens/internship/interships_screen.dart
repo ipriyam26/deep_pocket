@@ -1,3 +1,4 @@
+import 'package:deep_pocket_1/screens/internship/internship_create.dart';
 import 'package:flutter/material.dart';
 
 import 'package:deep_pocket_1/screens/internship/half_widgets.dart';
@@ -17,7 +18,16 @@ class internShips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.black,
         appBar: AppBar(
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, internCreate.route);
+                },
+                icon: Icon(Icons.add))
+          ],
+          backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
           title: const Text("Interships"),
         ),
         body: ListView(

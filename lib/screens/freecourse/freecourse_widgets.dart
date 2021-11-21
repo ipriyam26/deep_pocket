@@ -99,7 +99,7 @@ class courseListCard extends StatelessWidget {
         Navigator.pushNamed(context, courseScreen.route, arguments: course);
       },
       child: Card(
-        // color: Color(0xfffac4d9),
+        color: const Color.fromRGBO(40, 40, 40, 1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -143,7 +143,7 @@ class courseListCard extends StatelessWidget {
                       course.name!,
                       style: const TextStyle(
                           fontSize: 18,
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.w600),
                       minFontSize: 12,
                       maxLines: 2,
@@ -167,6 +167,7 @@ class courseListCard extends StatelessWidget {
                         Text(
                           '${course.rating ?? 4}',
                           style: const TextStyle(
+                            color: Colors.white,
                             fontSize: 12,
                           ),
                         ),
@@ -185,6 +186,7 @@ class courseListCard extends StatelessWidget {
                                       " " +
                                       course.enrolled.toString().split(" ")[2],
                                   style: const TextStyle(
+                                    color: Colors.white,
                                     fontSize: 12,
                                   ),
                                 )
@@ -198,6 +200,7 @@ class courseListCard extends StatelessWidget {
                                               "enrolled",
                                           style: const TextStyle(
                                             fontSize: 12,
+                                            color: Colors.white,
                                           ),
                                         )
                                       : course.enrolled
@@ -210,6 +213,7 @@ class courseListCard extends StatelessWidget {
                                                   "enrolled",
                                               style: const TextStyle(
                                                 fontSize: 12,
+                                                color: Colors.white,
                                               ),
                                             )
                                   : AutoSizeText(
@@ -219,6 +223,7 @@ class courseListCard extends StatelessWidget {
                                           "enrolled",
                                       style: const TextStyle(
                                         fontSize: 12,
+                                        color: Colors.white,
                                       ),
                                     ),
                       ],

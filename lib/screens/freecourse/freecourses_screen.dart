@@ -19,9 +19,9 @@ class freeCources extends StatelessWidget {
                 fontSize: 23,
                 fontWeight: FontWeight.bold,
               )),
-          backgroundColor: Colors.black,
+          backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
         ),
-        backgroundColor: const Color(0xFFFFF0E2),
+        backgroundColor: Colors.black,
         body: SingleChildScrollView(
           child: GridView.builder(
             padding: EdgeInsets.symmetric(

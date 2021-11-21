@@ -14,6 +14,7 @@ class internPage extends StatelessWidget {
     double MWeight = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
           title: Text("Internship"),
         ),
         body: Container(
@@ -23,16 +24,7 @@ class internPage extends StatelessWidget {
                   height: double.maxFinite,
                   width: double.maxFinite,
                   constraints: BoxConstraints.expand(),
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromRGBO(0, 0, 128, 0.4),
-                      Color.fromRGBO(30, 144, 255, 0.95),
-                      Color.fromRGBO(135, 206, 250, 1),
-                    ],
-                  )),
+                  decoration: const BoxDecoration(color: Colors.black),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -46,6 +38,9 @@ class internPage extends StatelessWidget {
                         MWidth: MWeight,
                       ),
                       ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white.withOpacity(0.1))),
                           onPressed: () {},
                           child: Container(
                             margin: EdgeInsets.symmetric(

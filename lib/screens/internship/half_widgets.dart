@@ -62,13 +62,9 @@ class firstHalf extends StatelessWidget {
           Container(
             width: MHeight * 0.075,
             height: MHeight * 0.075,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7),
-              image: const DecorationImage(
-                fit: BoxFit.scaleDown,
-                image: NetworkImage(
-                    "https://www.freepnglogos.com/uploads/apple-logo-png/apple-logo-png-dallas-shootings-don-add-are-speech-zones-used-4.png"),
-              ),
+            child: Image.network(
+              "https://www.freepnglogos.com/uploads/apple-logo-png/apple-logo-png-dallas-shootings-don-add-are-speech-zones-used-4.png",
+              color: Colors.white,
             ),
           ),
         ],
@@ -211,6 +207,8 @@ class enrollCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       // color: Colors.pink,
+      color: const Color.fromRGBO(11, 10, 10, 1),
+
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(7),
       ),
@@ -266,7 +264,7 @@ class enrollCard extends StatelessWidget {
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             // color: Colors.yellow,
-                            color: Colors.grey[200],
+                            color: Color.fromRGBO(40, 40, 43, 1),
                             borderRadius: BorderRadius.circular(7),
                           ),
                           // height: MHeight * 0.15 * 0.8,
@@ -277,7 +275,9 @@ class enrollCard extends StatelessWidget {
                               const Text(
                                 "Required skill",
                                 style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w500),
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500),
                               ),
                               SizedBox(
                                 height: MHeight * 0.15 * 0.04,
@@ -323,7 +323,7 @@ class enrollCard extends StatelessWidget {
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       // color: Colors.yellow,
-                      color: Colors.grey[200],
+                      color: Color.fromRGBO(40, 40, 43, 1),
                       borderRadius: BorderRadius.circular(7),
                     ),
                     // height: MHeight * 0.5 * 0.4,
@@ -422,8 +422,10 @@ class jobLine extends StatelessWidget {
               width: MWidth * 0.5,
               child: AutoSizeText(
                 text,
-                style:
-                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
                 minFontSize: 11,
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
@@ -454,13 +456,17 @@ class skill_line extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("- "),
+        const Text(
+          "- ",
+          style: TextStyle(color: Colors.white),
+        ),
         Container(
           // color: Colors.amber,
           width: MWidth * 0.6,
           child: AutoSizeText(
             line,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+            style: const TextStyle(
+                fontSize: 15, color: Colors.white, fontWeight: FontWeight.w300),
             minFontSize: 10,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -484,6 +490,7 @@ class aboutCompany extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+        color: const Color.fromRGBO(11, 10, 10, 1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7),
         ),
@@ -527,6 +534,7 @@ class jobDescribtion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+        color: const Color.fromRGBO(11, 10, 10, 1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7),
         ),
@@ -586,6 +594,7 @@ class internshipCard extends StatelessWidget {
         Navigator.pushNamed(context, internPage.route);
       },
       child: Card(
+        color: const Color.fromRGBO(11, 10, 10, 1),
         child: Container(
           // color: Colors.yellow,
           padding: const EdgeInsets.all(20.0),
@@ -601,7 +610,9 @@ class internshipCard extends StatelessWidget {
                       Text(
                         title,
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
                       ),
                       Text(
                         companyName,
@@ -639,18 +650,24 @@ class internshipCard extends StatelessWidget {
                     workfromhome
                         ? Row(
                             children: const [
-                              Icon(Icons.home),
+                              Icon(
+                                Icons.home,
+                                color: Colors.grey,
+                              ),
                               Text(
                                 " Work From Home",
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(color: Colors.white),
                               ),
                             ],
                           )
                         : Row(
                             children: const [
-                              Icon(Icons.business),
+                              Icon(
+                                Icons.business,
+                                color: Colors.grey,
+                              ),
                               Text(" Work at office",
-                                  style: TextStyle(color: Colors.black)),
+                                  style: TextStyle(color: Colors.white)),
                             ],
                           ),
                     Row(
@@ -658,14 +675,22 @@ class internshipCard extends StatelessWidget {
                         salary > 0
                             ? Row(
                                 children: [
-                                  const Icon(Icons.payment),
-                                  Text(" ₹ " + salary.toString() + " /month"),
+                                  const Icon(
+                                    Icons.payment,
+                                    color: Colors.grey,
+                                  ),
+                                  Text(" ₹ " + salary.toString() + " /month",
+                                      style: TextStyle(color: Colors.white)),
                                 ],
                               )
                             : Row(
                                 children: const [
-                                  Icon(Icons.language),
-                                  Text(" Experience"),
+                                  Icon(
+                                    Icons.language,
+                                    color: Colors.grey,
+                                  ),
+                                  Text(" Experience",
+                                      style: TextStyle(color: Colors.white)),
                                 ],
                               ),
                         SizedBox(
@@ -675,19 +700,26 @@ class internshipCard extends StatelessWidget {
                           children: [
                             const Icon(
                               Icons.calendar_today,
+                              color: Colors.grey,
                               size: 20,
                             ),
-                            Text(" " + time),
+                            Text(" " + time,
+                                style: TextStyle(color: Colors.white)),
                           ],
                         )
                       ],
                     ),
                     Row(
                       children: [
-                        const Icon(Icons.watch_later_outlined),
+                        const Icon(
+                          Icons.watch_later_outlined,
+                          color: Colors.grey,
+                        ),
                         partTimeAllowed
-                            ? const Text(" Part Time Allowed")
-                            : const Text(" Only Full Time"),
+                            ? const Text(" Part Time Allowed",
+                                style: TextStyle(color: Colors.white))
+                            : const Text(" Only Full Time",
+                                style: TextStyle(color: Colors.white)),
                       ],
                     )
                   ],

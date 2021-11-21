@@ -17,7 +17,7 @@ class clubsScreen extends StatelessWidget {
         // height: MSize.height,
         padding: EdgeInsets.symmetric(
             horizontal: MSize.width * 0.04, vertical: MSize.height * 0.04),
-        color: const Color(0xffE0E0E0),
+        color: Colors.black,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -27,7 +27,10 @@ class clubsScreen extends StatelessWidget {
                   bottom: MSize.height * 0.02, top: MSize.height * 0.05),
               child: const Text(
                 "College Clubs",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
               ),
             ),
             SizedBox(

@@ -1,16 +1,9 @@
 import 'dart:io';
 
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_pocket_1/models/api_integration_imgur.dart';
-import 'package:deep_pocket_1/models/image_upload.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 
 class createNotice extends StatefulWidget {
   static const route = 'noticeboard-Home/notice-create';
@@ -46,6 +39,18 @@ class _createNoticeState extends State<createNotice> {
   List<String> ImageLink = [];
   bool _posting = false;
 
+  List<String> searchItem(List<String> value) {
+    List<String> data = [];
+    String word = "";
+    for (int i = 0; i < value.length; i++) {
+      // for (int j = 0; j <= i; j++) {
+      word = word + " " + value[i];
+      // }
+      data.add(word);
+    }
+    return data;
+  }
+
   void submitted() async {
     String titleCheck = titleController.text;
     String bodyCheck = bodyController.text;
@@ -56,6 +61,12 @@ class _createNoticeState extends State<createNotice> {
     setState(() {
       _posting = true;
     });
+    List<String> value = titleController.text.split(" ").toList();
+    List<String> yolo = bodyController.text.split(" ").toList();
+    List<String> name = searchItem(value);
+    List<String> enrollment = searchItem(yolo);
+
+    List<String> finale = [...name, ...enrollment, ...value, ...yolo];
     var newNotice = {
       'AuthorUID': user!.uid,
       'Time': DateTime.now(),
@@ -63,6 +74,7 @@ class _createNoticeState extends State<createNotice> {
       'Body': bodyController.text,
       'Sender': senderController.text,
       'Department': _chosenValue,
+      'searchItems': finale
     };
     await FirebaseFirestore.instance
         .collection("Notices")

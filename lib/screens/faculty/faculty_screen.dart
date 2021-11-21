@@ -51,32 +51,35 @@ class _facultyScreenState extends State<facultyScreen> {
     bool _isSearching = false;
     if (_isSearching != false) {}
     return Scaffold(
-        backgroundColor: const Color(0xFFFFF0E2),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding:
-                  EdgeInsets.only(left: MWidth * 0.05, top: MHeight * 0.05),
-              width: MWidth,
-              child: const Text('Faculty',
-                  style: TextStyle(
-                      // color: Color(0xff00A6A6),
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(
-              height: MHeight * 0.01,
-            ),
-            SizedBox(
-              height: MHeight * 0.8,
-              child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: schools.length,
-                  itemBuilder: (context, i) => cardList(
-                      MWidth: MWidth, MHeight: MHeight, sch: schools[i])),
-            ),
-          ],
+        backgroundColor: Colors.black,
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                  left: MWidth * 0.05,
+                ),
+                width: MWidth,
+                child: const Text('Faculty',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold)),
+              ),
+              SizedBox(
+                height: MHeight * 0.01,
+              ),
+              SizedBox(
+                height: MHeight * 0.8,
+                child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemCount: schools.length,
+                    itemBuilder: (context, i) => cardList(
+                        MWidth: MWidth, MHeight: MHeight, sch: schools[i])),
+              ),
+            ],
+          ),
         ));
   }
 }

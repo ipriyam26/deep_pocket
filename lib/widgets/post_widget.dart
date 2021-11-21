@@ -77,6 +77,7 @@ class _postCardState extends State<postCard> {
     final CarouselController _controller = CarouselController();
 
     return Card(
+      color: const Color.fromRGBO(11, 10, 10, 1),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
@@ -120,6 +121,7 @@ class _postCardState extends State<postCard> {
                     Text(
                       widget.title.toString(),
                       style: const TextStyle(
+                        color: Colors.white,
                         fontWeight: FontWeight.w700,
                         fontSize: 17,
                       ),
@@ -132,7 +134,10 @@ class _postCardState extends State<postCard> {
                         colorClickableText: Colors.pink,
                         trimMode: TrimMode.Line,
                         trimCollapsedText: '..Read More',
-                        style: const TextStyle(fontSize: 13),
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.white,
+                        ),
                         trimExpandedText: ' Less',
                       ),
                     ),
@@ -198,7 +203,7 @@ class _postCardState extends State<postCard> {
                             style: ButtonStyle(
                                 foregroundColor:
                                     MaterialStateProperty.all<Color>(
-                                        Colors.black)),
+                                        Colors.white)),
                             onPressed: () async {
                               liked = !liked;
                               if (liked) {
@@ -240,7 +245,7 @@ class _postCardState extends State<postCard> {
                             style: ButtonStyle(
                                 foregroundColor:
                                     MaterialStateProperty.all<Color>(
-                                        Colors.black)),
+                                        Colors.white)),
                             onPressed: null,
                             icon: const Icon(Icons.comment),
                             label: Text("${widget.comments} Comments")),
@@ -364,8 +369,9 @@ class firstColumn extends StatelessWidget {
                             (Anonymous)
                                 ? const AutoSizeText(
                                     'Anonymous',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
                                     maxFontSize: 19,
                                     minFontSize: 18,
                                   )
@@ -378,6 +384,7 @@ class firstColumn extends StatelessWidget {
                                     child: AutoSizeText(
                                       name.toString().split(" ")[0],
                                       style: const TextStyle(
+                                          color: Colors.white,
                                           fontWeight: FontWeight.bold),
                                       maxFontSize: 19,
                                       minFontSize: 18,
@@ -394,7 +401,9 @@ class firstColumn extends StatelessWidget {
                                 },
                                 child: AutoSizeText(
                                   "(${name.toString().split(" ")[0]})",
-                                  style: const TextStyle(color: Colors.black),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
                                   maxFontSize: 19,
                                   minFontSize: 8,
                                 ),
@@ -406,6 +415,9 @@ class firstColumn extends StatelessWidget {
                             if (roleController.instructor!.contains(AuthorUID))
                               AutoSizeText(
                                 "Instructor   ".toUpperCase(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                             AutoSizeText(
                               time.toString(),
@@ -424,9 +436,9 @@ class firstColumn extends StatelessWidget {
                       label: Text(
                         tag,
                         style:
-                            const TextStyle(color: Colors.orange, fontSize: 12),
+                            const TextStyle(color: Colors.pink, fontSize: 12),
                       ),
-                      backgroundColor: Colors.black,
+                      backgroundColor: const Color.fromRGBO(40, 40, 43, 1),
                     ),
 
                     // This is the type used by the popup menu below.
@@ -474,7 +486,10 @@ class _sheetState extends State<sheet> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      icon: const Icon(Icons.more_vert),
+      icon: Icon(
+        Icons.more_vert,
+        color: Colors.white.withOpacity(0.5),
+      ),
       onSelected: (String result) async {
         result == 'Edit'
             ? Navigator.pushNamed(context, editPost.route, arguments: {

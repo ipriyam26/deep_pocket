@@ -1,4 +1,5 @@
 import 'package:deep_pocket_1/screens/event/create_event.dart';
+import 'package:deep_pocket_1/screens/internship/internship_create.dart';
 import 'package:deep_pocket_1/screens/login-signup/login.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notice_create.dart';
 import 'package:deep_pocket_1/screens/post/edit_post.dart';
@@ -88,6 +89,7 @@ class MyApp extends StatelessWidget {
           createEvent.route: (ctx) => createEvent(),
           fullImage.route: (ctx) => fullImage(),
           searchProfileScreen.route: (ctx) => searchProfileScreen(),
+          internCreate.route: (ctx) => internCreate()
         });
   }
 }

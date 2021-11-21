@@ -41,7 +41,7 @@ class hostclub extends StatelessWidget {
                     const Text("ABOUT THE CLUB",
                         style: TextStyle(
                             fontSize: 23,
-                            color: Colors.black,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold)),
                     // const Divider(
                     //   color: Colors.white,
@@ -72,7 +72,7 @@ class hostclub extends StatelessWidget {
                   subject: 'Request to join the club',
                   body: " "),
               style: ElevatedButton.styleFrom(
-                  primary: Colors.black,
+                  primary: Colors.white.withOpacity(0.3),
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(horizontal: MSize.width * 0.1)),
               child: const Text("Join"))
@@ -102,7 +102,7 @@ class hostDetails extends StatelessWidget {
           child: const Text("HOST",
               style: TextStyle(
                   fontSize: 20,
-                  color: Colors.black,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold)),
         ),
         Container(
@@ -122,7 +122,7 @@ class hostDetails extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: Colors.black,
                         image: DecorationImage(
-                          fit: BoxFit.scaleDown,
+                          fit: BoxFit.cover,
                           image: NetworkImage(details.leaders[i].img),
                         ),
                       ),
@@ -130,7 +130,7 @@ class hostDetails extends StatelessWidget {
                     title: Text(details.leaders[i].Name,
                         style: const TextStyle(
                             // fontSize: 17,
-                            color: Colors.black,
+                            color: Colors.white,
                             fontWeight: FontWeight.w400)),
                     subtitle: Text(details.leaders[i].designation,
                         style: const TextStyle(
@@ -160,10 +160,11 @@ class clubCard extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(context, clubDetail.route, arguments: clubdeatils);
       },
-      splashColor: Colors.black,
+      splashColor: Colors.white,
       child: Card(
         elevation: 5,
         // margin: EdgeInsets.all(10),
+        color: Color.fromRGBO(40, 40, 43, 1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
@@ -191,14 +192,14 @@ class clubCard extends StatelessWidget {
               Text(
                 clubdeatils.name,
                 style: const TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 20),
               ),
               Text(
                 clubdeatils.theme.toUpperCase(),
-                style: const TextStyle(
-                    color: Colors.black,
+                style: TextStyle(
+                    color: Colors.white.withOpacity(0.3),
                     fontWeight: FontWeight.w600,
                     fontSize: 14),
               ),
@@ -230,7 +231,6 @@ class details2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black.withOpacity(0.15),
-      // color: Colors.yellow,
       width: double.maxFinite,
       padding: EdgeInsets.only(
           left: MSize.height * 0.02, bottom: MSize.height * 0.025),

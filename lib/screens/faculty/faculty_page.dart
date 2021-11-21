@@ -31,7 +31,7 @@ class facultyPage extends StatelessWidget {
     }
 
     return Scaffold(
-      // backgroundColor: Colors.brown,
+      backgroundColor: Colors.black,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

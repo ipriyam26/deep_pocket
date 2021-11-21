@@ -79,7 +79,7 @@ class noticeCard extends StatelessWidget {
                   IconButton(
                       onPressed: () {},
                       icon: const Icon(Icons.bookmark_border_outlined,
-                          color: Colors.orange)),
+                          color: Colors.pink)),
                 ],
               )
             ],

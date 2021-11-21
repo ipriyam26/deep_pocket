@@ -12,7 +12,7 @@ class courseList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xFFFFF0E2),
+        backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
         appBar: AppBar(
           backgroundColor: Colors.black,
           title: const Text("Courses"),

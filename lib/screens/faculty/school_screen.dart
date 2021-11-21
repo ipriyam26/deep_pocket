@@ -68,12 +68,7 @@ class schoolScreen extends StatelessWidget {
       // endDrawer: Drawer(),
       // appBar: AppBar(title: ,),
       body: Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(colors: [
-          // Color(0xffffffff),
-          Color(0xffEDCA4D),
-          Color(0xffED7A4D)
-        ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+        decoration: const BoxDecoration(color: Colors.black),
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: MWidth * 0.01),

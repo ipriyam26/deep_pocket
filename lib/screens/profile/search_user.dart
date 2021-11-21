@@ -33,9 +33,10 @@ class _SearchUserState extends State<SearchUser> {
     final double Mwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
+        backgroundColor: Colors.black,
         title: const Text("Search User"),
       ),
+      backgroundColor: Color.fromRGBO(16, 15, 1, 1),
       body: Container(
         height: Mheight * 0.8,
         padding: EdgeInsets.symmetric(
@@ -44,21 +45,29 @@ class _SearchUserState extends State<SearchUser> {
           // ignore: prefer_const_literals_to_create_immutables
           children: [
             TextField(
-              cursorColor: Colors.black,
+              style: TextStyle(color: Colors.white),
+              cursorColor: Colors.white,
               onChanged: (String value) {
                 setState(() {
                   value1 = value;
                 });
               },
               decoration: const InputDecoration(
+                  disabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
                   focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 2),
+                      borderSide: BorderSide(color: Colors.white, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 2),
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   prefixIcon: Icon(
                     Icons.search,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                   border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 10),
                       borderRadius: BorderRadius.all(Radius.circular(10)))),
             ),
             FutureBuilder(
@@ -89,11 +98,14 @@ class _SearchUserState extends State<SearchUser> {
                                         currentMax = currentMax + 10;
                                       });
                                     },
-                                    child: const Text("Find More"))
+                                    child: const Text("Find More",
+                                        style: TextStyle(color: Colors.white)))
                                 : Container(
                                     width: Mwidth * 0.8,
                                     child: const Center(
-                                        child: Text("No More results")))
+                                        child: Text("No More results",
+                                            style: TextStyle(
+                                                color: Colors.white))))
                             : (snapshot.data!.docs[index].data()['Name'] !=
                                     "Add Name")
                                 ? InkWell(
@@ -104,6 +116,8 @@ class _SearchUserState extends State<SearchUser> {
                                               .data()['uid']);
                                     },
                                     child: Card(
+                                      color:
+                                          const Color.fromRGBO(11, 10, 10, 1),
                                       child: Padding(
                                         padding: const EdgeInsets.all(10),
                                         child: Row(
@@ -128,6 +142,7 @@ class _SearchUserState extends State<SearchUser> {
                                                   snapshot.data!.docs[index]
                                                       .data()['Name'],
                                                   style: const TextStyle(
+                                                      color: Colors.white,
                                                       fontSize: 20,
                                                       fontWeight:
                                                           FontWeight.bold),
@@ -136,6 +151,7 @@ class _SearchUserState extends State<SearchUser> {
                                                   snapshot.data!.docs[index]
                                                       .data()['enrollmentNo'],
                                                   style: const TextStyle(
+                                                      color: Colors.white,
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.w600),

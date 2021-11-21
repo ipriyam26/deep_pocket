@@ -20,7 +20,7 @@ class noticeScreen extends StatelessWidget {
         ),
         backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
       ),
-      backgroundColor: Color(0xFF16161d),
+      backgroundColor: Colors.black,
       body: Column(
         children: [
           Container(
@@ -36,7 +36,7 @@ class noticeScreen extends StatelessWidget {
                   style: const TextStyle(
                       fontSize: 23,
                       // color: Colors.white,
-                      color: Colors.orange,
+                      color: Colors.pinkAccent,
                       fontWeight: FontWeight.w800),
                   minFontSize: 16,
                   maxLines: 4,
@@ -56,7 +56,7 @@ class noticeScreen extends StatelessWidget {
                   newNotice.data()['Sender'],
                   // .format(newNotice.date),
                   style: const TextStyle(
-                      color: Color(0xFFFF6700),
+                      color: Colors.pink,
                       fontSize: 17,
                       fontWeight: FontWeight.w600),
                 ),

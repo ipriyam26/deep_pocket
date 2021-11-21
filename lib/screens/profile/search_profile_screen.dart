@@ -31,6 +31,7 @@ class _searchProfileScreenState extends State<searchProfileScreen> {
         init: userRoleController(),
         builder: (userRoleController rolecontroller) {
           return Scaffold(
+            backgroundColor: Colors.black,
             appBar: AppBar(
               backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
               title: const Text("User Profile"),
@@ -76,7 +77,7 @@ class _searchProfileScreenState extends State<searchProfileScreen> {
                               padding: EdgeInsets.all(
                                   MediaQuery.of(context).size.height * 0.01),
                               decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey)),
+                                  border: Border.all(color: Colors.black)),
                               height: MediaQuery.of(context).size.height * 0.22,
                               child: Column(
                                 children: [
@@ -101,38 +102,6 @@ class _searchProfileScreenState extends State<searchProfileScreen> {
             ),
           );
         });
-  }
-}
-
-class editprofile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(50))),
-          width: MediaQuery.of(context).size.width * 0.7,
-          child: ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(primary: Colors.black),
-            onPressed: () {
-              Navigator.pushNamed(context, editProfile.route);
-            },
-            icon: const Icon(
-              Icons.edit,
-              color: Colors.pink,
-            ),
-            label: const Text(
-              "Edit Profile",
-              // style: TextStyle(color: Colors.pink),
-            ),
-          ),
-        ),
-        IconButton(onPressed: () {}, icon: Icon(Icons.share))
-      ],
-    ));
   }
 }
 
@@ -183,8 +152,11 @@ class userImageName extends StatelessWidget {
                       children: [
                         AutoSizeText(
                           name,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                          minFontSize: 19,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                          minFontSize: 20,
                           maxFontSize: 23,
                         ),
                         const SizedBox(
@@ -198,12 +170,15 @@ class userImageName extends StatelessWidget {
                                 const Text(
                                   "EnrollNo. : ",
                                   style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600),
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 AutoSizeText(
                                   enrollmentNo,
-                                  style: const TextStyle(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
                                   maxFontSize: 16,
                                   minFontSize: 14,
                                 ),
@@ -214,12 +189,14 @@ class userImageName extends StatelessWidget {
                                 const Text(
                                   "Institute : ",
                                   style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600),
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 Text(
                                   college,
                                   style: const TextStyle(
+                                    color: Colors.white,
                                     fontSize: 14,
                                   ),
                                 ),

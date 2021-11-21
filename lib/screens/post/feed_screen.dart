@@ -139,10 +139,11 @@ class _feedScreenState extends State<feedScreen> {
                     {Navigator.pushNamed(context, userInput.route)},
                 child: const Icon(
                   Icons.add_box,
-                  color: Colors.red,
+                  color: Colors.pink,
                 )),
           ],
         ),
+        backgroundColor: Colors.black,
         body: StreamBuilder(
             stream: filter == 0 ? getposts() : getFilteredposts(),
 
@@ -165,7 +166,7 @@ class _feedScreenState extends State<feedScreen> {
                               ? const CupertinoActivityIndicator()
                               : Center(
                                   child: InkWell(
-                                    splashColor: Colors.black,
+                                    splashColor: Colors.white,
                                     onTap: () {
                                       Navigator.pushNamed(
                                           context, postPage.route,

@@ -338,7 +338,8 @@ class ListGrid extends StatelessWidget {
       children: [
         Text(
           title + "s",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
         ),
         SizedBox(
           height: Mheight * 0.01,
@@ -362,6 +363,7 @@ class ListGrid extends StatelessWidget {
                             },
                             icon: const Icon(
                               Icons.add,
+                              color: Color.fromRGBO(40, 40, 43, 1),
                               size: 50,
                             ))
                         : Stack(
@@ -369,7 +371,7 @@ class ListGrid extends StatelessWidget {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: Container(
-                                  color: Colors.black,
+                                  color: const Color.fromRGBO(40, 40, 43, 1),
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
@@ -435,7 +437,7 @@ class ListGrid extends StatelessWidget {
                     itemBuilder: (context, index) => ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: Container(
-                            color: Colors.black,
+                            color: Color.fromRGBO(40, 40, 43, 1),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [

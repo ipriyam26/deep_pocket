@@ -26,7 +26,7 @@ class UserModel {
         enrollmentNo: map['enrollmentNo'],
         CollegeName: map['CollegeName'],
         Image: map['Image'],
-        searchItems: map['searchItems']);
+        searchItems: map['searchItems'] as List<String>?);
   }
 
   // sending data to our server

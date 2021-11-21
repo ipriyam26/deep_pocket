@@ -28,6 +28,7 @@ class _profileScreenState extends State<profileScreen> {
         init: userRoleController(),
         builder: (userRoleController rolecontroller) {
           return Scaffold(
+            backgroundColor: Colors.black,
             appBar: AppBar(
               backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
               actions: [
@@ -83,7 +84,7 @@ class _profileScreenState extends State<profileScreen> {
                               padding: EdgeInsets.all(
                                   MediaQuery.of(context).size.height * 0.01),
                               decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey)),
+                                  border: Border.all(color: Colors.black)),
                               height: MediaQuery.of(context).size.height * 0.27,
                               child: Column(
                                 children: [
@@ -124,7 +125,8 @@ class editprofile extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(50))),
           width: MediaQuery.of(context).size.width * 0.7,
           child: ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(primary: Colors.black),
+            style: ElevatedButton.styleFrom(
+                primary: const Color.fromRGBO(40, 40, 43, 1)),
             onPressed: () {
               Navigator.pushNamed(context, editProfile.route);
             },
@@ -190,7 +192,8 @@ class userImageName extends StatelessWidget {
                       children: [
                         AutoSizeText(
                           name,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
                           minFontSize: 20,
                           maxFontSize: 23,
                         ),
@@ -205,12 +208,15 @@ class userImageName extends StatelessWidget {
                                 const Text(
                                   "EnrollNo. : ",
                                   style: TextStyle(
+                                    color: Colors.white,
                                     fontSize: 14,
                                   ),
                                 ),
                                 AutoSizeText(
                                   enrollmentNo,
-                                  style: const TextStyle(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
                                   maxFontSize: 16,
                                   minFontSize: 14,
                                 ),
@@ -222,11 +228,13 @@ class userImageName extends StatelessWidget {
                                   "Institute : ",
                                   style: TextStyle(
                                     fontSize: 14,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 Text(
                                   college,
                                   style: const TextStyle(
+                                    color: Colors.white,
                                     fontSize: 14,
                                   ),
                                 ),

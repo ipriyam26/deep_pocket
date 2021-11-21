@@ -36,7 +36,7 @@ class cardHeading extends StatelessWidget {
         Text(
           heading,
           style: const TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 28,
             fontWeight: FontWeight.bold,
           ),
@@ -48,8 +48,9 @@ class cardHeading extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: MWidth * 0.05),
           padding: EdgeInsets.all(MHeight * 0.01),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Color(0xffF2EEB3)),
+            borderRadius: BorderRadius.circular(10),
+            color: Color.fromRGBO(40, 40, 43, 1),
+          ),
           height:
               min(MHeight * 0.05 * list.length + MHeight * 0.05, MHeight * 0.4),
           child: ListView.builder(
@@ -59,7 +60,7 @@ class cardHeading extends StatelessWidget {
               itemCount: list.length,
               itemBuilder: (context, i) => Text(
                     list[i],
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 18, color: Colors.white),
                   )),
         )
       ],
@@ -96,7 +97,7 @@ class NameAndStuff extends StatelessWidget {
               child: AutoSizeText(
                 teacher.Name,
                 style: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.w600),
+                    color: Colors.white, fontWeight: FontWeight.w600),
                 maxLines: 2,
                 maxFontSize: 35,
                 minFontSize: 30,
@@ -115,7 +116,10 @@ class NameAndStuff extends StatelessWidget {
                   Container(
                       // color: Colors.amber,
                       width: MWidth * 0.77,
-                      child: Text(teacher.Designation))
+                      child: Text(
+                        teacher.Designation,
+                        style: TextStyle(color: Colors.white),
+                      ))
                 ],
               ),
             SizedBox(
@@ -192,7 +196,7 @@ class deansCard extends StatelessWidget {
           child: Text(
             heading,
             style: TextStyle(
-                color: Colors.black,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: headingSize),
           ),
@@ -216,6 +220,7 @@ class deansCard extends StatelessWidget {
                     splashColor: Colors.black,
                     child: Card(
                       // color: Color(0xffF1FFB0),
+                      // color:  Color.fromRGBO(40, 40, 43, 1)
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
@@ -297,11 +302,12 @@ class cardList extends StatelessWidget {
         );
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: MWidth * 0.025),
+        // padding: EdgeInsets.symmetric(horizontal: MWidth * 0.025),
         margin: EdgeInsets.symmetric(
             horizontal: MHeight * 0.01, vertical: MHeight * 0.007),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            color: const Color.fromRGBO(11, 10, 10, 1),
+            borderRadius: BorderRadius.circular(10)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -309,8 +315,8 @@ class cardList extends StatelessWidget {
             Container(
                 // color: Colors.pink,
 
-                height: MHeight * 0.15,
-                width: MHeight * 0.15,
+                height: MHeight * 0.17,
+                width: MHeight * 0.18,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: CachedNetworkImage(
@@ -320,6 +326,7 @@ class cardList extends StatelessWidget {
                         height: MHeight * 0.02,
                         child: const CupertinoActivityIndicator()),
                     imageUrl: sch.Image,
+                    fit: BoxFit.cover,
                   ),
                 )),
             Container(
@@ -330,7 +337,9 @@ class cardList extends StatelessWidget {
                 child: Text(
                   sch.name,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 24),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24),
                 ))
           ],
         ),
