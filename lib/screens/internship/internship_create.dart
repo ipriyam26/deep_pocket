@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -23,9 +24,9 @@ class _internCreateState extends State<internCreate> {
 
   DateTime? selectedStartDate;
   DateTime? selectedEndDate;
-  final titleController = TextEditingController();
   final OrgController = TextEditingController();
   final linkController = TextEditingController();
+  final titleController = TextEditingController();
 
   final bodyController = TextEditingController();
   final companyController = TextEditingController();
@@ -47,21 +48,36 @@ class _internCreateState extends State<internCreate> {
   List<String> hostRole = [];
   List<String> hostName = [];
   void submitted() async {
-    String titleCheck = titleController.text;
     String bodyCheck = bodyController.text;
+    String OrgCheck = OrgController.text;
+    String linkCheck = linkController.text;
+    String titlCheck = titleController.text;
+    String compCheck = companyController.text;
+    String softCheck = softwareController.text;
+    String locaCheck = locationController.text;
+    String StipCheck = StipendController.text;
+    String SlotCheck = SlotController.text;
+    String SkilCheck = SkillsController.text;
+    String DuraCheck = DurationController.text;
 
-    if (titleCheck.isEmpty || bodyCheck.length < 5) {
-      return;
+    if (bodyCheck.isEmpty ||
+        OrgCheck.isEmpty ||
+        linkCheck.isEmpty ||
+        titlCheck.isEmpty ||
+        compCheck.isEmpty ||
+        softCheck.isEmpty ||
+        locaCheck.isEmpty ||
+        SlotCheck.isEmpty ||
+        SkilCheck.isEmpty ||
+        DuraCheck.isEmpty) {
+      Fluttertoast.showToast(msg: "Please fill all fields");
     }
 
     setState(() {
       _posting = true;
     });
     ImageLink = await API_Manager().postImage(image!.path);
-    for (int i = 0; i < hostImage.length; i++) {
-      var link = await API_Manager().postImage(hostImage[i].path);
-      hostImageLink.add(link);
-    }
+
     var newEvent = {
       'AuthorUID': user!.uid,
       'Time': DateTime.now(),
@@ -69,12 +85,19 @@ class _internCreateState extends State<internCreate> {
       'Title': titleController.text,
       'StartingDate': selectedStartDate,
       'EndingDate': selectedEndDate,
-      'Description': bodyController.text,
+      'JobDescription': bodyController.text,
       'Link': linkController.text,
-      'HostImage': hostImageLink,
-      'HostName': hostName,
-      'HostRole': hostRole,
       'Image': ImageLink,
+      'Duration': DuraCheck,
+      'Skills': SkilCheck,
+      'Slots': SlotCheck,
+      'Location': locaCheck,
+      'Stipend': StipCheck == '' ? "0" : StipCheck,
+      'PartTimeAllowed': _partTimeAllowed,
+      'WorkFromHome': _workFromHome,
+      'Softwares': softCheck,
+      'AboutComapny': compCheck,
+      'Applied': 0,
     };
     await FirebaseFirestore.instance
         .collection("Events")
