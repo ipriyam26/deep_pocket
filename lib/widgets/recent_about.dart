@@ -152,61 +152,48 @@ class _RecentAboutState extends State<RecentAbout> {
                       controller: _scrollController,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) => (snapshot
-                                  .data!.docs[index]
-                                  .data()['Anonymous'] ??
-                              false)
-                          ? Container(
-                              height: 1,
-                            )
-                          : Center(
-                              child: InkWell(
-                                splashColor: Colors.black,
-                                onTap: () {
-                                  Navigator.pushNamed(context, postPage.route,
-                                      arguments: {
-                                        'documentid':
-                                            snapshot.data!.docs[index].id,
-                                        'user': widget.userdata,
-                                      });
-                                },
-                                child: postCard(
-                                  Anonymous: snapshot.data!.docs[index]
-                                          .data()['Anonymous'] ??
-                                      false,
-                                  AuthorUID: snapshot.data!.docs[index]
-                                      .data()['AuthorUID'],
-                                  MHeight: MediaQuery.of(context).size.height,
-                                  MWidth: MediaQuery.of(context).size.width,
-                                  imagesList: snapshot.data!.docs[index]
-                                      .data()['ImageLinks'],
-                                  name: snapshot.data!.docs[index]
-                                      .data()['AuthorName'],
-                                  AuthorImage: snapshot.data!.docs[index]
-                                      .data()['AuthorProfilePic'],
-                                  title: snapshot.data!.docs[index]
-                                      .data()['Title'],
-                                  body:
-                                      snapshot.data!.docs[index].data()['Body'],
-                                  time: DateFormat.jm().format(DateTime.parse(
-                                      snapshot.data!.docs[index]
-                                          .data()['Time']
-                                          .toDate()
-                                          .toString())),
-                                  likes: snapshot.data!.docs[index]
-                                      .data()['Likes'],
-                                  comments: snapshot.data!.docs[index]
-                                      .data()['Comments'],
-                                  date:
-                                      snapshot.data!.docs[index].data()['Date'],
-                                  tag: snapshot.data!.docs[index].data()['Tag'],
-                                  id: snapshot.data!.docs[index].id,
-                                  LikedBy: snapshot.data!.docs[index]
-                                      .data()['LikedBy'],
-                                  NotinFeed: false,
-                                ),
-                              ),
-                            ),
+                      itemBuilder: (context, index) => Center(
+                        child: InkWell(
+                          splashColor: Colors.black,
+                          onTap: () {
+                            Navigator.pushNamed(context, postPage.route,
+                                arguments: {
+                                  'documentid': snapshot.data!.docs[index].id,
+                                  'user': widget.userdata,
+                                });
+                          },
+                          child: postCard(
+                            Anonymous: snapshot.data!.docs[index]
+                                    .data()['Anonymous'] ??
+                                false,
+                            AuthorUID:
+                                snapshot.data!.docs[index].data()['AuthorUID'],
+                            MHeight: MediaQuery.of(context).size.height,
+                            MWidth: MediaQuery.of(context).size.width,
+                            imagesList:
+                                snapshot.data!.docs[index].data()['ImageLinks'],
+                            name:
+                                snapshot.data!.docs[index].data()['AuthorName'],
+                            AuthorImage: snapshot.data!.docs[index]
+                                .data()['AuthorProfilePic'],
+                            title: snapshot.data!.docs[index].data()['Title'],
+                            body: snapshot.data!.docs[index].data()['Body'],
+                            time: DateTime.parse(snapshot.data!.docs[index]
+                                .data()['Time']
+                                .toDate()
+                                .toString()),
+                            likes: snapshot.data!.docs[index].data()['Likes'],
+                            comments:
+                                snapshot.data!.docs[index].data()['Comments'],
+                            date: snapshot.data!.docs[index].data()['Date'],
+                            tag: snapshot.data!.docs[index].data()['Tag'],
+                            id: snapshot.data!.docs[index].id,
+                            LikedBy:
+                                snapshot.data!.docs[index].data()['LikedBy'],
+                            NotinFeed: false,
+                          ),
+                        ),
+                      ),
                     ),
                   );
                 })

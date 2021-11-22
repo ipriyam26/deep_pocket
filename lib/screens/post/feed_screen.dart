@@ -198,7 +198,7 @@ class _feedScreenState extends State<feedScreen> {
                                             title: snapshot.data!.docs[index]
                                                 .data()['Title'],
                                             body: snapshot.data!.docs[index].data()['Body'],
-                                            time: DateFormat.jm().format(DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString())),
+                                            time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
                                             likes: snapshot.data!.docs[index].data()['Likes'],
                                             comments: snapshot.data!.docs[index].data()['Comments'],
                                             date: snapshot.data!.docs[index].data()['Date'],

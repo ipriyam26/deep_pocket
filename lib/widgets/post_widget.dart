@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:intl/intl.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 
 import 'package:readmore/readmore.dart';
@@ -420,7 +421,9 @@ class firstColumn extends StatelessWidget {
                                 ),
                               ),
                             AutoSizeText(
-                              time.toString(),
+                              DateFormat.jm().format(time).toString() +
+                                  ",  " +
+                                  DateFormat.MMMd().format(time).toString(),
                               style: const TextStyle(
                                   color: Colors.grey, fontSize: 14),
                             ),
