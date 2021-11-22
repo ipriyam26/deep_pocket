@@ -2,11 +2,15 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:deep_pocket_1/screens/internship/internship_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class firstHalf extends StatelessWidget {
-  const firstHalf({
+  firstHalf({
     Key? key,
-  }) : super(key: key);
+    required this.internship,
+  });
+
+  Map<String, dynamic> internship;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +36,9 @@ class firstHalf extends StatelessWidget {
                   height: MHeight * 0.18 * 0.05,
                 ),
                 Container(
-                  child: const AutoSizeText(
-                    'Software Development Engineer-Artificial Intelligence',
-                    style: TextStyle(
+                  child: AutoSizeText(
+                    internship['Title'],
+                    style: const TextStyle(
                         fontSize: 22,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
@@ -46,9 +50,9 @@ class firstHalf extends StatelessWidget {
                 // SizedBox(
                 //   height: MHeight * 0.015,
                 // ),
-                const AutoSizeText(
-                  'Rocket Flyer Technology',
-                  style: TextStyle(
+                AutoSizeText(
+                  internship['Org'],
+                  style: const TextStyle(
                       fontSize: 18,
                       color: Colors.white,
                       fontWeight: FontWeight.w400),
@@ -63,8 +67,8 @@ class firstHalf extends StatelessWidget {
             width: MHeight * 0.075,
             height: MHeight * 0.075,
             child: Image.network(
-              "https://www.freepnglogos.com/uploads/apple-logo-png/apple-logo-png-dallas-shootings-don-add-are-speech-zones-used-4.png",
-              color: Colors.white,
+              internship['Image'].toString(),
+              // color: Colors.white,
             ),
           ),
         ],
@@ -74,12 +78,18 @@ class firstHalf extends StatelessWidget {
 }
 
 class middleButton extends StatelessWidget {
-  const middleButton({
-    Key? key,
-  }) : super(key: key);
-
+  middleButton({
+    required this.internship,
+  });
+  Map<String, dynamic> internship;
   @override
   Widget build(BuildContext context) {
+    int daysBetween(DateTime from, DateTime to) {
+      from = DateTime(from.year, from.month, from.day);
+      to = DateTime(to.year, to.month, to.day);
+      return (to.difference(from).inHours / 24).round();
+    }
+
     return Container(
       // color: Colors.green,
       padding: const EdgeInsets.all(5),
@@ -123,12 +133,16 @@ class middleButton extends StatelessWidget {
               Stack(
                   fit: StackFit.passthrough,
                   alignment: AlignmentDirectional.center,
-                  children: const [
+                  children: [
                     Text(
-                      "23",
+                      daysBetween(
+                              DateTime.now(),
+                              DateTime.parse(
+                                  internship['EndingDate'].toDate().toString()))
+                          .toString(),
                       style: TextStyle(color: Colors.white),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.brightness_1_outlined,
                       color: Colors.white,
                       size: 43,
@@ -147,14 +161,16 @@ class middleButton extends StatelessWidget {
 }
 
 class internshipCarosel extends StatelessWidget {
-  const internshipCarosel({
+  internshipCarosel({
     Key? key,
     required this.MHeight,
     required this.MWidth,
+    required this.internship,
   }) : super(key: key);
 
   final double MHeight;
   final double MWidth;
+  Map<String, dynamic> internship;
 
   @override
   Widget build(BuildContext context) {
@@ -173,13 +189,17 @@ class internshipCarosel extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 5.0),
               // decoration: BoxDecoration(color: Colors.amber),
               child: i == 0
-                  ? aboutCompany(MHeight: MHeight, MWidth: MWidth)
+                  ? aboutCompany(
+                      MHeight: MHeight, MWidth: MWidth, internship: internship)
                   : i == 1
                       ? enrollCard(
                           MHeight: MHeight,
                           MWidth: MWidth,
-                        )
-                      : jobDescribtion(MHeight: MHeight, MWidth: MWidth),
+                          internship: internship)
+                      : jobDescribtion(
+                          MHeight: MHeight,
+                          MWidth: MWidth,
+                          internship: internship),
             );
           },
         );
@@ -189,19 +209,16 @@ class internshipCarosel extends StatelessWidget {
 }
 
 class enrollCard extends StatelessWidget {
+  Map<String, dynamic> internship;
+
   enrollCard({
     required this.MHeight,
     required this.MWidth,
+    required this.internship,
   });
 
   final double MHeight;
   final double MWidth;
-  var salary = 3000;
-
-  var line = [
-    "In Depth experience on Python",
-    "Experience in Tensorflow or Pytorch is a must try",
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -277,24 +294,20 @@ class enrollCard extends StatelessWidget {
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17,
-                                    fontWeight: FontWeight.w500),
+                                    fontWeight: FontWeight.w700),
                               ),
                               SizedBox(
                                 height: MHeight * 0.15 * 0.04,
                               ),
                               Container(
                                 // color: Colors.yellow,
-                                height: MHeight * 0.15 * 0.8 * 0.6 +
-                                    MHeight *
-                                        0.15 *
-                                        0.8 *
-                                        0.1 *
-                                        (line.length - 2),
-                                child: ListView.builder(
-                                    itemCount: line.length,
-                                    itemBuilder: (context, i) => skill_line(
-                                        MWidth: MWidth, line: line[i])),
-                              )
+                                child: Text(internship['Skills'].toString(),
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w300)),
+                              ),
+
                               // Row(
                               //   children: [
                               //     Text("- "),
@@ -309,7 +322,6 @@ class enrollCard extends StatelessWidget {
                               //     )
                               //   ],
                               // ),
-                              ,
                             ],
                           ),
                         )
@@ -333,25 +345,22 @@ class enrollCard extends StatelessWidget {
                       children: [
                         jobLine(
                             MHeight: MHeight,
-                            ico: Icons.work_outline,
-                            MWidth: MWidth,
-                            text: "0-4 Years"),
-                        jobLine(
-                            MHeight: MHeight,
                             ico: Icons.person_add_alt_1_outlined,
                             MWidth: MWidth,
-                            text: "20"),
+                            text: internship['Slots']),
                         jobLine(
                             MHeight: MHeight,
                             ico: Icons.location_on_outlined,
                             MWidth: MWidth,
-                            text: "Gurgaon/Gurugram, Madhya Pradesh"),
-                        salary > 0
+                            text: internship['Location']),
+                        int.parse(internship['Stipend'].toString()) > 0
                             ? jobLine(
                                 MHeight: MHeight,
                                 ico: Icons.attach_money_outlined,
                                 MWidth: MWidth,
-                                text: "₹ " + salary.toString() + "/month")
+                                text: "₹ " +
+                                    internship['Stipend'].toString() +
+                                    "/month")
                             : jobLine(
                                 MHeight: MHeight,
                                 ico: Icons.language_outlined,
@@ -361,8 +370,7 @@ class enrollCard extends StatelessWidget {
                             MHeight: MHeight,
                             ico: Icons.attribution_outlined,
                             MWidth: MWidth,
-                            text:
-                                "Tensorflow, REST API, Open Source, Image Recognition, Machine Learning, Flask, Python")
+                            text: internship['Softwares'])
                       ],
                     ),
                   ),
@@ -372,7 +380,9 @@ class enrollCard extends StatelessWidget {
                   Container(
                     // color: Colors.yellow,
                     width: double.maxFinite,
-                    child: Text("Internship Applicants 30".toUpperCase(),
+                    child: Text(
+                        "Internship Applicants ${internship['Applied']}"
+                            .toUpperCase(),
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                             fontSize: 15,
@@ -478,14 +488,16 @@ class skill_line extends StatelessWidget {
 }
 
 class aboutCompany extends StatelessWidget {
-  const aboutCompany({
+  aboutCompany({
     Key? key,
     required this.MHeight,
     required this.MWidth,
+    required this.internship,
   }) : super(key: key);
 
   final double MHeight;
   final double MWidth;
+  Map<String, dynamic> internship;
 
   @override
   Widget build(BuildContext context) {
@@ -517,19 +529,35 @@ class aboutCompany extends StatelessWidget {
                       color: Colors.black),
                 ),
               ),
+              SizedBox(
+                height: MHeight * 0.01,
+              ),
+              Container(
+                padding: EdgeInsets.all(8),
+                color: Color.fromRGBO(40, 40, 43, 1),
+                child: Text(
+                  internship['AboutComapny'],
+                  style: const TextStyle(
+                      fontSize: 17,
+                      // fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              )
             ])));
   }
 }
 
 class jobDescribtion extends StatelessWidget {
-  const jobDescribtion({
-    Key? key,
-    required this.MHeight,
-    required this.MWidth,
-  }) : super(key: key);
+  jobDescribtion(
+      {Key? key,
+      required this.MHeight,
+      required this.MWidth,
+      required this.internship})
+      : super(key: key);
 
   final double MHeight;
   final double MWidth;
+  Map<String, dynamic> internship;
 
   @override
   Widget build(BuildContext context) {
@@ -561,37 +589,36 @@ class jobDescribtion extends StatelessWidget {
                       color: Colors.black),
                 ),
               ),
+              SizedBox(
+                height: MHeight * 0.01,
+              ),
+              Container(
+                padding: EdgeInsets.all(8),
+                color: Color.fromRGBO(40, 40, 43, 1),
+                child: Text(
+                  internship['JobDescription'],
+                  style: const TextStyle(
+                      fontSize: 17,
+                      // fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              )
             ])));
   }
 }
 
 class internshipCard extends StatelessWidget {
-  const internshipCard({
-    Key? key,
-    required this.title,
-    required this.companyName,
-    required this.imageSrc,
-    required this.workfromhome,
-    required this.salary,
-    required this.time,
-    required this.partTimeAllowed,
-    required this.date,
-  }) : super(key: key);
+  internshipCard({
+    required this.internship,
+  });
 
-  final String title;
-  final String companyName;
-  final String imageSrc;
-  final bool workfromhome;
-  final int salary;
-  final String time;
-  final bool partTimeAllowed;
-  final String date;
+  final Map<String, dynamic> internship;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, internPage.route);
+        Navigator.pushNamed(context, internPage.route, arguments: internship);
       },
       child: Card(
         color: const Color.fromRGBO(11, 10, 10, 1),
@@ -607,15 +634,22 @@ class internshipCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        child: AutoSizeText(
+                          internship['Title'].toString(),
+                          minFontSize: 18,
+                          maxFontSize: 23,
+                          maxLines: 2,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                          ),
+                        ),
                       ),
                       Text(
-                        companyName,
+                        internship['Org'].toString(),
                         style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w300,
@@ -631,7 +665,7 @@ class internshipCard extends StatelessWidget {
                       color: Colors.white,
                       image: DecorationImage(
                         fit: BoxFit.scaleDown,
-                        image: NetworkImage(imageSrc),
+                        image: NetworkImage(internship['Image'].toString()),
                       ),
                     ),
                   ),
@@ -647,7 +681,7 @@ class internshipCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    workfromhome
+                    internship['WorkFromHome']
                         ? Row(
                             children: const [
                               Icon(
@@ -672,14 +706,17 @@ class internshipCard extends StatelessWidget {
                           ),
                     Row(
                       children: [
-                        salary > 0
+                        int.parse(internship['Stipend']) > 0
                             ? Row(
                                 children: [
                                   const Icon(
                                     Icons.payment,
                                     color: Colors.grey,
                                   ),
-                                  Text(" ₹ " + salary.toString() + " /month",
+                                  Text(
+                                      " ₹ " +
+                                          internship['Stipend'].toString() +
+                                          " /month",
                                       style: TextStyle(color: Colors.white)),
                                 ],
                               )
@@ -703,7 +740,10 @@ class internshipCard extends StatelessWidget {
                               color: Colors.grey,
                               size: 20,
                             ),
-                            Text(" " + time,
+                            Text(
+                                " " +
+                                    internship['Duration'].toString() +
+                                    " Days",
                                 style: TextStyle(color: Colors.white)),
                           ],
                         )
@@ -715,7 +755,7 @@ class internshipCard extends StatelessWidget {
                           Icons.watch_later_outlined,
                           color: Colors.grey,
                         ),
-                        partTimeAllowed
+                        internship['PartTimeAllowed']
                             ? const Text(" Part Time Allowed",
                                 style: TextStyle(color: Colors.white))
                             : const Text(" Only Full Time",
@@ -725,18 +765,18 @@ class internshipCard extends StatelessWidget {
                   ],
                 ),
               ),
+              // final ctime = document.data()!['Time'];
+
+              // final dtime = DateTime.parse(internship['EndingDate'].toDate().toString());
+
+              // final time = DateFormat.DateFormat.yMd().format(DateTime.parse(internship['EndingDate'].toDate().toString()));
               Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                  ),
-                  const Icon(
-                    Icons.check_circle_outline,
-                    size: 25,
-                    color: Colors.grey,
-                  ),
                   Text(
-                    " Apply by" + date,
+                    "Last date: " +
+                        DateFormat.yMd().format(DateTime.parse(
+                            internship['EndingDate'].toDate().toString())),
                     style: const TextStyle(color: Colors.grey, fontSize: 15),
                   ),
                 ],

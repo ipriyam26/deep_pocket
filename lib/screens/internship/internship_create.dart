@@ -100,7 +100,7 @@ class _internCreateState extends State<internCreate> {
       'Applied': 0,
     };
     await FirebaseFirestore.instance
-        .collection("Events")
+        .collection("Internships")
         .add(newEvent)
         .then((value) => print(value));
 
@@ -111,12 +111,18 @@ class _internCreateState extends State<internCreate> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    titleController.dispose();
-    linkController.dispose();
-    OrgController.dispose();
-
     bodyController.dispose();
+    OrgController.dispose();
+    linkController.dispose();
+    titleController.dispose();
+    companyController.dispose();
+    softwareController.dispose();
+    locationController.dispose();
+    StipendController.dispose();
+    SlotController.dispose();
+    SkillsController.dispose();
+    DurationController.dispose();
+
     super.dispose();
   }
 
@@ -140,89 +146,6 @@ class _internCreateState extends State<internCreate> {
   }
 
   int hosts = 2;
-
-  Future<void> _pickImagehHost(BuildContext context) async {
-    try {
-      final newimage =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (newimage == null) {
-        return;
-      }
-      String HostsName = "";
-      String HostsDesgination = "";
-      final dialogueImage = File(newimage.path);
-      showDialog(
-          context: context,
-          builder: (BuildContext ctx) {
-            final NameController = TextEditingController();
-            final DesignationController = TextEditingController();
-            return Dialog(
-              child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  height: MediaQuery.of(context).size.height * 0.182,
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            ClipOval(
-                              child: Image.file(
-                                dialogueImage,
-                                height: MediaQuery.of(context).size.width * 0.2,
-                                width: MediaQuery.of(context).size.width * 0.2,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.05,
-                            ),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.35,
-                                  child: TextField(
-                                    controller: NameController,
-                                    decoration: const InputDecoration(
-                                        hintText: "Host Name"),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.35,
-                                  child: TextField(
-                                    controller: DesignationController,
-                                    decoration: const InputDecoration(
-                                        hintText: "Host Designation"),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ]),
-                      TextButton(
-                          onPressed: () {
-                            setState(() {
-                              hostImage.add(dialogueImage);
-                              hostName.add(NameController.text.toString());
-                              hostRole
-                                  .add(DesignationController.text.toString());
-                            });
-                            Navigator.pop(ctx);
-                          },
-                          child: Text("ADD"))
-                    ],
-                  )),
-            );
-          });
-    } on PlatformException catch (e) {
-      print(e);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -310,7 +233,7 @@ class _internCreateState extends State<internCreate> {
                                 keyboardType: TextInputType.number,
                                 style: const TextStyle(color: Colors.white),
                                 autocorrect: false,
-                                controller: SlotController,
+                                controller: DurationController,
                                 decoration: InputDecoration(
                                     filled: true,
                                     fillColor: Colors.white.withOpacity(0.1),

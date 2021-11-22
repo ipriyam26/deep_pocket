@@ -12,6 +12,8 @@ class internPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double MHeight = MediaQuery.of(context).size.height;
     double MWeight = MediaQuery.of(context).size.width;
+    Map<String, dynamic> internship =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
@@ -28,15 +30,15 @@ class internPage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      firstHalf(),
-                      middleButton(),
+                      firstHalf(internship: internship),
+                      middleButton(internship: internship),
                       SizedBox(
                         height: MHeight * 0.005,
                       ),
                       internshipCarosel(
-                        MHeight: MHeight,
-                        MWidth: MWeight,
-                      ),
+                          MHeight: MHeight,
+                          MWidth: MWeight,
+                          internship: internship),
                       ElevatedButton(
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
