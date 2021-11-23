@@ -30,6 +30,12 @@ class postPage extends StatelessWidget {
     final documentid = MapArgms['documentid'] as String;
 
     // getLoggedUser();
+    Future<DocumentSnapshot<Map<String, dynamic>>> getcorrectAnswere(
+        String id) async {
+      var data =
+          await FirebaseFirestore.instance.collection("Comments").doc(id).get();
+      return data;
+    }
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -55,7 +61,6 @@ class postPage extends StatelessWidget {
 
               final dtime = DateTime.parse(ctime.toDate().toString());
 
-              final time = DateFormat.jm().format(dtime);
               return SafeArea(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -64,7 +69,7 @@ class postPage extends StatelessWidget {
                         MHeight: MHeight,
                         MWidth: MWidth,
                         document: document,
-                        time: time),
+                        time: dtime),
                     Container(
                       padding: EdgeInsets.all(MWidth * 0.01),
                       child: StreamBuilder(
@@ -92,6 +97,98 @@ class postPage extends StatelessWidget {
                                     commentText: commentText,
                                     id: id,
                                     document: document),
+                                if (document.data()!['Tag'] == 'Query' &&
+                                    document.data()!['Correct Answere'] != null)
+                                  Container(
+                                    child: FutureBuilder(
+                                        future: getcorrectAnswere(document
+                                            .data()!['Correct Answere']),
+                                        builder: (context,
+                                            AsyncSnapshot<
+                                                    DocumentSnapshot<
+                                                        Map<String, dynamic>>>
+                                                comment) {
+                                          if (!comment.hasData) {
+                                            return const CircularProgressIndicator(
+                                                color: Colors.pink);
+                                          }
+                                          return ListTile(
+                                            // horizontalTitleGap: 1,
+                                            minVerticalPadding: 0,
+
+                                            leading: ClipOval(
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(2),
+                                                color: Colors.black,
+                                                child: ClipOval(
+                                                  child: Container(
+                                                    height: MWidth * 0.13,
+                                                    width: MWidth * 0.13,
+                                                    color: Colors.grey,
+                                                    child: CachedNetworkImage(
+                                                      placeholder: (context,
+                                                              url) =>
+                                                          Image.asset(
+                                                              'assets/person.png'),
+                                                      imageUrl: comment.data!
+                                                          .data()!['AuthorPic'],
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            trailing: const Icon(
+                                              Icons.done_outline_rounded,
+                                              color: Colors.pink,
+                                            ),
+                                            title: Row(
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pushNamed(
+                                                        context,
+                                                        searchProfileScreen
+                                                            .route,
+                                                        arguments: comment.data!
+                                                            .data()!['AuthorID']
+                                                            .toString());
+                                                  },
+                                                  child: Text(
+                                                    comment.data!
+                                                        .data()!['AuthorName']
+                                                        .toString()
+                                                        .split(" ")[0],
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            // horizontalTitleGap: 0,
+                                            subtitle: ReadMoreText(
+                                              comment.data!
+                                                  .data()!['CommentText'],
+                                              trimLines: 2,
+                                              colorClickableText: Colors.pink,
+                                              trimMode: TrimMode.Line,
+                                              // trimCollapsedText: '..Read More',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.white
+                                                      .withOpacity(0.7)),
+                                              trimExpandedText: ' Less',
+                                            ),
+
+                                            isThreeLine: true,
+                                          );
+                                        }),
+                                  ),
                                 StreamBuilder(
                                     stream: FirebaseFirestore.instance
                                         .collection("Comments")
@@ -164,9 +261,13 @@ class postPage extends StatelessWidget {
                                                         ),
                                                       ),
 
-                                                      trailing: (comment.data()[
-                                                                      'AuthorID'] ==
+                                                      trailing: (document.data()![
+                                                                      'AuthorUID'] ==
                                                                   userdata![
+                                                                      'uid']) ||
+                                                              (comment.data()[
+                                                                      'AuthorID'] ==
+                                                                  userdata[
                                                                       'uid']) ||
                                                               (roleController
                                                                   .specialAccess!
@@ -279,14 +380,47 @@ class deleteComment extends StatelessWidget {
         color: Colors.white,
       ),
       onSelected: (String result) async {
-        await FirebaseFirestore.instance
-            .collection("Comments")
-            .doc(comment.id)
-            .delete();
-        await FirebaseFirestore.instance
-            .collection("Posts")
-            .doc(comment.data()["PostID"])
-            .update({"Comments": document!.data()!['Comments'] - 1});
+        if (result == "Delete") {
+          await FirebaseFirestore.instance
+              .collection("Comments")
+              .doc(comment.id)
+              .delete();
+          await FirebaseFirestore.instance
+              .collection("Posts")
+              .doc(comment.data()["PostID"])
+              .update({"Comments": document!.data()!['Comments'] - 1});
+        } else {
+          var authordata = await FirebaseFirestore.instance
+              .collection("users")
+              .doc(document!.data()!['AuthorUID'])
+              .get();
+          int authorPoints = authordata.data()!['Points'];
+          print(authorPoints);
+          var Cauthordata = await FirebaseFirestore.instance
+              .collection("users")
+              .doc(comment.data()['AuthorID'])
+              .get();
+          int CauthorPoints = authordata.data()!['Points'];
+          print(CauthorPoints);
+
+          print(document!.data()!['Points '].toString());
+          await FirebaseFirestore.instance
+              .collection("Comments")
+              .doc(comment.id)
+              .update({'isCorrect': true});
+          await FirebaseFirestore.instance
+              .collection("Posts")
+              .doc(document!.id)
+              .update({'Correct Answere': comment.id});
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(document!.data()!['AuthorUID'])
+              .update({'Points': authorPoints - document!.data()!['Points ']});
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(comment.data()['AuthorID'])
+              .update({'Points': CauthorPoints + document!.data()!['Points ']});
+        }
       },
       itemBuilder: (BuildContext context) => [
         PopupMenuItem(
@@ -302,6 +436,20 @@ class deleteComment extends StatelessWidget {
                 style: TextStyle(color: Colors.black),
               )),
         ),
+        if (document!.data()!['Tag'] == 'Query')
+          PopupMenuItem(
+            value: "Correct",
+            child: TextButton.icon(
+                onPressed: null,
+                icon: const Icon(
+                  Icons.done,
+                  color: Colors.pink,
+                ),
+                label: const Text(
+                  "Correct",
+                  style: TextStyle(color: Colors.black),
+                )),
+          ),
       ],
     );
   }
@@ -424,7 +572,7 @@ class postCardCall extends StatelessWidget {
   final double MHeight;
   final double MWidth;
   final DocumentSnapshot<Map<String, dynamic>>? document;
-  final String time;
+  final DateTime time;
 
   @override
   Widget build(BuildContext context) {
@@ -432,6 +580,7 @@ class postCardCall extends StatelessWidget {
       tag: "xcross",
       child: postCard(
           Anonymous: document!.data()!['Anonymous'] ?? false,
+          points: document!.data()!['Points '] ?? 0,
           AuthorUID: document!.data()!['AuthorUID'],
           NotinFeed: true,
           MHeight: MHeight,

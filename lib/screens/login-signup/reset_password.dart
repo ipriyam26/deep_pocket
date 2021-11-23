@@ -1,7 +1,6 @@
 // import 'package:email_password_login/screens/home_screen.dart';
 // import 'package:email_password_login/screens/registration_screen.dart';
 import 'package:deep_pocket_1/main.dart';
-import 'package:deep_pocket_1/screens/login-signup/reset_password.dart';
 import 'package:deep_pocket_1/screens/login-signup/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,20 +8,19 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class ResetPassword extends StatefulWidget {
+  const ResetPassword({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _ResetPasswordState createState() => _ResetPasswordState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ResetPasswordState extends State<ResetPassword> {
   // form key
   final _formKey = GlobalKey<FormState>();
 
   // editing controller
   final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
 
   // firebase
   final _auth = FirebaseAuth.instance;
@@ -70,38 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
 
     //password field
-    final passwordField = TextFormField(
-        autofocus: false,
-        controller: passwordController,
-        obscureText: true,
-        validator: (value) {
-          RegExp regex = new RegExp(r'^.{6,}$');
-          if (value!.isEmpty) {
-            return ("Password is required for login");
-          }
-          if (!regex.hasMatch(value)) {
-            return ("Enter Valid Password(Min. 6 Character)");
-          }
-        },
-        onSaved: (value) {
-          passwordController.text = value!;
-        },
-        style: TextStyle(color: Colors.white),
-        textInputAction: TextInputAction.done,
-        decoration: InputDecoration(
-          hintStyle: TextStyle(color: Colors.white),
-          prefixIcon: Icon(
-            Icons.vpn_key,
-            color: Colors.white,
-          ),
-          filled: true,
-          fillColor: Colors.black,
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Password",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ));
 
     final loginButton = Material(
       elevation: 5,
@@ -111,10 +77,10 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () async {
-            signIn(emailController.text, passwordController.text);
+            signIn(emailController.text);
           },
           child: Text(
-            "Login",
+            "Reset Password",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
@@ -146,51 +112,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   //     )),
                   SizedBox(height: 45),
                   emailField,
-                  SizedBox(height: 25),
-                  passwordField,
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ResetPassword()));
-                          },
-                          child: const Text("Forgot Password?",
-                              style: TextStyle(color: Colors.white)))
-                    ],
-                  ),
-                  SizedBox(height: 10),
+
+                  SizedBox(height: 30),
+
                   loginButton,
                   SizedBox(height: 15),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const Text(
-                          "Don't have an account? ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        RegistrationScreen()));
-                          },
-                          child: const Text(
-                            "SignUp",
-                            style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          ),
-                        )
-                      ])
                 ],
               ),
             ),
@@ -201,21 +127,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   // login function
-  void signIn(String email, String password) async {
+  void signIn(String email) async {
     var localStrorage = await SharedPreferences.getInstance();
     if (_formKey.currentState!.validate()) {
       try {
-        await _auth
-            .signInWithEmailAndPassword(email: email, password: password)
-            .then((uid) => {
-                  Fluttertoast.showToast(msg: "Login Successful"),
-                  localStrorage.setString(
-                      'email', emailController.text.toString()),
-                  localStrorage.setString(
-                      'password', passwordController.text.toString()),
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => MyApp())),
-                });
+        _auth.sendPasswordResetEmail(email: email);
+        Fluttertoast.showToast(msg: "Please Check your Email for a Reset Link");
+        Navigator.of(context).pop();
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":

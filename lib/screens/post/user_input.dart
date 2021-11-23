@@ -37,6 +37,7 @@ class _userInputState extends State<userInput> {
 
   final titleController = TextEditingController();
   final bodyController = TextEditingController();
+  final pointsController = TextEditingController();
   // CollectionReference userCollection =
   //     FirebaseFirestore.instance.collection("users");
 
@@ -76,6 +77,7 @@ class _userInputState extends State<userInput> {
     var newPost = {
       'AuthorUID': user!.uid,
 // 'PostID':,
+
       'AuthorProfilePic': userImage,
       'AuthorName': userName,
       'Time': DateTime.now(),
@@ -88,6 +90,27 @@ class _userInputState extends State<userInput> {
       'LikedBy': [],
       "Anonymous": makeAnonymous,
     };
+    if (_chosenValue == 'Query') {
+      newPost = {
+        'AuthorUID': user!.uid,
+        'Points ': (pointsController.text == "")
+            ? 5
+            : int.parse(pointsController.text),
+        'AuthorProfilePic': userImage,
+        'AuthorName': userName,
+        'Time': DateTime.now(),
+        'Title': titleController.text,
+        'Body': bodyController.text,
+        'ImageLinks': ImageLink,
+        'Likes': 0,
+        'Comments': 0,
+        'Tag': _chosenValue,
+        'LikedBy': [],
+        "Anonymous": makeAnonymous,
+        "Correct": "No One"
+      };
+    }
+
     await FirebaseFirestore.instance
         .collection("Posts")
         .add(newPost)
@@ -256,6 +279,46 @@ class _userInputState extends State<userInput> {
                       SizedBox(
                         height: Mheight * 0.03,
                       ),
+                      if (_chosenValue == 'Query')
+                        SizedBox(
+                          height: Mheight * 0.08,
+                          child: TextFormField(
+                            controller: pointsController,
+                            maxLength: 2,
+                            autocorrect: false,
+                            scrollPadding:
+                                const EdgeInsets.symmetric(horizontal: 20),
+                            // onChanged: (value){
+                            //   titleController = value;
+
+                            validator: (value) {
+                              if (value!.length > 2) {
+                                return ("nothing more than 99");
+                              }
+                            },
+                            // },
+
+                            decoration: const InputDecoration(
+                                errorStyle: TextStyle(color: Colors.red),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                hintText: "Points",
+                                hintStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                )),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [

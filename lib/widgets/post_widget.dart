@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/admin.dart';
+import 'package:deep_pocket_1/models/data_feed.dart';
 import 'package:deep_pocket_1/screens/post/edit_post.dart';
 import 'package:deep_pocket_1/screens/profile/search_profile_screen.dart';
 import 'package:deep_pocket_1/widgets/fullscreen_image.dart';
@@ -42,8 +43,10 @@ class postCard extends StatefulWidget {
     required this.LikedBy,
     required this.NotinFeed,
     required this.Anonymous,
+    required this.points,
   }) : super(key: key);
 
+  final dynamic points;
   final dynamic tag;
   final double MHeight;
   final double MWidth;
@@ -81,189 +84,214 @@ class _postCardState extends State<postCard> {
       color: const Color.fromRGBO(11, 10, 10, 1),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: Container(
-          // color: Colors.black,
-          // height: widget.MHeight * 0.5,
-          // width: MWidth * 0.9,
-
-          padding: EdgeInsets.only(
-              left: widget.MWidth * 0.02,
-              right: widget.MWidth * 0.02,
-              top: widget.MHeight * 0.01,
-              bottom: widget.MHeight * 0.01),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              firstColumn(
-                Anonymous: widget.Anonymous,
-                id: widget.id,
-                imageList: widget.imagesList,
-                title: widget.title,
-                tag: widget.tag,
-                body: widget.body,
-                AuthorUID: widget.AuthorUID,
-                currentUserId: widget.currentuser!.uid,
-                MWidth: widget.MWidth,
-                name: widget.name,
-                time: widget.time,
-                date: widget.date,
-                AuthorImage: widget.AuthorImage,
-              ),
-              SizedBox(
-                height: widget.MHeight * 0.01,
-              ),
+        child: Column(
+          children: [
+            if (widget.tag == 'Query')
               Container(
-                width: widget.MWidth,
-                // height: widget.MHeight * 0.1,
-                margin: EdgeInsets.symmetric(horizontal: widget.MWidth * 0.02),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.title.toString(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 17,
-                      ),
-                    ),
-                    Container(
-                      // height:DeviceSize.height(context),
-                      child: ReadMoreText(
-                        widget.body.toString(),
-                        trimLines: 2,
-                        colorClickableText: Colors.pink,
-                        trimMode: TrimMode.Line,
-                        trimCollapsedText: '..Read More',
-                        style: const TextStyle(
-                          fontSize: 13,
-                          color: Colors.white,
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.04),
+                  width: double.maxFinite,
+                  decoration: const BoxDecoration(
+                      color: Colors.orange,
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10))),
+                  child: Text(
+                    "POINTS : " + widget.points.toString(),
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
+                  )),
+            Container(
+              // color: Colors.black,
+              // height: widget.MHeight * 0.5,
+              // width: MWidth * 0.9,
+
+              margin: EdgeInsets.only(
+                  left: widget.MWidth * 0.02,
+                  right: widget.MWidth * 0.02,
+                  top: widget.MHeight * 0.01,
+                  bottom: widget.MHeight * 0.01),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  firstColumn(
+                    Anonymous: widget.Anonymous,
+                    id: widget.id,
+                    imageList: widget.imagesList,
+                    title: widget.title,
+                    tag: widget.tag,
+                    body: widget.body,
+                    AuthorUID: widget.AuthorUID,
+                    currentUserId: widget.currentuser!.uid,
+                    MWidth: widget.MWidth,
+                    name: widget.name,
+                    time: widget.time,
+                    date: widget.date,
+                    AuthorImage: widget.AuthorImage,
+                  ),
+                  SizedBox(
+                    height: widget.MHeight * 0.01,
+                  ),
+                  Container(
+                    width: widget.MWidth,
+                    // height: widget.MHeight * 0.1,
+                    margin:
+                        EdgeInsets.symmetric(horizontal: widget.MWidth * 0.02),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.title.toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 17,
+                          ),
                         ),
-                        trimExpandedText: ' Less',
-                      ),
+                        Container(
+                          // height:DeviceSize.height(context),
+                          child: ReadMoreText(
+                            widget.body.toString(),
+                            trimLines: 2,
+                            colorClickableText: Colors.pink,
+                            trimMode: TrimMode.Line,
+                            trimCollapsedText: '..Read More',
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Colors.white,
+                            ),
+                            trimExpandedText: ' Less',
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              if (widget.imagesList.length > 0)
-                Container(
-                  height: widget.MHeight * 0.33,
-                  padding: EdgeInsets.all(widget.MHeight * 0.002),
-                  // color: Colors.amber,
-                  child: CarouselSlider(
-                    carouselController: _controller,
-                    options: CarouselOptions(
-                        aspectRatio: 4.5 / 3,
-                        viewportFraction: 1,
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: false,
-                        autoPlay: false,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            currentIndex = index;
-                          });
-                        }),
-                    items: widget.imagesList
-                        .map(
-                          (item) => GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, fullImage.route,
-                                  arguments: item.toString());
-                            },
-                            child: Center(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Container(
-                                  color: Colors.grey[200],
-                                  child: CachedNetworkImage(
-                                    fadeInDuration:
-                                        const Duration(microseconds: 0),
-                                    fadeOutDuration:
-                                        const Duration(microseconds: 2),
-                                    placeholder: (context, url) =>
-                                        const CupertinoActivityIndicator(),
-                                    imageUrl: item.toString(),
-                                    fit: BoxFit.cover,
+                  ),
+                  if (widget.imagesList.length > 0)
+                    Container(
+                      height: widget.MHeight * 0.33,
+                      padding: EdgeInsets.all(widget.MHeight * 0.002),
+                      // color: Colors.amber,
+                      child: CarouselSlider(
+                        carouselController: _controller,
+                        options: CarouselOptions(
+                            aspectRatio: 4.5 / 3,
+                            viewportFraction: 1,
+                            enlargeCenterPage: true,
+                            enableInfiniteScroll: false,
+                            autoPlay: false,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                currentIndex = index;
+                              });
+                            }),
+                        items: widget.imagesList
+                            .map(
+                              (item) => GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, fullImage.route,
+                                      arguments: item.toString());
+                                },
+                                child: Center(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Container(
+                                      color: Colors.grey[200],
+                                      child: CachedNetworkImage(
+                                        fadeInDuration:
+                                            const Duration(microseconds: 0),
+                                        fadeOutDuration:
+                                            const Duration(microseconds: 2),
+                                        placeholder: (context, url) =>
+                                            const CupertinoActivityIndicator(),
+                                        imageUrl: item.toString(),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-              SizedBox(
-                height: widget.MHeight * 0.06,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+                            )
+                            .toList(),
+                      ),
+                    ),
+                  SizedBox(
+                    height: widget.MHeight * 0.06,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextButton.icon(
-                            style: ButtonStyle(
-                                foregroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.white)),
-                            onPressed: () async {
-                              liked = !liked;
-                              if (liked) {
-                                await FirebaseFirestore.instance
-                                    .collection("Posts")
-                                    .doc(widget.id)
-                                    .update({
-                                  "LikedBy": FieldValue.arrayUnion(
-                                      [widget.currentuser!.uid])
-                                });
-                                if (widget.NotinFeed) {
-                                  widget.LikedBy!.add(widget.currentuser!.uid);
-                                }
-                              } else {
-                                await FirebaseFirestore.instance
-                                    .collection("Posts")
-                                    .doc(widget.id)
-                                    .update({
-                                  'Likes': widget.likes,
-                                  "LikedBy": FieldValue.arrayRemove(
-                                      [widget.currentuser!.uid])
-                                });
-                                if (widget.NotinFeed) {
-                                  widget.LikedBy!
-                                      .remove(widget.currentuser!.uid);
-                                }
-                              }
+                        Row(
+                          children: [
+                            TextButton.icon(
+                                style: ButtonStyle(
+                                    foregroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.white)),
+                                onPressed: () async {
+                                  liked = !liked;
+                                  if (liked) {
+                                    await FirebaseFirestore.instance
+                                        .collection("Posts")
+                                        .doc(widget.id)
+                                        .update({
+                                      "LikedBy": FieldValue.arrayUnion(
+                                          [widget.currentuser!.uid])
+                                    });
+                                    if (widget.NotinFeed) {
+                                      widget.LikedBy!
+                                          .add(widget.currentuser!.uid);
+                                    }
+                                  } else {
+                                    await FirebaseFirestore.instance
+                                        .collection("Posts")
+                                        .doc(widget.id)
+                                        .update({
+                                      'Likes': widget.likes,
+                                      "LikedBy": FieldValue.arrayRemove(
+                                          [widget.currentuser!.uid])
+                                    });
+                                    if (widget.NotinFeed) {
+                                      widget.LikedBy!
+                                          .remove(widget.currentuser!.uid);
+                                    }
+                                  }
 
-                              setState(() {});
-                            },
-                            icon: liked
-                                ? const Icon(
-                                    Icons.thumb_up,
-                                    color: Colors.pink,
-                                  )
-                                : const Icon(Icons.thumb_up_outlined),
-                            label: Text("${widget.LikedBy!.length} Likes")),
+                                  setState(() {});
+                                },
+                                icon: liked
+                                    ? const Icon(
+                                        Icons.thumb_up,
+                                        color: Colors.pink,
+                                      )
+                                    : const Icon(Icons.thumb_up_outlined),
+                                label: Text("${widget.LikedBy!.length} Likes")),
+                            TextButton.icon(
+                                style: ButtonStyle(
+                                    foregroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.white)),
+                                onPressed: null,
+                                icon: const Icon(Icons.comment),
+                                label: Text("${widget.comments} Comments")),
+                          ],
+                        ),
                         TextButton.icon(
                             style: ButtonStyle(
                                 foregroundColor:
                                     MaterialStateProperty.all<Color>(
-                                        Colors.white)),
-                            onPressed: null,
-                            icon: const Icon(Icons.comment),
-                            label: Text("${widget.comments} Comments")),
+                                        Colors.black)),
+                            onPressed: () {},
+                            icon: const Icon(Icons.share),
+                            label: const Text("")),
                       ],
                     ),
-                    TextButton.icon(
-                        style: ButtonStyle(
-                            foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.black)),
-                        onPressed: () {},
-                        icon: const Icon(Icons.share),
-                        label: const Text("")),
-                  ],
-                ),
-              )
-            ],
-          ),
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -85,7 +85,7 @@ class _profileScreenState extends State<profileScreen> {
                                   MediaQuery.of(context).size.height * 0.01),
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black)),
-                              height: MediaQuery.of(context).size.height * 0.27,
+                              height: MediaQuery.of(context).size.height * 0.33,
                               child: Column(
                                 children: [
                                   userImageName(
@@ -96,6 +96,40 @@ class _profileScreenState extends State<profileScreen> {
                                         "Add Enrollment",
                                     college: userdata['CollegeName'] ??
                                         "Add College",
+                                    points: userdata['Points'] ?? 0,
+                                  ),
+                                  Row(
+                                    // mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            left: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.055),
+                                        child: Row(
+                                          children: [
+                                            const Text(
+                                              "Points : ",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Chip(
+                                              backgroundColor: Colors.pink,
+                                              label: Text(
+                                                userdata['Points'].toString(),
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   editprofile(),
                                 ],
@@ -152,17 +186,23 @@ class userImageName extends StatelessWidget {
     required this.Image,
     required this.college,
     required this.enrollmentNo,
+    required this.points,
   });
 
   final String name;
   final String Image;
   final String college;
   final String enrollmentNo;
+  final dynamic points;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.025),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.height * 0.025,
+            right: MediaQuery.of(context).size.height * 0.025,
+            top: MediaQuery.of(context).size.height * 0.025,
+            bottom: MediaQuery.of(context).size.height * 0.015),
         child: Row(
           children: [
             ClipOval(

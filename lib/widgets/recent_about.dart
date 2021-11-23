@@ -163,6 +163,9 @@ class _RecentAboutState extends State<RecentAbout> {
                                 });
                           },
                           child: postCard(
+                            points:
+                                snapshot.data!.docs[index].data()['Points '] ??
+                                    0,
                             Anonymous: snapshot.data!.docs[index]
                                     .data()['Anonymous'] ??
                                 false,

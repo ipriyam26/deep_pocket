@@ -78,7 +78,7 @@ class _searchProfileScreenState extends State<searchProfileScreen> {
                                   MediaQuery.of(context).size.height * 0.01),
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black)),
-                              height: MediaQuery.of(context).size.height * 0.22,
+                              height: MediaQuery.of(context).size.height * 0.26,
                               child: Column(
                                 children: [
                                   userImageName(
@@ -90,6 +90,39 @@ class _searchProfileScreenState extends State<searchProfileScreen> {
                                     college: userdata['CollegeName'] ??
                                         "Add College",
                                   ),
+                                  Row(
+                                    // mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            left: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.055),
+                                        child: Row(
+                                          children: [
+                                            const Text(
+                                              "Points : ",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Chip(
+                                              backgroundColor: Colors.pink,
+                                              label: Text(
+                                                userdata['Points'].toString(),
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -121,7 +154,11 @@ class userImageName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.025),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.height * 0.025,
+            right: MediaQuery.of(context).size.height * 0.025,
+            top: MediaQuery.of(context).size.height * 0.025,
+            bottom: MediaQuery.of(context).size.height * 0.010),
         child: Row(
           children: [
             ClipOval(

@@ -178,6 +178,7 @@ class _feedScreenState extends State<feedScreen> {
                                     },
                                     child: Container(
                                         child: postCard(
+                                          points: snapshot.data!.docs[index].data()['Points '] ?? 0,
                                             AuthorUID: snapshot.data!.docs[index]
                                                 .data()['AuthorUID'],
                                             MHeight: MHeight,

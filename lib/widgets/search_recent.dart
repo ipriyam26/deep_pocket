@@ -151,6 +151,9 @@ class _searchRecentState extends State<searchRecent> {
                                       });
                                 },
                                 child: postCard(
+                                  points: snapshot.data!.docs[index]
+                                          .data()['Points '] ??
+                                      0,
                                   Anonymous: snapshot.data!.docs[index]
                                           .data()['Anonymous'] ??
                                       false,
