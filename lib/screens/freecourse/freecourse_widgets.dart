@@ -114,12 +114,12 @@ class courseListCard extends StatelessWidget {
                 // color: Colors.amber,
 
                 child: ClipRRect(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(10),
                       bottomLeft: Radius.circular(10)),
                   child: Image.network(
                     course.image ??
-                        "https://www.freevector.com/uploads/vector/preview/31305/Revision_Freevector_School-Stationary_Background_Mf0421-01.jpg",
+                        "https://pngimg.com/uploads/question_mark/question_mark_PNG122.png",
                     fit: BoxFit.cover,
                     height: MSize.height * 0.13,
                     width: MSize.height * 0.15,
@@ -373,8 +373,11 @@ class firstHalf extends StatelessWidget {
 
     return Container(
       // color: Colors.amberAccent,
-      padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
-      height: MHeight * 0.27,
+      padding: EdgeInsets.only(
+          top: MediaQuery.of(context).size.width * 0.05,
+          left: MediaQuery.of(context).size.width * 0.05,
+          right: MediaQuery.of(context).size.width * 0.05),
+      height: MHeight * 0.265,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -416,7 +419,7 @@ class firstHalf extends StatelessWidget {
           Row(
             children: [
               rating(
-                ratin: course.rating,
+                ratin: course.rating * 1.0,
               ),
               SizedBox(
                 width: Mwidth * 0.07,
@@ -665,7 +668,7 @@ class enrollCard1 extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: MHeight * 0.15 * 0.04,
+                  height: MHeight * 0.15 * 0.02,
                 ),
 
                 Row(
@@ -677,14 +680,17 @@ class enrollCard1 extends StatelessWidget {
                     SizedBox(
                       width: Mwidth * 0.025,
                     ),
-                    Text(
-                      course.time!,
-                      style: const TextStyle(fontSize: 16),
+                    Container(
+                      width: Mwidth * 0.69,
+                      child: AutoSizeText(
+                        course.time!,
+                        style: const TextStyle(fontSize: 16),
+                      ),
                     )
                   ],
                 ),
                 SizedBox(
-                  height: MHeight * 0.15 * 0.04,
+                  height: MHeight * 0.15 * 0.02,
                 ),
                 // if (course.quiz != 0)
                 Row(
@@ -700,7 +706,7 @@ class enrollCard1 extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: MHeight * 0.15 * 0.04,
+                  height: MHeight * 0.15 * 0.02,
                 ),
 
                 Row(

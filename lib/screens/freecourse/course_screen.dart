@@ -51,7 +51,7 @@ class courseScreen extends StatelessWidget {
                         height: MHeight * 0.02,
                       ),
                       Container(
-                        height: MHeight * 0.55,
+                        height: MHeight * 0.6,
                         width: MWeight * 0.9,
                         child: enrollCard(course: course, MHeight: MHeight),
                       )

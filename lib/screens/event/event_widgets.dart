@@ -35,128 +35,155 @@ class eventCard extends StatelessWidget {
             height: MHeight * 0.7 * 0.6,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: NetworkImage(upcomingEvent['Image']),
-              ),
+              // image: DecorationImage(
+              //   fit: BoxFit.fill,
+              //   image: NetworkImage(upcomingEvent['Image']),
+              // ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Stack(
               children: [
-                Container(
-                  // color: Colors.amber,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        // color: Colors.blue,
-                        margin: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.06,
-                            top: MediaQuery.of(context).size.width * 0.05,
-                            bottom: MediaQuery.of(context).size.width * 0.05),
-                        height: MHeight * 0.7 * 0.6 * 0.15,
-                        width: MediaQuery.of(context).size.width * 0.25 +
-                            (upcomingEvent['HostImage'].length - 2) *
-                                MediaQuery.of(context).size.width *
-                                0.08,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: upcomingEvent['HostImage'].length,
-                            itemBuilder: (context, i) => Align(
-                                  child: Container(
-                                    width: MHeight * 0.7 * 0.6 * 0.14,
-                                    height: MHeight * 0.7 * 0.6 * 0.14,
-                                    child: ClipOval(
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: CachedNetworkImage(
+                    height: MHeight * 0.7 * 0.6,
+                    imageUrl: upcomingEvent['Image'],
+                    fit: BoxFit.fill,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => Container(
+                      height: 50,
+                      width: 50,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                            color: Colors.pink,
+                            value: downloadProgress.progress),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      // color: Colors.amber,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            // color: Colors.blue,
+                            margin: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.06,
+                                top: MediaQuery.of(context).size.width * 0.05,
+                                bottom:
+                                    MediaQuery.of(context).size.width * 0.05),
+                            height: MHeight * 0.7 * 0.6 * 0.15,
+                            width: MediaQuery.of(context).size.width * 0.25 +
+                                (upcomingEvent['HostImage'].length - 2) *
+                                    MediaQuery.of(context).size.width *
+                                    0.08,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: upcomingEvent['HostImage'].length,
+                                itemBuilder: (context, i) => Align(
                                       child: Container(
-                                        padding: EdgeInsets.all(2),
-                                        color: Colors.white,
+                                        width: MHeight * 0.7 * 0.6 * 0.14,
+                                        height: MHeight * 0.7 * 0.6 * 0.14,
                                         child: ClipOval(
-                                          child: CachedNetworkImage(
-                                            fadeInDuration:
-                                                const Duration(microseconds: 0),
-                                            fadeOutDuration:
-                                                const Duration(microseconds: 2),
-                                            placeholder: (context, url) =>
-                                                const CupertinoActivityIndicator(),
-                                            imageUrl: upcomingEvent['HostImage']
-                                                    [i]
-                                                .toString(),
-                                            fit: BoxFit.cover,
+                                          child: Container(
+                                            padding: EdgeInsets.all(2),
+                                            color: Colors.white,
+                                            child: ClipOval(
+                                              child: CachedNetworkImage(
+                                                fadeInDuration: const Duration(
+                                                    microseconds: 0),
+                                                fadeOutDuration: const Duration(
+                                                    microseconds: 2),
+                                                placeholder: (context, url) =>
+                                                    const CupertinoActivityIndicator(),
+                                                imageUrl:
+                                                    upcomingEvent['HostImage']
+                                                            [i]
+                                                        .toString(),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  widthFactor: 0.8,
-                                )),
-                      ),
-                      Container(
-                        height: MHeight * 0.7 * 0.6 * 0.19,
-                        width: MediaQuery.of(context).size.width * 0.16,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: MHeight * 0.7 * 0.6 * 0.07),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              DateTime.parse(upcomingEvent['StartingDate']
-                                      .toDate()
-                                      .toString())
-                                  .day
-                                  .toString(),
-                              style: const TextStyle(
-                                  fontSize: 28, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              DateFormat('MMMM', 'en_US')
-                                  .format(DateTime.parse(
-                                      upcomingEvent['StartingDate']
-                                          .toDate()
-                                          .toString()))
-                                  .substring(0, 3)
-                                  .toUpperCase(),
-                              style: const TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  color: Colors.black.withOpacity(0.15),
-                  // color: Colors.yellow,
-                  width: double.maxFinite,
-                  padding: EdgeInsets.all(MHeight * 0.02),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            upcomingEvent['Org'],
-                            style: const TextStyle(
-                                fontSize: 17,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400),
+                                      widthFactor: 0.8,
+                                    )),
                           ),
-                          Text(
-                            upcomingEvent['Title'],
-                            style: const TextStyle(
-                                fontSize: 24,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                          Container(
+                            height: MHeight * 0.7 * 0.6 * 0.19,
+                            width: MediaQuery.of(context).size.width * 0.16,
+                            margin: EdgeInsets.symmetric(
+                                horizontal: MHeight * 0.7 * 0.6 * 0.07),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  DateTime.parse(upcomingEvent['StartingDate']
+                                          .toDate()
+                                          .toString())
+                                      .day
+                                      .toString(),
+                                  style: const TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  DateFormat('MMMM', 'en_US')
+                                      .format(DateTime.parse(
+                                          upcomingEvent['StartingDate']
+                                              .toDate()
+                                              .toString()))
+                                      .substring(0, 3)
+                                      .toUpperCase(),
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      color: Colors.black.withOpacity(0.3),
+                      // color: Colors.yellow,
+                      width: double.maxFinite,
+                      padding: EdgeInsets.all(MHeight * 0.02),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                upcomingEvent['Org'],
+                                style: const TextStyle(
+                                    fontSize: 17,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              Text(
+                                upcomingEvent['Title'],
+                                style: const TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                )
+                    )
+                  ],
+                ),
               ],
             ),
           ),

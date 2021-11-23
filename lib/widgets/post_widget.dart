@@ -92,7 +92,7 @@ class _postCardState extends State<postCard> {
                       left: MediaQuery.of(context).size.width * 0.04),
                   width: double.maxFinite,
                   decoration: const BoxDecoration(
-                      color: Colors.orange,
+                      color: Colors.pink,
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),

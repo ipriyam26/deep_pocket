@@ -57,7 +57,7 @@ class _RecentAboutState extends State<RecentAbout> {
       children: [
         Container(
             height: MediaQuery.of(context).size.height * 0.04,
-            color: Colors.black,
+            color: const Color.fromRGBO(16, 15, 1, 1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -65,15 +65,27 @@ class _RecentAboutState extends State<RecentAbout> {
                   width: Mwidth * 0.15,
                 ),
                 TextButton(
-                    onPressed: () {
-                      setState(() {
-                        recent = true;
-                      });
-                    },
-                    child: const Text(
-                      "Recent",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    )),
+                  onPressed: () {
+                    setState(() {
+                      recent = true;
+                    });
+                  },
+                  child: recent
+                      ? const Text(
+                          "Recent",
+                          style: TextStyle(
+                              color: Colors.pink,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                        )
+                      : const Text(
+                          "Recent",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                        ),
+                ),
                 SizedBox(
                   width: Mwidth * 0.3,
                 ),
@@ -83,10 +95,21 @@ class _RecentAboutState extends State<RecentAbout> {
                         recent = false;
                       });
                     },
-                    child: const Text(
-                      "About",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    )),
+                    child: recent
+                        ? const Text(
+                            "About",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          )
+                        : const Text(
+                            "About",
+                            style: TextStyle(
+                                color: Colors.pink,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          )),
                 SizedBox(
                   width: Mwidth * 0.05,
                 ),

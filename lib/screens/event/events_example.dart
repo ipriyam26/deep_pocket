@@ -112,7 +112,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(11, 10, 10, 1),
       body: SingleChildScrollView(
-        child: Expanded(
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.88,
           child: Column(
             children: [
               TableCalendar<QueryDocumentSnapshot<Map<String, dynamic>>>(

@@ -26,6 +26,14 @@ class eventScreen extends StatelessWidget {
         children: [
           Stack(
             children: [
+              CachedNetworkImage(
+                imageUrl: details['Image'],
+                height: MSize.height * 0.7 * 0.6,
+                fit: BoxFit.fill,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CupertinoActivityIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
               Image.network(
                 details['Image'],
                 height: MSize.height * 0.7 * 0.6,

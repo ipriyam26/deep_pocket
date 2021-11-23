@@ -54,8 +54,9 @@ class eventMainScreen extends StatelessWidget {
                       );
                     }
                     return Container(
-                        height: MHeight * 0.77,
+                        height: MHeight * 0.82,
                         child: ListView.builder(
+                            shrinkWrap: true,
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: (context, i) => eventCard(
                                   upcomingEvent: snapshot.data!.docs[i],

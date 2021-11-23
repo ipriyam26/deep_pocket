@@ -1,6 +1,7 @@
 import 'package:deep_pocket_1/screens/event/create_event.dart';
 import 'package:deep_pocket_1/screens/internship/internship_create.dart';
 import 'package:deep_pocket_1/screens/login-signup/login.dart';
+import 'package:deep_pocket_1/screens/menu-pages/menu.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notice_create.dart';
 import 'package:deep_pocket_1/screens/post/edit_post.dart';
 import 'package:deep_pocket_1/screens/profile/edit_profile.dart';

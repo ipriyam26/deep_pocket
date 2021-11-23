@@ -5,6 +5,7 @@ import 'package:deep_pocket_1/models/data_feed.dart';
 
 import 'package:deep_pocket_1/models/user_model.dart';
 import 'package:deep_pocket_1/screens/login-signup/login.dart';
+import 'package:deep_pocket_1/screens/menu-pages/menu.dart';
 
 import 'package:deep_pocket_1/screens/post/new_post_page.dart';
 import 'package:deep_pocket_1/screens/post/user_input.dart';
@@ -134,13 +135,13 @@ class _feedScreenState extends State<feedScreen> {
                   "Filters",
                   style: TextStyle(color: Colors.white),
                 )),
-            TextButton(
-                onPressed: () =>
-                    {Navigator.pushNamed(context, userInput.route)},
-                child: const Icon(
-                  Icons.add_box,
-                  color: Colors.pink,
-                )),
+            // TextButton(
+            //     onPressed: () =>
+            //         {Navigator.pushNamed(context, userInput.route)},
+            //     child: const Icon(
+            //       Icons.add_box,
+            //       color: Colors.pink,
+            //     )),
           ],
         ),
         backgroundColor: Colors.black,
@@ -156,56 +157,67 @@ class _feedScreenState extends State<feedScreen> {
                   color: Colors.orange,
                 ));
               }
-              return Container(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  child: ListView.builder(
-                      controller: _scrollController,
-                      itemCount: snapshot.data!.docs.length + 1,
-                      itemBuilder: (context, index) =>
-                          index == snapshot.data!.docs.length
-                              ? const CupertinoActivityIndicator()
-                              : Center(
-                                  child: InkWell(
-                                    splashColor: Colors.white,
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, postPage.route,
-                                          arguments: {
-                                            'documentid':
-                                                snapshot.data!.docs[index].id,
-                                            'user': loggedInuser,
-                                          });
-                                    },
-                                    child: Container(
-                                        child: postCard(
-                                          points: snapshot.data!.docs[index].data()['Points '] ?? 0,
-                                            AuthorUID: snapshot.data!.docs[index]
-                                                .data()['AuthorUID'],
-                                            MHeight: MHeight,
-                                            Anonymous: snapshot.data!.docs[index]
-                                                    .data()['Anonymous'] ??
-                                                false,
-                                            NotinFeed: false,
-                                            MWidth: MWidth,
-                                            imagesList: snapshot.data!.docs[index]
-                                                .data()['ImageLinks'],
-                                            id: snapshot.data!.docs[index].id,
-                                            LikedBy: snapshot.data!.docs[index]
-                                                .data()['LikedBy'],
-                                            name: snapshot.data!.docs[index]
-                                                .data()['AuthorName'],
-                                            AuthorImage: snapshot.data!.docs[index]
-                                                .data()['AuthorProfilePic'],
-                                            title: snapshot.data!.docs[index]
-                                                .data()['Title'],
-                                            body: snapshot.data!.docs[index].data()['Body'],
-                                            time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
-                                            likes: snapshot.data!.docs[index].data()['Likes'],
-                                            comments: snapshot.data!.docs[index].data()['Comments'],
-                                            date: snapshot.data!.docs[index].data()['Date'],
-                                            tag: snapshot.data!.docs[index].data()['Tag'])),
-                                  ),
-                                )));
+              return SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  children: [
+                    Container(height: MHeight * 0.22, child: MenuP()),
+                    SizedBox(
+                      height: MHeight * 0.005,
+                    ),
+                    ListView.builder(
+                        // controller: _scrollController,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: snapshot.data!.docs.length + 1,
+                        itemBuilder: (context, index) =>
+                            index == snapshot.data!.docs.length
+                                ? const CupertinoActivityIndicator()
+                                : Center(
+                                    child: InkWell(
+                                      splashColor: Colors.white,
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, postPage.route,
+                                            arguments: {
+                                              'documentid':
+                                                  snapshot.data!.docs[index].id,
+                                              'user': loggedInuser,
+                                            });
+                                      },
+                                      child: Container(
+                                          child: postCard(
+                                              points: snapshot.data!.docs[index].data()['Points '] ??
+                                                  0,
+                                              AuthorUID: snapshot.data!.docs[index]
+                                                  .data()['AuthorUID'],
+                                              MHeight: MHeight,
+                                              Anonymous: snapshot.data!.docs[index]
+                                                      .data()['Anonymous'] ??
+                                                  false,
+                                              NotinFeed: false,
+                                              MWidth: MWidth,
+                                              imagesList: snapshot.data!.docs[index]
+                                                  .data()['ImageLinks'],
+                                              id: snapshot.data!.docs[index].id,
+                                              LikedBy: snapshot.data!.docs[index]
+                                                  .data()['LikedBy'],
+                                              name: snapshot.data!.docs[index]
+                                                  .data()['AuthorName'],
+                                              AuthorImage: snapshot.data!.docs[index]
+                                                  .data()['AuthorProfilePic'],
+                                              title: snapshot.data!.docs[index].data()['Title'],
+                                              body: snapshot.data!.docs[index].data()['Body'],
+                                              time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
+                                              likes: snapshot.data!.docs[index].data()['Likes'],
+                                              comments: snapshot.data!.docs[index].data()['Comments'],
+                                              date: snapshot.data!.docs[index].data()['Date'],
+                                              tag: snapshot.data!.docs[index].data()['Tag'])),
+                                    ),
+                                  )),
+                  ],
+                ),
+              );
             }));
   }
 }

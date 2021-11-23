@@ -1,15 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_pocket_1/models/mock_data.dart';
 import 'package:deep_pocket_1/models/user_model.dart';
 import 'package:deep_pocket_1/screens/post/feed_screen.dart';
-import 'package:deep_pocket_1/screens/menu-pages/menu_pages.dart';
-import 'package:deep_pocket_1/screens/post/user_input.dart';
-import 'package:deep_pocket_1/screens/profile/search_user.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'screens/post/user_input.dart';
 import 'screens/profile/profile_screen.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -26,8 +24,8 @@ class _TabsScreenState extends State<TabsScreen> {
   final List<Widget> _widgetOptions = <Widget>[
     feedScreen(),
     // SearchUser(),
-    Menu(),
-    // userInput(),
+    // Menu(),
+    userInput(),
     profileScreen(),
   ];
   void _onItemTapped(int index) {
@@ -72,8 +70,8 @@ class _TabsScreenState extends State<TabsScreen> {
             // ),
             BottomNavigationBarItem(
               backgroundColor: Colors.white,
-              icon: Icon(Icons.pages_outlined, size: 30),
-              activeIcon: Icon(Icons.pages, size: 30),
+              icon: Icon(Icons.add, size: 30),
+              activeIcon: Icon(Icons.add_circle, size: 32),
               label: '',
             ),
             // BottomNavigationBarItem(

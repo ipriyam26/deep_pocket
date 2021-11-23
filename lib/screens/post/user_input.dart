@@ -179,7 +179,10 @@ class _userInputState extends State<userInput> {
                   AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
                       snapshot) {
                 if (!snapshot.hasData) {
-                  return const CircularProgressIndicator();
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: Colors.pink,
+                  ));
                 }
                 var userdata = snapshot.data!.data();
 
@@ -249,7 +252,7 @@ class _userInputState extends State<userInput> {
                                         style: const TextStyle(
                                           fontSize: 12,
                                         ),
-                                        iconEnabledColor: Colors.orange,
+                                        iconEnabledColor: Colors.pink,
                                         items:
                                             Tag.map<DropdownMenuItem<String>>(
                                                 (String value) {
@@ -258,7 +261,7 @@ class _userInputState extends State<userInput> {
                                             child: Text(
                                               value,
                                               style: const TextStyle(
-                                                  color: Colors.orange),
+                                                  color: Colors.pink),
                                             ),
                                           );
                                         }).toList(),
