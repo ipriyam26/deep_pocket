@@ -1,0 +1,536 @@
+[
+  {
+    "Name": "SNU Lake",
+    "Address": "GHGH+34V, Greater Noida, Uttar Pradesh 203207",
+    "urls": "https://www.google.com/maps/place/SNU+Lake/@28.5252391,77.5756142,17z/data=!3m1!4b1!4m5!3m4!1s0x390c94dbe0222a6f:0x96c4e051b8e0fe5d!8m2!3d28.5252391!4d77.5778029",
+    "Catagory": "Hangouts"
+  },
+  {
+    "Name": "Vansia Mall",
+    "Address": "4, near Radison hotel, Industrial Area, Surajpur Site 4, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Vansia+Mall/@28.4400272,77.5430089,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc06ec9381e71:0xab64cc2e6e0953e!8m2!3d28.4401019!4d77.5453928",
+    "Catagory": "Hangouts"
+  },
+  {
+    "Name": "The Grand Venice Mall",
+    "Address": "Plot No SH3, Site IV, near Pari Chowk, Greater Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/The+Grand+Venice+Mall/@28.4525346,77.5241227,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc030551d5e55:0xf4077203c436ddc2!8m2!3d28.4525346!4d77.5263114",
+    "Catagory": "Hangouts"
+  },
+  {
+    "Name": "Ansal Plaza Mall",
+    "Address": "ANSAL PLAZA MALL SHOPPING COMPLEX, Pari Chowk, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Ansal+plaza+Mall/@28.4646154,77.5058456,17z/data=!3m1!4b1!4m5!3m4!1s0x390cebc76924c03b:0x7f9c5a4c15d4294!8m2!3d28.4646154!4d77.5080343",
+    "Catagory": "Hangouts"
+  },
+  {
+    "Name": "Library",
+    "Address": "LT. Kirpal Singh Bhati Marg, Greater Noida, Uttar Pradesh 203202",
+    "urls": "https://www.google.com/maps/place/Library/@28.4501099,77.581955,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbf9d727c8b97:0x1c7580b6918408d6!8m2!3d28.4501099!4d77.5841437",
+    "Catagory": "Library"
+  },
+  {
+    "Name": "Bodhisattva Dr. B.R. Ambedkar Central Library",
+    "Address": "Gautam Buddha University (Delhi NCR), Yamuna Expy, Greater Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/Bodhisattva+Dr.+B.R.+Ambedkar+Central+Library/@28.4199057,77.5239559,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc0f9b557da4f:0x1fd3e901505650e!8m2!3d28.4199057!4d77.5261446",
+    "Catagory": "Library"
+  },
+  {
+    "Name": "Open Library",
+    "Address": "Senior Citizen Apartment, Phi II, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Open+Library/@28.4506488,77.5120395,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc16d7423fb3b:0x182552faae0956ec!8m2!3d28.4506813!4d77.5142993",
+    "Catagory": "Library"
+  },
+  {
+    "Name": "PRAGYA LIBRARY",
+    "Address": "Alpha 2 Main Market, 5th floor, KB complex, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/PRAGYA+LIBRARY/@28.478139,77.5159507,17z/data=!3m1!4b1!4m5!3m4!1s0x390ceb3887516809:0xecb2dcb40a8623a0!8m2!3d28.478139!4d77.5181394",
+    "Catagory": "Library"
+  },
+  {
+    "Name": "AIMT Library",
+    "Address": "Army Institute Of Management And Technology (AIMT), Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/AIMT+Library,+Chi+II,+Greater+Noida,+Uttar+Pradesh/@28.478139,77.5159507,17z/data=!4m5!3m4!1s0x390cc1873bd12849:0x1daf9c01e13bf93c!8m2!3d28.4416964!4d77.5081544",
+    "Catagory": "Library"
+  },
+  {
+    "Name": "THE MODULE LIBRARY",
+    "Address": "Gali Number 9, Jagat Farm, Block E, GTB MARKET, Gamma 1, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/AIMT+Library,+Chi+II,+Greater+Noida,+Uttar+Pradesh/@28.478139,77.5159507,17z/data=!4m5!3m4!1s0x390cc1873bd12849:0x1daf9c01e13bf93c!8m2!3d28.4416964!4d77.5081544",
+    "Catagory": "Library"
+  },
+  {
+    "Name": "Galgotia Library",
+    "Address": "Galgotias College of Engineering and Technology, Knowledge Park, Phase-2, Greater Noida, Uttar Pradesh 201306",
+    "urls": "https://www.google.com/maps/place/AIMT+Library,+Chi+II,+Greater+Noida,+Uttar+Pradesh/@28.478139,77.5159507,17z/data=!4m5!3m4!1s0x390cc1873bd12849:0x1daf9c01e13bf93c!8m2!3d28.4416964!4d77.5081544",
+    "Catagory": "Library"
+  },
+  {
+    "Name": "City Centre Library",
+    "Address": "H-49, Beta 2 Rd, Block H, Beta II, Greater Noida, Uttar Pradesh 201306",
+    "urls": "https://www.google.com/maps/place/AIMT+Library,+Chi+II,+Greater+Noida,+Uttar+Pradesh/@28.478139,77.5159507,17z/data=!4m5!3m4!1s0x390cc1873bd12849:0x1daf9c01e13bf93c!8m2!3d28.4416964!4d77.5081544",
+    "Catagory": "Library"
+  },
+  {
+    "Name": "RK library Jagat Farm",
+    "Address": "2nd floor, Above Chutney Restaurant, Gali Number 9, opp. Red Tape Showroom GTB Mkt, Jagat Farm, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/AIMT+Library,+Chi+II,+Greater+Noida,+Uttar+Pradesh/@28.478139,77.5159507,17z/data=!4m5!3m4!1s0x390cc1873bd12849:0x1daf9c01e13bf93c!8m2!3d28.4416964!4d77.5081544",
+    "Catagory": "Library"
+  },
+  {
+    "Name": "Buddha Library",
+    "Address": "C-61, 4th Cross St, Block C, Beta I, Greater Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/AIMT+Library,+Chi+II,+Greater+Noida,+Uttar+Pradesh/@28.478139,77.5159507,17z/data=!4m5!3m4!1s0x390cc1873bd12849:0x1daf9c01e13bf93c!8m2!3d28.4416964!4d77.5081544",
+    "Catagory": "Library"
+  },
+  {
+    "Name": "Indian stationery mart",
+    "Address": "FHC9+GMF, Block C, Sector MU 1, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Indian+stationery+mart/@28.4713208,77.5691618,15z/data=!4m5!3m4!1s0x0:0x4b73d25868d1c713!8m2!3d28.4713474!4d77.5691456",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "Maa Shakumbhari Stationers and Sport",
+    "Address": "Shop no. 11, Opposite. OBC Bank Bhagirath Plaza, Kasna, Greater Noida, near Gupta Eye Care Centre, Greater Noida, Uttar Pradesh 201306",
+    "urls": "https://www.google.com/maps/place/Maa+Shakumbhari+Stationers+and+Sport/@28.436735,77.544286,15z/data=!4m5!3m4!1s0x0:0x1604a4ef4dfe40f1!8m2!3d28.436735!4d77.544286",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "FRIENDS TRADING",
+    "Address": "320, Block A, RHO 2, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/FRIENDS+TRADING/@28.4595784,77.5484372,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc00555a589bd:0x65698c2a28c43c86!8m2!3d28.4594591!4d77.5507138",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "Vinayak Stationers",
+    "Address": "Shop No.3, Main Market Aichher, Pi -32, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Vinayak+Stationers/@28.4649209,77.5362694,17z/data=!4m8!1m2!2m1!1sVinayak+Stationers+Shop+No.3,+Main+Market+Aichher,+Pi+-32,+Greater+Noida,+Uttar+Pradesh+201310!3m4!1s0x390ceaa1aaaaaaab:0x55534e46c1868f00!8m2!3d28.464973!4d77.5384796",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "Student's Corner",
+    "Address": "Shop No.9, Om Veer Nagar Market, Aichher, Pi -32, Greater Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/Student's+Corner/@28.473069,77.5396903,17z/data=!3m1!4b1!4m5!3m4!1s0x390ceaa1aaaaaaab:0xd1d1cba1c571efe!8m2!3d28.473069!4d77.541879",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "ks stationery",
+    "Address": "D-97, Block D, Sector Xu 2, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/ks+stationery/@28.4687045,77.5737141,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbf42ae743b25:0x80cfc322adc27db7!8m2!3d28.4687045!4d77.5759028",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "Harsh Stationary & Shoes Center",
+    "Address": "Ajaibpur, KARAN SINGH MARKET, Rithori Road Gr, Noida, 201310",
+    "urls": "https://www.google.com/maps/place/Harsh+Stationary+%26+Shoes+Center/@28.4696819,77.5916337,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbfd9840a0d2f:0x1255e5a13c3a09a4!8m2!3d28.4696833!4d77.5938264",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "Stationery Shop",
+    "Address": "201310, Jalvayu Vihar, Phi II, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Stationery+Shop/@28.4474264,77.5109925,17z/data=!4m9!1m2!2m1!1sStationery+Shop+Jalvayu+Vihar+greater+noida!3m5!1s0x390cc0354a4913e5:0x96e6316138505129!8m2!3d28.4461359!4d77.5163324!15sCitTdGF0aW9uZXJ5IFNob3AgSmFsdmF5dSBWaWhhciBncmVhdGVyIG5vaWRhWi0iK3N0YXRpb25lcnkgc2hvcCBqYWx2YXl1IHZpaGFyIGdyZWF0ZXIgbm9pZGGSARBzdGF0aW9uZXJ5X3N0b3Jl",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "S. K Stationery",
+    "Address": "Shop No. 15, Main Market, Aichher, Pi -32, Greater Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/S.+K+Stationery/@28.473069,77.5396903,17z/data=!3m1!4b1!4m5!3m4!1s0x390ceaa1aaaaaaab:0x1bd48825224d8198!8m2!3d28.473069!4d77.541879",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "Aarohi Book Centre",
+    "Address": "Shop No. A1 Main Road Vill, Ghori Bachhera, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Aarohi+Book+Centre/@28.4790655,77.5714646,17z/data=!3m1!4b1!4m5!3m4!1s0x390c95cd716b2a99:0xce136668b10321c5!8m2!3d28.4790748!4d77.5736358",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "Students Corner Stationery Shop",
+    "Address": "Sharma market, Accher, Greater Noida, Uttar Pradesh",
+    "urls": "https://www.google.com/maps/place/Students+Corner+Stationery+Shop/@28.4647863,77.536172,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc1b94ae77f29:0xb4efbaf526ac9d2!8m2!3d28.4647863!4d77.5383607",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "Ribbons Stationery & Gift Items",
+    "Address": "Shop No- A-10, AVJ Market, Greater Noida, Uttar Pradesh 201306",
+    "urls": "https://www.google.com/maps/place/Ribbons+Stationery+%26+Gift+Items./@28.4514704,77.5527397,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc141f95e5f3f:0x873246e392c1b4de!8m2!3d28.4514166!4d77.5548349",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "All In One Stationer's",
+    "Address": "Shop No. 7, Ground Floor, Ph. 3, A.W.H.O, Gr. Noida, 201310",
+    "urls": "https://www.google.com/maps/place/All+In+One+Stationer's/@28.448717,77.5078413,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc1c95e7acd8b:0x2ad77d956fc66ba2!8m2!3d28.4486702!4d77.5100369",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "Gamma Stationers",
+    "Address": "Shri Amrit Plaza,, Beta 1 Block B Rd, Jagat Farm, Chandila, Gamma 1, Greater Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/Gamma+Stationers/@28.4796173,77.4985236,17z/data=!3m1!4b1!4m5!3m4!1s0x390cea6e44352cf7:0xef4b7063444d2b11!8m2!3d28.4796173!4d77.5007123",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "Greano Stationers",
+    "Address": "Shop No. 1& 2 Basement , , Gurubaksh Plaza , Jagat Farm, Beta 1 Block B Rd, near Liberty Shoes, Block E, Chandila, Gamma 1, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Greano+Stationers/@28.481699,77.4970083,17z/data=!3m1!4b1!4m5!3m4!1s0x390cea6e9eaf3223:0x712e562d201bf310!8m2!3d28.4816834!4d77.4991761",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "NRSR Stationery",
+    "Address": "Shop No. G-32, Krishna Apra Plaza Alpha -1, Alpha-I Commercial Belt, Greater Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/NRSR+Stationery/@28.470982,77.5089623,17z/data=!3m1!4b1!4m5!3m4!1s0x390cea7ee9aaaac7:0x40a7ee4ffe2f648b!8m2!3d28.4710457!4d77.5111031",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "Pooja stationery sports gift & gift shop",
+    "Address": "Shop no, 1, Rampur Jagir Rd, Block E, Block D, Beta I, Greater Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/Pooja+stationery+sports+gift+%26+gift+shop/@28.4855178,77.5021384,17z/data=!3m1!4b1!4m5!3m4!1s0x390cea66bfffffff:0xcd815da8821bb201!8m2!3d28.4855178!4d77.5043271",
+    "Catagory": "Stationers"
+  },
+  {
+    "Name": "Dev General Store & Recharge",
+    "Address": "Shop No. 4, Ground Floor, Shoping Complex 3rd, AWHO, near Euro Kids School, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Dev+General+Store+%26+Recharge/@28.448799,77.510087,15z/data=!4m5!3m4!1s0x0:0xc9f759a1fda35ce7!8m2!3d28.4486779!4d77.5101048",
+    "Catagory": "General Store"
+  },
+  {
+    "Name": "Lalit General Store",
+    "Address": "6 Rithori, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Lalit+General+Store/@28.4628551,77.601173,15z/data=!4m5!3m4!1s0x0:0x8cf16c36c4deaecc!8m2!3d28.4628551!4d77.601173",
+    "Catagory": "General Store"
+  },
+  {
+    "Name": "Mittal General Store",
+    "Address": "Sector P-3 Shop No.8, near said mandir, Greater Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/Mittal+General+Store/@28.4514767,77.5212008,15z/data=!4m5!3m4!1s0x0:0xbfdee7fad5101a44!8m2!3d28.4514767!4d77.5212008",
+    "Catagory": "General Store"
+  },
+  {
+    "Name": "MAST GENERAL STORE",
+    "Address": "MAIN DADRI ROAD, NEAR MANGAL BAZAAR, GULISTANPUR, G.B.NAGAR, Greater Noida, Uttar Pradesh 201306",
+    "urls": "https://www.google.com/maps/place/MAST+GENERAL+STORE/@28.510892,77.517474,15z/data=!4m5!3m4!1s0x0:0xc7c282432bcf6a5!8m2!3d28.510892!4d77.517474",
+    "Catagory": "General Store"
+  },
+  {
+    "Name": "Anu General Store",
+    "Address": "Unnamed Road, Block C, RHO 2, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Anu+General+Store/@28.5508357,77.2706445,11z/data=!4m19!1m13!4m12!1m4!2m2!1d77.2864321!2d28.6575754!4e1!1m6!1m2!1s0x390cc1c590ecf5ed:0x9411d33a345a1b21!2sanu+general+store,block+C+noida!2m2!1d77.5526847!2d28.460984!3m4!1s0x390cc1c590ecf5ed:0x9411d33a345a1b21!8m2!3d28.460984!4d77.5526847",
+    "Catagory": "General Store"
+  },
+  {
+    "Name": "Balaji General Store",
+    "Address": "Shop Number 16 basement Gaur Atulyam sector, Omicron I, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Balaji+General+Store/@28.4625771,77.5577692,15z/data=!4m5!3m4!1s0x0:0xfdb42bb054187278!8m2!3d28.4625771!4d77.5577692",
+    "Catagory": "General Store"
+  },
+  {
+    "Name": "VANSH GENERAL STORE",
+    "Address": "Shop no 07, Central Market, AWHO, AWHO Phase III, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/VANSH+GENERAL+STORE/@28.5513011,77.2490939,11z/data=!4m19!1m13!4m12!1m4!2m2!1d77.2864321!2d28.6575754!4e1!1m6!1m2!1s0x390cc15a7c3bbc63:0x101655b2854fbce1!2sVANSH+GENERAL+STORE,+Shop+no+07,+Central+Market,+AWHO,+AWHO+Phase+III,+Greater+Noida,+Uttar+Pradesh+201310!2m2!1d77.5098002!2d28.4465191!3m4!1s0x390cc15a7c3bbc63:0x101655b2854fbce1!8m2!3d28.4465191!4d77.5098002",
+    "Catagory": "General Store"
+  },
+  {
+    "Name": "Ruchika General Store",
+    "Address": "Shop No.12, Shivam Plaza, Block E, Delta I, Greater Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/Ruchika+General+Store/@28.4824096,77.5228592,17z/data=!4m5!3m4!1s0x390cebd3e113d475:0x7248c99a7b49ffd8!8m2!3d28.4824285!4d77.5257345",
+    "Catagory": "General Store"
+  },
+  {
+    "Name": "Radha Rani General Store",
+    "Address": "Shop 9 ! Satyam Complex, Alpha 2, Block I, Sector Alpha II, Greater Noida, Uttar Pradesh 201304",
+    "urls": "https://www.google.com/maps/place/Radha+Rani+General+Store/@28.4785483,77.5160491,17z/data=!3m1!4b1!4m5!3m4!1s0x390cea87a5133c65:0x87ff7c1316c5c24f!8m2!3d28.4785518!4d77.5182439",
+    "Catagory": "General Store"
+  },
+  {
+    "Name": "PURVANCHAL GENERAL STORE",
+    "Address": "FG83+HXV, Tugalpur, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/PURVANCHAL+GENERAL+STORE/@28.4664861,77.5027359,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc1d9fad178bb:0xcfba3f825663ad8!8m2!3d28.4664704!4d77.5049166",
+    "Catagory": "General Store"
+  },
+  {
+    "Name": "Zoza Bank",
+    "Address": "D-249, Omicron 1A, Block B, Dadha, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Zoza+Bank/@28.4576259,77.5669285,15z/data=!4m5!3m4!1s0x0:0xa5bcc019eb80a66b!8m2!3d28.4576259!4d77.5669285",
+    "Catagory": "Bank"
+  },
+  {
+    "Name": "HDFC Bank",
+    "Address": "Kasana Complex Main Kasna Road, Dabra, Dadri, near Shiv Mandir, Noida, Uttar Pradesh 203207",
+    "urls": "https://www.google.com/maps/place/HDFC+Bank/@28.5613538,77.2994746,11z/data=!4m19!1m13!4m12!1m4!2m2!1d77.2864321!2d28.6575754!4e1!1m6!1m2!1s0x390cbfc262f052f1:0xd09c967ef53ceba0!2sHDFC+Bank,+Kasana+Complex+Main+Kasna+Road,+Dabra,+Dadri,+near+Shiv+Mandir,+Noida,+Uttar+Pradesh+203207!2m2!1d77.5855273!2d28.4597301!3m4!1s0x390cbfc262f052f1:0xd09c967ef53ceba0!8m2!3d28.4597301!4d77.5855273",
+    "Catagory": "Bank"
+  },
+  {
+    "Name": "SyndicateBank Kasna Branch",
+    "Address": "Khasra No.712 2Nd Cut Main Road At, Kasna Rd, Dadri, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/SyndicateBank+Kasna+Branch/@28.4289,77.5910113,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbf504d939a87:0xfd13f00ebf1187a6!8m2!3d28.4289!4d77.5932",
+    "Catagory": "Bank"
+  },
+  {
+    "Name": "Bank Of Baroda",
+    "Address": "Kasna Village, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Bank+Of+Baroda/@28.438502,77.5379993,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc068334fbedf:0xa705c3c4734c90c7!8m2!3d28.438502!4d77.540188",
+    "Catagory": "Bank"
+  },
+  {
+    "Name": "Punjab National Bank",
+    "Address": "Unnamed Road, Greater Noida, Uttar Pradesh 203202",
+    "urls": "https://www.google.com/maps/place/Punjab+National+Bank/@28.4460831,77.6029157,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbfb5af7d4c59:0x2c950c709765e32a!8m2!3d28.4460967!4d77.6051134",
+    "Catagory": "Bank"
+  },
+  {
+    "Name": "State Bank Of India",
+    "Address": "EPIP Zone, Kasna Rd, Block E, Surajpur Site V, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/State+Bank+Of+India/@28.4316695,77.534279,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc05dadfaefc1:0xfc6e47bbb8bb7a5f!8m2!3d28.4316695!4d77.5364677",
+    "Catagory": "Bank"
+  },
+  {
+    "Name": "UCO Bank",
+    "Address": "1st Floor, GNS Plaza, opposite Radisson Blu, Surajpur Industrial Area, Surajpur Site 4, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/UCO+Bank/@28.4495852,77.5259739,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc039cf099af7:0x471ab45fb21e632c!8m2!3d28.4495852!4d77.5281626",
+    "Catagory": "Bank"
+  },
+  {
+    "Name": "Indian Bank Kasna Branch",
+    "Address": "Harish Chand Market, Kasna Rd, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Indian+Bank+Kasna+Branch/@28.4381238,77.5384576,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc0684bd60e61:0x32d4a8d916d65af2!8m2!3d28.4381251!4d77.5406426",
+    "Catagory": "Bank"
+  },
+  {
+    "Name": "Jaichand hair cut saloon/barber",
+    "Address": "Main sirsa road kasna, near by Oxford green public school, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Jaichand+hair+cut+saloon%2Fbarber/@28.4327571,77.5774102,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbffefd512bf9:0x6d0bc89d08c01a2e!8m2!3d28.4327571!4d77.5795989",
+    "Catagory": "Salons"
+  },
+  {
+    "Name": "MasterCuts Salon",
+    "Address": "Eldeco Mystic Greens, Shop No - 104,Arcade, Omicron I, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/MasterCuts+Salon/@28.4588401,77.560799,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbff7b8eabcf9:0xc901a0a193824c2e!8m2!3d28.458843!4d77.5629856",
+    "Catagory": "Salons"
+  },
+  {
+    "Name": "New Instyle Beauty Salon",
+    "Address": "Shop No. 101 &102 FF , Eldeco Mystic Greens Near Supertech Czar, Omicron I, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/New+Instyle+Beauty+Salon/@28.458788,77.5612102,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbf1cfeeddd6f:0x679c9a4bf8f595a2!8m2!3d28.458788!4d77.5633989",
+    "Catagory": "Salons"
+  },
+  {
+    "Name": "The Skin Expert - Beauty Saloon and nail art studio(only for ladies)A/C",
+    "Address": "C 68, Omicron 1A, Block B, Dadha, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/The+Skin+Expert+-+Beauty+Saloon+and+nail+art+studio(only+for+ladies)A%2FC/@28.4566502,77.5640519,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbfacb957261f:0x5155a9e686c19c63!8m2!3d28.4566502!4d77.5662406",
+    "Catagory": "Salons"
+  },
+  {
+    "Name": "New unisex mens hair saloon",
+    "Address": "FH75+33V, Omicron I, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/New+unisex+mens+hair+saloon/@28.462039,77.5562182,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc14823eea5a1:0x4962b462167d430e!8m2!3d28.462039!4d77.5584069",
+    "Catagory": "Salons"
+  },
+  {
+    "Name": "Pooja Makup Studio",
+    "Address": "Near, Maincha Ecotech 11 gr noida Bright future academy, Eastern Peripheral Expy, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Pooja+Makup+Studio/@28.449812,77.599275,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbfc5414537b9:0x2e892dbb8d6737fa!8m2!3d28.449812!4d77.6014637",
+    "Catagory": "Salons"
+  },
+  {
+    "Name": "Beauty Zone",
+    "Address": "Gaur Atulyam, Omicron I, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Beauty+Zone/@28.4609535,77.5568493,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc1daf019c0cf:0x69f706371f1d9081!8m2!3d28.4609535!4d77.559038",
+    "Catagory": "Salons"
+  },
+  {
+    "Name": "Arlika unisex salon &Beauty parlor",
+    "Address": "Super tech czar suites near Marketing office, behind sanju departmental store, Omicron I, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Arlika+unisex+salon+%26Beauty+parlor/@28.4577753,77.558672,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc1dc0e0ae59d:0xaf2718a4f9b7bfcf!8m2!3d28.4578061!4d77.5608399",
+    "Catagory": "Salons"
+  },
+  {
+    "Name": "Chahat beauty parlour",
+    "Address": "11, Block D, Sector MU 1, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Chahat+beauty+parlour/@28.4713401,77.561201,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbf9302faa8d7:0x98a78ba65b45c36a!8m2!3d28.4713401!4d77.5633897",
+    "Catagory": "Salons"
+  },
+  {
+    "Name": "Ak unisex hair salon",
+    "Address": "Block E, Kasna Village, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Ak+unisex+hair+salon/@28.434521,77.5340581,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc1d33b195681:0xd38724512c70c001!8m2!3d28.434521!4d77.5362468",
+    "Catagory": "Salons"
+  },
+  {
+    "Name": "Reba's The Beauty Clinic",
+    "Address": "Shop No.4 , Parasvnath Platinum, Sector-Tau Swarn Nagri, Greater Noida, Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/Ak+unisex+hair+salon/@28.434521,77.5340581,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc1d33b195681:0xd38724512c70c001!8m2!3d28.434521!4d77.5362468",
+    "Catagory": "Salons"
+  },
+  {
+    "Name": "The New Royal Chinese fast food",
+    "Address": "Plot No. 11 tech zone, Street 2, near by Bennett university, Greater Noida, 201310",
+    "urls": "https://www.google.com/maps/place/Ak+unisex+hair+salon/@28.434521,77.5340581,17z/data=!3m1!4b1!4m5!3m4!1s0x390cc1d33b195681:0xd38724512c70c001!8m2!3d28.434521!4d77.5362468",
+    "Catagory": "Food"
+  },
+  {
+    "Name": "Raja Dhaba",
+    "Address": "Unnamed Road, Dadha, Greater Noida, Uttar Pradesh 203202",
+    "urls": "https://www.google.com/maps/place/Raja+Dhaba/@28.4504822,77.578303,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbf5556e05573:0x9036147b91e38a67!8m2!3d28.4505198!4d77.5805557",
+    "Catagory": "Food"
+  },
+  {
+    "Name": "Babu Tea Stall",
+    "Address": "FH2H+PC2, Dadha, Greater Noida, Uttar Pradesh 203202",
+    "urls": "https://www.google.com/maps/place/Babu+Tea+Stall/@28.4517704,77.5763182,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbf60c9eb7b21:0x6dbf79c9c85e560d!8m2!3d28.4517746!4d77.5785148",
+    "Catagory": "Food"
+  },
+  {
+    "Name": "Ekta dhaba",
+    "Address": "Unnamed Road, Greater Noida, Uttar Pradesh 203202",
+    "urls": "https://www.google.com/maps/place/Ekta+dhaba/@28.4480859,77.5868245,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbf8059358723:0x482d9774ae9eb7ef!8m2!3d28.4480859!4d77.5890132",
+    "Catagory": "Food"
+  },
+  {
+    "Name": "Chinu tea stall",
+    "Address": "CHVP+62M, Greater Noida, Uttar Pradesh 203202",
+    "urls": "https://www.google.com/maps/place/Ekta+dhaba/@28.4480859,77.5868245,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbf8059358723:0x482d9774ae9eb7ef!8m2!3d28.4480859!4d77.5890132",
+    "Catagory": "Food"
+  },
+  {
+    "Name": "Vanshika Bhandaar",
+    "Address": "CHX9+JXM, Dadha, Greater Noida, Uttar Pradesh 203202",
+    "urls": "https://www.google.com/maps/place/Vanshika+Bhandaar/@28.4490899,77.5677286,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbf2bfd206c25:0x3e05d05489ab833a!8m2!3d28.4490899!4d77.5699174",
+    "Catagory": "Food"
+  },
+  {
+    "Name": "Mama Fast Food Shop",
+    "Address": "Shiv Mandir Sirsa Gr Noida, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Mama+Fast+Food+Shop/@28.4335721,77.5729746,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbf95aa4cf0df:0x63204b3e08a79eaa!8m2!3d28.4335721!4d77.5751633",
+    "Catagory": "Food"
+  },
+  {
+    "Name": "Pandit ji Dhaba",
+    "Address": "Unnamed Road, Greater Noida, Uttar Pradesh 203202",
+    "urls": "https://www.google.com/maps/place/Pandit+ji+Dhaba/@28.4336939,77.5882247,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbf282ae22393:0x685df7d1fb2ef557!8m2!3d28.4337389!4d77.5904568",
+    "Catagory": "Food"
+  },
+  {
+    "Name": "Choudhary Daba",
+    "Address": "Shiv Mandir Ladpura Gr Noida, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Choudhary+Daba/@28.429568,77.5889473,17z/data=!3m1!4b1!4m5!3m4!1s0x390cbfa74fcb4ef5:0x61c31a9ab0000000!8m2!3d28.429568!4d77.591136",
+    "Catagory": "Food"
+  },
+  {
+    "Name": "Get well Pharmacy",
+    "Address": "Shop No G 10 Gaur Atulyam Gravity Sec, Omicron I, Greater Noida, Uttar Pradesh 201307",
+    "urls": "https://www.google.com/maps/place/Get+well+Pharmacy/@28.4602383,77.5570625,17z/data=!4m12!1m6!3m5!1s0x390cc142651faa41:0x63c9a828a6de69ec!2sGet+well+Pharmacy!8m2!3d28.4602383!4d77.5592512!3m4!1s0x390cc142651faa41:0x63c9a828a6de69ec!8m2!3d28.4602383!4d77.5592512",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Medical Store",
+    "Address": "FH57+G97, Omicron I, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Medical+Store/@28.4587845,77.5546823,15z/data=!4m9!1m2!2m1!1sMedical+Store++FH57%2BG97,+Omicron+I,+Greater+Noida,+Uttar+Pradesh+201310!3m5!1s0x390cbff7b8916d71:0xf2d11022a5dd0dad!8m2!3d28.458828!4d77.5634074!15sCkdNZWRpY2FsIFN0b3JlICBGSDU3K0c5NywgT21pY3JvbiBJLCBHcmVhdGVyIE5vaWRhLCBVdHRhciBQcmFkZXNoIDIwMTMxMFpFIkNtZWRpY2FsIHN0b3JlIGZoNTcgZzk3IG9taWNyb24gaSBncmVhdGVyIG5vaWRhIHV0dGFyIHByYWRlc2ggMjAxMzEwkgEIcGhhcm1hY3k",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Sai Medical Store",
+    "Address": "Mukaddam Muniram Complex,Vill Anchher sec 32, Pi I & Ii, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Sai+Medical+Store/@28.4643612,77.5376508,17z/data=!4m12!1m6!3m5!1s0x390ceaa1aaaaaaab:0x72b7619142cf25db!2sSai+Medical+Store!8m2!3d28.4643612!4d77.5398395!3m4!1s0x390ceaa1aaaaaaab:0x72b7619142cf25db!8m2!3d28.4643612!4d77.5398395",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "MEDPOINT PHARMACY & COSMETICS",
+    "Address": "SHOP NO 6 SHOPPING COMPLEX SEC, P3 Rd, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/MEDPOINT+PHARMACY+%26+COSMETICS/@28.4502499,77.5210257,17z/data=!4m12!1m6!3m5!1s0x390cc1468b11fc15:0x4dce3c186ba2ff35!2sMEDPOINT+PHARMACY+%26+COSMETICS!8m2!3d28.4502499!4d77.5232144!3m4!1s0x390cc1468b11fc15:0x4dce3c186ba2ff35!8m2!3d28.4502499!4d77.5232144",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "S R Medical Store",
+    "Address": "Transformer Lane, Near Masjid, Rithori, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/S+R+Medical+Store/@28.4592416,77.4626702,11z/data=!4m9!1m2!2m1!1sS+R+Medical+Store!3m5!1s0x390cbf7dd46b2d01:0x3df2bb05f1d5a627!8m2!3d28.4592416!4d77.6027459!15sChFTIFIgTWVkaWNhbCBTdG9yZVoSIhBzciBtZWRpY2FsIHN0b3JlkgEIcGhhcm1hY3k",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Zara medical shop",
+    "Address": "FHGH+27R, Block B, Sector Xu 2, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Zara+medical+shop/@28.4751213,77.5759441,17z/data=!4m12!1m6!3m5!1s0x390c95e787ba9bbd:0xe83d8456a74a2827!2sZara+medical+shop!8m2!3d28.4750772!4d77.5781706!3m4!1s0x390c95e787ba9bbd:0xe83d8456a74a2827!8m2!3d28.4750772!4d77.5781706",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Medical Store",
+    "Address": "shopping complex P3 Market, Phi III, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Medical+Store/@28.451468,77.5190903,17z/data=!4m12!1m6!3m5!1s0x390cc033fbcd2721:0xed53af561a4cdd9a!2sMedical+Store!8m2!3d28.4514223!4d77.5212288!3m4!1s0x390cc033fbcd2721:0xed53af561a4cdd9a!8m2!3d28.4514223!4d77.5212288",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Rohit Medical Store",
+    "Address": "CH. Rami Market, Tugalpur, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Rohit+Medical+Store/@28.465976,77.5022483,17z/data=!4m12!1m6!3m5!1s0x390cc1d81d29b78f:0xb259460b1759e3eb!2sRohit+Medical+Store!8m2!3d28.4659171!4d77.5044032!3m4!1s0x390cc1d81d29b78f:0xb259460b1759e3eb!8m2!3d28.4659171!4d77.5044032",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "V R Medicos",
+    "Address": "Block C, Alpha 1, Block E, Alpha I, Greater Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/V+R+Medicos+-+Best+Medical+Store+in+Greater+Noida,+Best+Medical+Store+Near+Me/@28.4723714,77.5118294,17z/data=!4m12!1m6!3m5!1s0x390cea7b93478df1:0xb8002fbda77054ae!2sV+R+Medicos+-+Best+Medical+Store+in+Greater+Noida,+Best+Medical+Store+Near+Me!8m2!3d28.4724162!4d77.5140897!3m4!1s0x390cea7b93478df1:0xb8002fbda77054ae!8m2!3d28.4724162!4d77.5140897",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "jai durge pharmacy",
+    "Address": "FHR5+9CW, Junpat Village, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/medical+store+Jai+durge+pharmacy+greater+noida/@28.4909875,77.5563894,17z/data=!4m13!1m7!3m6!1s0x0:0xc9f72c29f0a0f9af!2s7JWVFHR5%2B9CW!3b1!8m2!3d28.4909875!4d77.5585781!3m4!1s0x390ceab45a4ef02f:0xc29cb230139419a0!8m2!3d28.4909808!4d77.5585984",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Ratan Medicos",
+    "Address": "Shop No. 11, Lagerstroemia Shopping Centre, near Kailash hospital, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Ratan+Medicos+Pvt.+Ltd./@28.4702034,77.5036362,17z/data=!4m12!1m6!3m5!1s0x390cea79c9eee4cf:0xb05cb3d11a1af903!2sRatan+Medicos+Pvt.+Ltd.!8m2!3d28.4701778!4d77.5059658!3m4!1s0x390cea79c9eee4cf:0xb05cb3d11a1af903!8m2!3d28.4701778!4d77.5059658",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Acropolis Chemist Shop",
+    "Address": "201310, Eldeco Green Meadows, Pi I & II, Pi I & Ii, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Acropolis+Chemist+Shop/@28.468424,77.5339645,17z/data=!4m12!1m6!3m5!1s0x390cc02061920791:0x62b189a9fa4cf743!2sAcropolis+Chemist+Shop!8m2!3d28.4684127!4d77.5361713!3m4!1s0x390cc02061920791:0x62b189a9fa4cf743!8m2!3d28.4684127!4d77.5361713",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Radha Medical Store",
+    "Address": "FG25+GMM, Block A, Ansal Golf Links 1, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Radha+Medical+Store/@28.4513302,77.5069906,17z/data=!4m12!1m6!3m5!1s0x390cc1cebe229db9:0x695f5440e06a3ab3!2sRadha+Medical+Store!8m2!3d28.451336!4d77.5091873!3m4!1s0x390cc1cebe229db9:0x695f5440e06a3ab3!8m2!3d28.451336!4d77.5091873",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Krishna Medical Store",
+    "Address": "D6, 4th Ave, Block D, Swarn Nagari, Sector 31, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Krishna+Medical+Store/@28.4608705,77.5302537,17z/data=!4m12!1m6!3m5!1s0x390cc02462e3a53b:0xb0c3d39f13e2741d!2sKrishna+Medical+Store!8m2!3d28.4608651!4d77.5324465!3m4!1s0x390cc02462e3a53b:0xb0c3d39f13e2741d!8m2!3d28.4608651!4d77.5324465",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Awadh Medical Store Kasna",
+    "Address": "Awadh medical store, opposite GIMS hospital, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Awadh+Medical+Store+Kasna/@28.4346709,77.5320657,17z/data=!4m12!1m6!3m5!1s0x390cc1769219098f:0xa93d208e6d87cb03!2sAwadh+Medical+Store+Kasna!8m2!3d28.4346709!4d77.5342544!3m4!1s0x390cc1769219098f:0xa93d208e6d87cb03!8m2!3d28.4346709!4d77.5342544",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Pawan Medical Store",
+    "Address": "Shop No.2/20, C-Block Market, Alpha-I, G.B.Nagar, Greater Noida, Uttar Pradesh",
+    "urls": "https://www.google.com/maps/place/Pawan+Medical+Store/@28.47464,77.5076963,17z/data=!4m12!1m6!3m5!1s0x390cea7b8c4320c1:0x3c0ab9845f3e15e9!2sPawan+Medical+Store!8m2!3d28.4746249!4d77.5098576!3m4!1s0x390cea7b8c4320c1:0x3c0ab9845f3e15e9!8m2!3d28.4746249!4d77.5098576",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "HiGlance Pharmacy",
+    "Address": "Shop No.2, Eldeco Arcadia Shipping Complex,, Eldeco Green Meadows, Pi I & II, Sector MU 1, Greater Noida, Uttar Pradesh 201308",
+    "urls": "https://www.google.com/maps/place/HiGlance+Pharmacy/@28.4684084,77.5338147,17z/data=!4m12!1m6!3m5!1s0x390cc0200ffffff7:0x508cba8e2e2a9c8e!2sHiGlance+Pharmacy!8m2!3d28.4683749!4d77.5359765!3m4!1s0x390cc0200ffffff7:0x508cba8e2e2a9c8e!8m2!3d28.4683749!4d77.5359765",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Shiv Medicoz",
+    "Address": "Gali Number 1 University Rd, Block E, Surajpur Site V, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Shiv+Medicoz/@28.4344625,77.5338822,17z/data=!4m12!1m6!3m5!1s0x390cc19721483c8f:0xdabb17fc8e71a905!2sShiv+Medicoz!8m2!3d28.4344625!4d77.5360709!3m4!1s0x390cc19721483c8f:0xdabb17fc8e71a905!8m2!3d28.4344625!4d77.5360709",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Dr Preamraj Singh medical store",
+    "Address": "FH7M+V5G, Raipur Village, Raipur Bangar, Uttar Pradesh 203202",
+    "urls": "https://www.google.com/maps/place/Dr+Preamraj+Singh+medical+store/@28.4646801,77.5807751,17z/data=!4m12!1m6!3m5!1s0x390cbf5c1a94fa11:0x5937d48cae23bd34!2sDr+Preamraj+Singh+medical+store!8m2!3d28.4647056!4d77.5829818!3m4!1s0x390cbf5c1a94fa11:0x5937d48cae23bd34!8m2!3d28.4647056!4d77.5829818",
+    "Catagory": "Medicine"
+  },
+  {
+    "Name": "Tabs N Caps Chemist",
+    "Address": "Shop Number-26, Gamma Shopping Complex, Gamma 2, Greater Noida, Uttar Pradesh 201310",
+    "urls": "https://www.google.com/maps/place/Tabs+N+Caps+Chemist/@28.488429,77.5041943,17z/data=!4m12!1m6!3m5!1s0x390cea67be016839:0xabb6364056a75977!2sTabs+N+Caps+Chemist!8m2!3d28.4884626!4d77.5063573!3m4!1s0x390cea67be016839:0xabb6364056a75977!8m2!3d28.4884626!4d77.5063573",
+    "Catagory": "Medicine"
+  }
+]

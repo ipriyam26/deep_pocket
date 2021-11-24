@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:deep_pocket_1/screens/Nearby/nearby_first.dart';
+import 'package:deep_pocket_1/screens/Nearby/nearby_tab.dart';
 import 'package:deep_pocket_1/screens/club/clubs_screen.dart';
 import 'package:deep_pocket_1/screens/event/even_tabs.dart';
 import 'package:deep_pocket_1/screens/faculty/faculty_screen.dart';
@@ -47,7 +49,7 @@ class MenuP extends StatelessWidget {
         name: "NEARBY",
         image:
             "https://as2.ftcdn.net/v2/jpg/02/07/31/27/1000_F_207312782_UAsvH6A9GteuXrkPQPGBSNDGxDuSYLVt.jpg",
-        route: internShips.route),
+        route: nearbyTab.route),
     mbutton(
         name: "NOTICE",
         image:

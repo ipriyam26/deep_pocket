@@ -1,54 +1,61 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:deep_pocket_1/models/places.dart';
+// import 'package:deep_pocket_1/read_data.dart';
+// import 'package:flutter/material.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 
-class testFire extends StatelessWidget {
-  const testFire({Key? key}) : super(key: key);
+// class testFire extends StatelessWidget {
+//   const testFire({Key? key}) : super(key: key);
+//   Future<QuerySnapshot<Map<String, dynamic>>> getplaces() async {
+//    return await FirebaseFirestore.instance.collection("Nearby").get();
+//   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> search() async {
-    return await FirebaseFirestore.instance.collection("users").get();
-  }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: SafeArea(
+//         child: FutureBuilder(
+//             future: getplaces(),
+//             builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> places) {
+//               if (!places.hasData) {
+//                 return const Center(
+//                   child: CircularProgressIndicator(),
+//                 );
+//               }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: FutureBuilder(
-            future: search(),
-            builder: (context,
-                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+//               return ElevatedButton(
+//                   onPressed: () async {
+//                     var data = places.data!.docs;
+//                     for (var i = 0; i < data.length; i++) {
+//                       if()
+//                       await FirebaseFirestore.instance
+//                           .collection("Nearby")
+//                           .doc(data[i].id)
+//                           .update({
+//                         'Name': data[i].name,
+//                         'Address': data[i].address,
+//                         'Url': data[i].urls,
+//                         'Catagory': data[i].catagory,
+//                         'Rating': 0,
+//                       });
+//                     }
+//                     Fluttertoast.showToast(msg: "Done");
+//                   },
+//                   child: Text("Press"));
+//             }),
+//       ),
+//     );
+//   }
 
-              return ElevatedButton(
-                  onPressed: () async {
-                    var data = snapshot.data!.docs;
-                    for (var i = 0; i < data.length; i++) {
-                      await FirebaseFirestore.instance
-                          .collection("users")
-                          .doc(data[i].id)
-                          .update({'Points': 50});
-                    }
-                    Fluttertoast.showToast(msg: "Done");
-                  },
-                  child: Text("Press"));
-            }),
-      ),
-    );
-  }
-
-  List<String> searchItem(List<String> value) {
-    List<String> data = [];
-    String word = "";
-    for (int i = 0; i < value.length; i++) {
-      // for (int j = 0; j <= i; j++) {
-      word = word + " " + value[i];
-      // }
-      data.add(word);
-    }
-    return data;
-  }
-}
+//   List<String> searchItem(List<String> value) {
+//     List<String> data = [];
+//     String word = "";
+//     for (int i = 0; i < value.length; i++) {
+//       // for (int j = 0; j <= i; j++) {
+//       word = word + " " + value[i];
+//       // }
+//       data.add(word);
+//     }
+//     return data;
+//   }
+// }

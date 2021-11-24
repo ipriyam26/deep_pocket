@@ -1,3 +1,6 @@
+import 'package:deep_pocket_1/screens/Nearby/nearby_first.dart';
+import 'package:deep_pocket_1/screens/Nearby/nearby_tab.dart';
+import 'package:deep_pocket_1/screens/Nearby/place.dart';
 import 'package:deep_pocket_1/screens/event/create_event.dart';
 import 'package:deep_pocket_1/screens/internship/internship_create.dart';
 import 'package:deep_pocket_1/screens/login-signup/login.dart';
@@ -64,6 +67,8 @@ class MyApp extends StatelessWidget {
         home: TabsScreen(),
         debugShowCheckedModeBanner: false,
         routes: {
+          place.route: (ctx) => place(),
+          nearbyTab.route: (ctx) => nearbyTab(),
           NoticeTab.route: (ctx) => NoticeTab(),
           SearchUser.route: (ctx) => SearchUser(),
           userInput.route: (ctx) => userInput(),
