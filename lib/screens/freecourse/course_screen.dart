@@ -5,6 +5,7 @@ import 'package:deep_pocket_1/screens/freecourse/freecourse_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'freecourse_enroll.dart';
 import 'freecourse_mock.dart';
@@ -22,7 +23,17 @@ class courseScreen extends StatelessWidget {
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: Colors.brown,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          onPressed: () {},
+          onPressed: () async {
+            final url = course.courseLink;
+            if (await canLaunch(url!)) {
+              await launch(
+                url,
+                forceSafariVC: true,
+                forceWebView: true,
+                enableJavaScript: true,
+              );
+            }
+          },
           label: Text(
             "ENROLL NOW",
             style: TextStyle(color: Colors.white),

@@ -5,6 +5,7 @@ import 'package:deep_pocket_1/screens/event/mock_event.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class eventScreen extends StatelessWidget {
   // const eventScreen({Key? key}) : super(key: key);
@@ -15,7 +16,30 @@ class eventScreen extends StatelessWidget {
     final MSize = MediaQuery.of(context).size;
     final details = ModalRoute.of(context)!.settings.arguments
         as QueryDocumentSnapshot<Map<String, dynamic>>;
+    int applied = details.data()['Applied'] ?? 0;
+
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          backgroundColor: Colors.white.withOpacity(0.1),
+          onPressed: () async {
+            final url = details.data()['Link'];
+            if (await canLaunch(url!)) {
+              await FirebaseFirestore.instance
+                  .collection("Events")
+                  .doc(details.id)
+                  .update({'Applied': (applied + 1)});
+              await launch(
+                url,
+                forceSafariVC: true,
+                forceWebView: true,
+                enableJavaScript: true,
+              );
+            }
+          },
+          label: Text(
+            "Apply".toUpperCase(),
+          )),
       backgroundColor: const Color.fromRGBO(27, 18, 18, 1),
       appBar: AppBar(
           title: Text(
@@ -169,9 +193,9 @@ class dateHost extends StatelessWidget {
 
   final Size MSize;
   final QueryDocumentSnapshot<Map<String, dynamic>> details;
-
   @override
   Widget build(BuildContext context) {
+    int applied = details.data()['Applied'] ?? 0;
     return Container(
       // color: Colors.amber,
       padding: EdgeInsets.only(
@@ -202,31 +226,37 @@ class dateHost extends StatelessWidget {
             ],
           ),
           SizedBox(height: MSize.height * 0.01),
-          if (DateFormat('EEEE').format(DateTime.parse(
-                      details['StartingDate'].toDate().toString())) ==
-                  'Saturday' ||
-              DateFormat('EEEE').format(DateTime.parse(
-                      details['StartingDate'].toDate().toString())) ==
-                  'Sunday')
-            const SizedBox(
-              width: double.maxFinite,
-              child: Text('Weekend',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w300)),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            if (DateFormat('EEEE').format(DateTime.parse(
+                        details['StartingDate'].toDate().toString())) ==
+                    'Saturday' ||
+                DateFormat('EEEE').format(DateTime.parse(
+                        details['StartingDate'].toDate().toString())) ==
+                    'Sunday')
+              const SizedBox(
+                // width: double.maxFinite,
+                child: Text('Weekend',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w300)),
+              )
+            else
+              Container(
+                // width: double.maxFinite,
+                child: const Text('Weekday',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w300)),
+              ),
+            Text(
+              "Applied : " + applied.toString(),
+              style: TextStyle(color: Colors.white, fontSize: 17),
             )
-          else
-            Container(
-              width: double.maxFinite,
-              child: const Text('Weekday',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300)),
-            ),
+          ]),
           SizedBox(height: MSize.height * 0.01),
           const Divider(
             color: Colors.white,

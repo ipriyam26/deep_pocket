@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/screens/internship/internship_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -609,16 +610,17 @@ class jobDescribtion extends StatelessWidget {
 
 class internshipCard extends StatelessWidget {
   internshipCard({
-    required this.internship,
+    required this.internshipc,
   });
 
-  final Map<String, dynamic> internship;
+  final QueryDocumentSnapshot<Map<String, dynamic>> internshipc;
 
   @override
   Widget build(BuildContext context) {
+    final internship = internshipc.data();
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, internPage.route, arguments: internship);
+        Navigator.pushNamed(context, internPage.route, arguments: internshipc);
       },
       child: Card(
         color: const Color.fromRGBO(11, 10, 10, 1),

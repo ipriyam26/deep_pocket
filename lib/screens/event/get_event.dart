@@ -13,7 +13,10 @@ class EventController extends GetxController {
   }
 
   Future<void> fetchAllEvents() async {
-    var data = FirebaseFirestore.instance.collection("Events").get();
+    var data = FirebaseFirestore.instance
+        .collection("Events")
+        .where('EndingDate', isGreaterThanOrEqualTo: DateTime.now())
+        .get();
     snapshot = data;
     update();
   }

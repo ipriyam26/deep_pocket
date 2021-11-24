@@ -52,7 +52,7 @@ class internShips extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) => internshipCard(
-                              internship: snapshot.data!.docs[index].data())),
+                              internshipc: snapshot.data!.docs[index])),
                     );
                   }));
         });

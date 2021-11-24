@@ -41,6 +41,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+ 		 <string>https</string>
+  		 <string>http</string>
+	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To Take User Profile Image</string>
 	<key>NSCameraUsageDescription</key>
