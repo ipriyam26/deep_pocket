@@ -8,6 +8,7 @@ import 'package:deep_pocket_1/screens/faculty/faculty_screen.dart';
 import 'package:deep_pocket_1/screens/freecourse/freecourses_screen.dart';
 import 'package:deep_pocket_1/screens/internship/interships_screen.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notiboard_home.dart';
+import 'package:deep_pocket_1/screens/noticeboard/notice_tab.dart';
 import 'package:deep_pocket_1/screens/resources/resources_tab_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class MenuP extends StatelessWidget {
         name: "NOTICE",
         image:
             "https://as2.ftcdn.net/v2/jpg/03/97/68/63/1000_F_397686319_bzfypCKI13uWJetS60FB4EiDHzExJasl.jpg",
-        route: noticeBoard.route),
+        route: NoticeTab.route),
     mbutton(
         name: "FACULTY",
         image: "https://i.imgur.com/73GGpnzh.jpg",
@@ -126,7 +127,7 @@ class Menubtt extends StatelessWidget {
       child: Card(
         color: randomColor(),
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10))),
+            borderRadius: BorderRadius.all(Radius.circular(5))),
         child: Container(
           // margin: EdgeInsets.symmetric(horizontal: Mwidth * 0.01),
           height: Mheight * 0.08,
@@ -135,8 +136,7 @@ class Menubtt extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
+                    topLeft: Radius.circular(5), topRight: Radius.circular(5)),
                 child: CachedNetworkImage(
                     fadeInDuration: const Duration(microseconds: 0),
                     fadeOutDuration: const Duration(microseconds: 0),
@@ -150,7 +150,7 @@ class Menubtt extends StatelessWidget {
                     fit: BoxFit.fill),
               ),
               SizedBox(
-                height: Mheight * 0.005,
+                height: Mheight * 0.002,
               ),
               AutoSizeText(
                 name,

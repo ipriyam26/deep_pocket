@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notice_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,6 +17,7 @@ class noticeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<dynamic> SavedBy = newNotice.data()['SavedBy'] ?? [];
     var MSize = MediaQuery.of(context).size;
     return InkWell(
       splashColor: Colors.grey,
@@ -37,7 +39,7 @@ class noticeCard extends StatelessWidget {
                     newNotice.data()['Department'],
                     style: const TextStyle(
                         fontSize: 20,
-                        color: Colors.white,
+                        color: Colors.pinkAccent,
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
@@ -76,10 +78,30 @@ class noticeCard extends StatelessWidget {
                         newNotice.data()['Time'].toDate().toString())),
                     style: const TextStyle(color: Colors.white),
                   ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.bookmark_border_outlined,
-                          color: Colors.pink)),
+                  SavedBy.contains(FirebaseAuth.instance.currentUser!.uid)
+                      ? IconButton(
+                          onPressed: () {
+                            FirebaseFirestore.instance
+                                .collection("Notices")
+                                .doc(newNotice.id)
+                                .update({
+                              "SavedBy": FieldValue.arrayRemove(
+                                  [FirebaseAuth.instance.currentUser!.uid])
+                            });
+                          },
+                          icon: const Icon(Icons.bookmark, color: Colors.pink))
+                      : IconButton(
+                          onPressed: () {
+                            FirebaseFirestore.instance
+                                .collection("Notices")
+                                .doc(newNotice.id)
+                                .update({
+                              "SavedBy": FieldValue.arrayUnion(
+                                  [FirebaseAuth.instance.currentUser!.uid])
+                            });
+                          },
+                          icon: const Icon(Icons.bookmark_border_outlined,
+                              color: Colors.pink)),
                 ],
               )
             ],

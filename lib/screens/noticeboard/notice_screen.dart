@@ -64,16 +64,20 @@ class noticeScreen extends StatelessWidget {
             ),
             // child: ,
           ),
-          Container(
-            padding: EdgeInsets.only(
-                right: MSize.width * 0.04,
-                left: MSize.width * 0.04,
-                top: MSize.height * 0.04),
-            child: Text(newNotice['Body'],
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500)),
+          SingleChildScrollView(
+            child: Container(
+              color: Colors.white.withOpacity(0.1),
+              height: MSize.height * 0.69,
+              padding: EdgeInsets.only(
+                  right: MSize.width * 0.04,
+                  left: MSize.width * 0.04,
+                  top: MSize.height * 0.04),
+              child: Text(newNotice['Body'],
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500)),
+            ),
           )
         ],
       ),

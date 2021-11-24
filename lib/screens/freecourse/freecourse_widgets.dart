@@ -606,9 +606,7 @@ class enrollCard1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //This area is used for Top Part Started
-      // color: Colors.amber,
-      // height: MHeight * 0.15,
+      // height: MHeight * 0.5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -631,7 +629,7 @@ class enrollCard1 extends StatelessWidget {
             child: AutoSizeText(
               course.desciption!,
               style: const TextStyle(fontSize: 14),
-              minFontSize: 7,
+              minFontSize: 8,
               maxLines: 10,
             ),
           ),

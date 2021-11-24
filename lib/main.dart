@@ -3,6 +3,7 @@ import 'package:deep_pocket_1/screens/internship/internship_create.dart';
 import 'package:deep_pocket_1/screens/login-signup/login.dart';
 import 'package:deep_pocket_1/screens/menu-pages/menu.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notice_create.dart';
+import 'package:deep_pocket_1/screens/noticeboard/notice_tab.dart';
 import 'package:deep_pocket_1/screens/post/edit_post.dart';
 import 'package:deep_pocket_1/screens/profile/edit_profile.dart';
 import 'package:deep_pocket_1/screens/club/club_detail_screen.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
         home: TabsScreen(),
         debugShowCheckedModeBanner: false,
         routes: {
+          NoticeTab.route: (ctx) => NoticeTab(),
           SearchUser.route: (ctx) => SearchUser(),
           userInput.route: (ctx) => userInput(),
           feedScreen.route: (ctx) => feedScreen(),

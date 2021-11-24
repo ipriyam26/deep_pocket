@@ -19,6 +19,15 @@ class courseScreen extends StatelessWidget {
     double MWeight = MediaQuery.of(context).size.width;
     final course = ModalRoute.of(context)!.settings.arguments as Course;
     return Scaffold(
+        floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: Colors.brown,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          onPressed: () {},
+          label: Text(
+            "ENROLL NOW",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
         appBar: AppBar(
           backgroundColor: Colors.black,
           title: Text(course.provider ?? "Not Defined"),
@@ -43,19 +52,23 @@ class courseScreen extends StatelessWidget {
                       // Color.fromRGBO(135, 206, 250, 1),
                     ],
                   )),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      firstHalf(course: course),
-                      SizedBox(
-                        height: MHeight * 0.02,
+                  child: SingleChildScrollView(
+                    child: Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          firstHalf(course: course),
+                          SizedBox(
+                            height: MHeight * 0.02,
+                          ),
+                          Container(
+                            height: MHeight * 0.6,
+                            width: MWeight * 0.9,
+                            child: enrollCard(course: course, MHeight: MHeight),
+                          )
+                        ],
                       ),
-                      Container(
-                        height: MHeight * 0.6,
-                        width: MWeight * 0.9,
-                        child: enrollCard(course: course, MHeight: MHeight),
-                      )
-                    ],
+                    ),
                   ))
             ],
           ),
