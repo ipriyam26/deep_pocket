@@ -23,6 +23,7 @@ class enrollCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(7),
       ),
       child: Container(
+        // height: MHeight * 0.5,
         padding: EdgeInsets.symmetric(
             horizontal: Mwidth * 0.02, vertical: MHeight * 0.01),
         child: Column(
@@ -30,7 +31,6 @@ class enrollCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             enrollCard1(MHeight: MHeight, Mwidth: Mwidth, course: course),
-            enrollCard2(MHeight: MHeight, Mwidth: Mwidth),
           ],
         ),
       ),
