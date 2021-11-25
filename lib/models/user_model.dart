@@ -6,6 +6,7 @@ class UserModel {
   String? CollegeName;
   String? enrollmentNo;
   List<String>? searchItems;
+  int? Points;
 
   UserModel({
     this.uid,
@@ -15,6 +16,7 @@ class UserModel {
     this.CollegeName,
     this.Image,
     this.searchItems,
+    this.Points,
   });
 
   // receiving data from server
@@ -26,6 +28,7 @@ class UserModel {
         enrollmentNo: map['enrollmentNo'],
         CollegeName: map['CollegeName'],
         Image: map['Image'],
+        Points: map['Points'],
         searchItems: map['searchItems'] as List<String>?);
   }
 
@@ -38,7 +41,8 @@ class UserModel {
       'enrollmentNo': enrollmentNo,
       'CollegeName': CollegeName,
       'Image': Image,
-      'searchItems': searchItems
+      'searchItems': searchItems,
+      'Points': Points
     };
   }
 }

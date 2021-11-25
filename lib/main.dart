@@ -67,6 +67,7 @@ class MyApp extends StatelessWidget {
         home: TabsScreen(),
         debugShowCheckedModeBanner: false,
         routes: {
+          TabsScreen.route: (ctx) => TabsScreen(),
           place.route: (ctx) => place(),
           nearbyTab.route: (ctx) => nearbyTab(),
           NoticeTab.route: (ctx) => NoticeTab(),

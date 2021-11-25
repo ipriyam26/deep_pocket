@@ -64,7 +64,8 @@ class courseScreen extends StatelessWidget {
                     ],
                   )),
                   child: SingleChildScrollView(
-                    child: Expanded(
+                    child: Container(
+                      height: MHeight,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -72,9 +73,9 @@ class courseScreen extends StatelessWidget {
                           SizedBox(
                             height: MHeight * 0.02,
                           ),
-                          Container(
-                            height: MHeight * 0.6,
-                            width: MWeight * 0.9,
+                          Expanded(
+                            // height: MHeight * 0.5,
+                            // width: MWeight * 0.9,
                             child: enrollCard(course: course, MHeight: MHeight),
                           )
                         ],

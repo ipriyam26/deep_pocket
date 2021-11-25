@@ -410,13 +410,25 @@ class firstColumn extends StatelessWidget {
                                           context, searchProfileScreen.route,
                                           arguments: AuthorUID);
                                     },
-                                    child: AutoSizeText(
-                                      name.toString().split(" ")[0],
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                      maxFontSize: 19,
-                                      minFontSize: 18,
+                                    child: Row(
+                                      children: [
+                                        AutoSizeText(
+                                          name.toString().split(" ")[0],
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                          maxFontSize: 19,
+                                          minFontSize: 18,
+                                        ),
+                                        if (roleController.instructor!
+                                            .contains(AuthorUID))
+                                          AutoSizeText(
+                                            "  Instructor".toUpperCase(),
+                                            style: const TextStyle(
+                                              color: Colors.pink,
+                                            ),
+                                          ),
+                                      ],
                                     ),
                                   ),
                             if (Anonymous &&
@@ -441,13 +453,6 @@ class firstColumn extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            if (roleController.instructor!.contains(AuthorUID))
-                              AutoSizeText(
-                                "Instructor   ".toUpperCase(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
                             AutoSizeText(
                               DateFormat.jm().format(time).toString() +
                                   ",  " +

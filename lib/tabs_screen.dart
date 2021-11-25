@@ -12,7 +12,7 @@ import 'screens/profile/profile_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   TabsScreen({Key? key}) : super(key: key);
-
+  static const route = '/tabsScreen';
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }

@@ -47,7 +47,8 @@ class _feedScreenState extends State<feedScreen> {
         builder: (ctx) => SizedBox(
               height: 300,
               child: SingleChildScrollView(
-                  child: SizedBox(
+                  child: Container(
+                color: const Color.fromRGBO(16, 15, 1, 1),
                 height: 280,
                 child: ListView.builder(
                     itemCount: Tag.length,
@@ -55,7 +56,9 @@ class _feedScreenState extends State<feedScreen> {
                           onPressed: () {
                             return updateFilter(i, context);
                           },
-                          child: Text(Tag[i]),
+                          child: Text(Tag[i].toUpperCase(),
+                          style: TextStyle(color: Colors.pink),
+                          ),
                         )),
               )),
             ));
@@ -175,7 +178,7 @@ class _feedScreenState extends State<feedScreen> {
                                 ? const CupertinoActivityIndicator()
                                 : Center(
                                     child: InkWell(
-                                      splashColor: Colors.white,
+                                      splashColor: Colors.pinkAccent,
                                       onTap: () {
                                         Navigator.pushNamed(
                                             context, postPage.route,

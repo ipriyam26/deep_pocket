@@ -129,6 +129,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         },
         textInputAction: TextInputAction.next,
         style: const TextStyle(color: Colors.white),
+        autocorrect: false,
         decoration: InputDecoration(
           prefixIcon: const Icon(
             Icons.account_circle,
@@ -504,6 +505,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         "https://i.dlpng.com/static/png/5780540-person-icon-person-icon-silhouette-transparent-png-370x370-icon-person-820_450_preview.png";
     userModel.CollegeName = "Add College";
     userModel.enrollmentNo = "Add Enrollment";
+    userModel.Points = 50;
 
     await firebaseFirestore
         .collection("users")

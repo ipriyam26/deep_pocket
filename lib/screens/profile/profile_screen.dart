@@ -283,10 +283,11 @@ class userImageName extends StatelessWidget {
                             if (roleController.instructor!.contains(
                                 FirebaseAuth.instance.currentUser!.uid))
                               const Chip(
-                                  backgroundColor: Colors.black,
+                                  backgroundColor: Colors.pink,
                                   label: Text(
                                     "Instructor",
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
                                   ))
                           ],
                         ),
