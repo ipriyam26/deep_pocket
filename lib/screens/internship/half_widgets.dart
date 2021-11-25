@@ -645,7 +645,7 @@ class internshipCard extends StatelessWidget {
                           maxFontSize: 23,
                           maxLines: 2,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: Colors.pink,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

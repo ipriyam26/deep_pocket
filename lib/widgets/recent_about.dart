@@ -288,7 +288,7 @@ class ListGrid extends StatelessWidget {
       }
       String tt = " ";
       final dialogueImage = File(newimage.path);
-      showDialog(
+      await showDialog(
           context: context,
           builder: (BuildContext ctx) {
             final nameController = TextEditingController();
@@ -312,30 +312,31 @@ class ListGrid extends StatelessWidget {
                           width: MediaQuery.of(context).size.width * 0.5,
                           child: TextField(
                             controller: nameController,
-                            decoration:
-                                InputDecoration(hintText: "One Word Title"),
+                            decoration: const InputDecoration(
+                                hintText: "One Word Title"),
                           ),
                         ),
                         TextButton(
-                            onPressed: () {
+                            onPressed: () async {
                               tt = nameController.text.toString();
+                              var link =
+                                  await API_Manager().postImage(newimage.path);
+
+                              String head = title + "text";
+
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(userdata['uid'])
+                                  .update({
+                                head: FieldValue.arrayUnion([tt]),
+                                title: FieldValue.arrayUnion([link])
+                              });
                               Navigator.pop(ctx);
                             },
                             child: Text("ADD"))
                       ])),
             );
           });
-      var link = await API_Manager().postImage(newimage.path);
-
-      String head = title + "text";
-
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(userdata['uid'])
-          .update({
-        head: FieldValue.arrayUnion([tt]),
-        title: FieldValue.arrayUnion([link])
-      });
     } on PlatformException catch (e) {
       print(e);
     }

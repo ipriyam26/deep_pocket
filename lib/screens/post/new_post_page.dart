@@ -99,100 +99,13 @@ class postPage extends StatelessWidget {
                                     document: document),
                                 if (document.data()!['Tag'] == 'Query' &&
                                     document.data()!['Correct Answere'] != null)
-                                  Container(
-                                    child: FutureBuilder(
-                                        future: getcorrectAnswere(document
-                                            .data()!['Correct Answere']),
-                                        builder: (context,
-                                            AsyncSnapshot<
-                                                    DocumentSnapshot<
-                                                        Map<String, dynamic>>>
-                                                comment) {
-                                          if (!comment.hasData) {
-                                            return const CircularProgressIndicator(
-                                                color: Colors.pink);
-                                          }
-                                          return ListTile(
-                                            // horizontalTitleGap: 1,
-                                            minVerticalPadding: 0,
-
-                                            leading: ClipOval(
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.all(2),
-                                                color: Colors.black,
-                                                child: ClipOval(
-                                                  child: Container(
-                                                    height: MWidth * 0.13,
-                                                    width: MWidth * 0.13,
-                                                    color: Colors.grey,
-                                                    child: CachedNetworkImage(
-                                                      placeholder: (context,
-                                                              url) =>
-                                                          Image.asset(
-                                                              'assets/person.png'),
-                                                      imageUrl: comment.data!
-                                                          .data()!['AuthorPic'],
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            trailing: const Icon(
-                                              Icons.done_outline_rounded,
-                                              color: Colors.pink,
-                                            ),
-                                            title: Row(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.pushNamed(
-                                                        context,
-                                                        searchProfileScreen
-                                                            .route,
-                                                        arguments: comment.data!
-                                                            .data()!['AuthorID']
-                                                            .toString());
-                                                  },
-                                                  child: Text(
-                                                    comment.data!
-                                                        .data()!['AuthorName']
-                                                        .toString()
-                                                        .split(" ")[0],
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            // horizontalTitleGap: 0,
-                                            subtitle: ReadMoreText(
-                                              comment.data!
-                                                  .data()!['CommentText'],
-                                              trimLines: 2,
-                                              colorClickableText: Colors.pink,
-                                              trimMode: TrimMode.Line,
-                                              // trimCollapsedText: '..Read More',
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.white
-                                                      .withOpacity(0.7)),
-                                              trimExpandedText: ' Less',
-                                            ),
-
-                                            isThreeLine: true,
-                                          );
-                                        }),
-                                  ),
+                                  correctAnswere(
+                                      getcorrectAnswere, document, MWidth),
                                 StreamBuilder(
                                     stream: FirebaseFirestore.instance
                                         .collection("Comments")
                                         .where('PostID', isEqualTo: id)
+                                        .orderBy("Time", descending: true)
                                         .snapshots(),
                                     builder: (context,
                                         AsyncSnapshot<
@@ -218,135 +131,13 @@ class postPage extends StatelessWidget {
 
                                             final time =
                                                 DateFormat.jm().format(dtime);
-                                            return Card(
-                                              color: const Color.fromRGBO(
-                                                  11, 10, 10, 1),
-                                              elevation: 0,
-                                              child: GetBuilder(
-                                                  init: userRoleController(),
-                                                  builder: (userRoleController
-                                                      roleController) {
-                                                    return ListTile(
-                                                      // horizontalTitleGap: 1,
-                                                      minVerticalPadding: 0,
-
-                                                      leading: ClipOval(
-                                                        child: Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(2),
-                                                          color: Colors.black,
-                                                          child: ClipOval(
-                                                            child: Container(
-                                                              height:
-                                                                  MWidth * 0.13,
-                                                              width:
-                                                                  MWidth * 0.13,
-                                                              color:
-                                                                  Colors.grey,
-                                                              child:
-                                                                  CachedNetworkImage(
-                                                                placeholder: (context,
-                                                                        url) =>
-                                                                    Image.asset(
-                                                                        'assets/person.png'),
-                                                                imageUrl: comment
-                                                                        .data()[
-                                                                    'AuthorPic'],
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-
-                                                      trailing: (document.data()![
-                                                                      'AuthorUID'] ==
-                                                                  userdata![
-                                                                      'uid']) ||
-                                                              (comment.data()[
-                                                                      'AuthorID'] ==
-                                                                  userdata[
-                                                                      'uid']) ||
-                                                              (roleController
-                                                                  .specialAccess!
-                                                                  .contains(
-                                                                      user!
-                                                                          .uid))
-                                                          ? deleteComment(
-                                                              comment: comment,
-                                                              document:
-                                                                  document,
-                                                            )
-                                                          : SizedBox(
-                                                              width:
-                                                                  MWidth * 0.05,
-                                                            ),
-                                                      title: Row(
-                                                        children: [
-                                                          GestureDetector(
-                                                            onTap: () {
-                                                              Navigator.pushNamed(
-                                                                  context,
-                                                                  searchProfileScreen
-                                                                      .route,
-                                                                  arguments: comment
-                                                                      .data()[
-                                                                          'AuthorID']
-                                                                      .toString());
-                                                            },
-                                                            child: Text(
-                                                              comment
-                                                                  .data()[
-                                                                      'AuthorName']
-                                                                  .toString()
-                                                                  .split(
-                                                                      " ")[0],
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            "   " + time,
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 12,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      // horizontalTitleGap: 0,
-                                                      subtitle: ReadMoreText(
-                                                        comment.data()[
-                                                            'CommentText'],
-                                                        trimLines: 2,
-                                                        colorClickableText:
-                                                            Colors.pink,
-                                                        trimMode: TrimMode.Line,
-                                                        // trimCollapsedText: '..Read More',
-                                                        style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: Colors.white
-                                                                .withOpacity(
-                                                                    0.7)),
-                                                        trimExpandedText:
-                                                            ' Less',
-                                                      ),
-
-                                                      isThreeLine: true,
-                                                    );
-                                                  }),
-                                            );
+                                            return commetCard(
+                                                MWidth,
+                                                comment,
+                                                document,
+                                                userdata,
+                                                context,
+                                                time);
                                           }).toList());
                                     }),
                               ],
@@ -358,6 +149,176 @@ class postPage extends StatelessWidget {
               );
             }),
       ),
+    );
+  }
+
+  Container correctAnswere(
+      Future<DocumentSnapshot<Map<String, dynamic>>> getcorrectAnswere(
+          String id),
+      DocumentSnapshot<Map<String, dynamic>> document,
+      double MWidth) {
+    return Container(
+      child: FutureBuilder(
+          future: getcorrectAnswere(document.data()!['Correct Answere']),
+          builder: (context,
+              AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> comment) {
+            if (!comment.hasData) {
+              return const CircularProgressIndicator(color: Colors.pink);
+            }
+            return ListTile(
+              // horizontalTitleGap: 1,
+              minVerticalPadding: 0,
+
+              leading: ClipOval(
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  color: Colors.black,
+                  child: ClipOval(
+                    child: Container(
+                      height: MWidth * 0.13,
+                      width: MWidth * 0.13,
+                      color: Colors.grey,
+                      child: CachedNetworkImage(
+                        placeholder: (context, url) =>
+                            Image.asset('assets/person.png'),
+                        imageUrl: comment.data!.data()!['AuthorPic'],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              trailing: const Icon(
+                Icons.done_outline_rounded,
+                color: Colors.pink,
+              ),
+              title: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, searchProfileScreen.route,
+                          arguments:
+                              comment.data!.data()!['AuthorID'].toString());
+                    },
+                    child: Text(
+                      comment.data!
+                          .data()!['AuthorName']
+                          .toString()
+                          .split(" ")[0],
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // horizontalTitleGap: 0,
+              subtitle: ReadMoreText(
+                comment.data!.data()!['CommentText'],
+                trimLines: 2,
+                colorClickableText: Colors.pink,
+                trimMode: TrimMode.Line,
+                // trimCollapsedText: '..Read More',
+                style: TextStyle(
+                    fontSize: 14, color: Colors.white.withOpacity(0.7)),
+                trimExpandedText: ' Less',
+              ),
+
+              isThreeLine: true,
+            );
+          }),
+    );
+  }
+
+  Card commetCard(
+      double MWidth,
+      QueryDocumentSnapshot<Map<String, dynamic>> comment,
+      DocumentSnapshot<Map<String, dynamic>> document,
+      Map<String, dynamic>? userdata,
+      BuildContext context,
+      String time) {
+    return Card(
+      color: const Color.fromRGBO(11, 10, 10, 1),
+      elevation: 0,
+      child: GetBuilder(
+          init: userRoleController(),
+          builder: (userRoleController roleController) {
+            return ListTile(
+              // horizontalTitleGap: 1,
+              minVerticalPadding: 0,
+
+              leading: ClipOval(
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  color: Colors.black,
+                  child: ClipOval(
+                    child: Container(
+                      height: MWidth * 0.13,
+                      width: MWidth * 0.13,
+                      color: Colors.grey,
+                      child: CachedNetworkImage(
+                        placeholder: (context, url) =>
+                            Image.asset('assets/person.png'),
+                        imageUrl: comment.data()['AuthorPic'],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              trailing: (document.data()!['AuthorUID'] == userdata!['uid']) ||
+                      (comment.data()['AuthorID'] == userdata['uid']) ||
+                      (roleController.admins!.contains(user!.uid))
+                  ? deleteComment(
+                      comment: comment,
+                      document: document,
+                    )
+                  : SizedBox(
+                      width: MWidth * 0.05,
+                    ),
+              title: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, searchProfileScreen.route,
+                          arguments: comment.data()['AuthorID'].toString());
+                    },
+                    child: Text(
+                      comment.data()['AuthorName'].toString().split(" ")[0],
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    "   " + time,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                  )
+                ],
+              ),
+              // horizontalTitleGap: 0,
+              subtitle: ReadMoreText(
+                comment.data()['CommentText'],
+                trimLines: 2,
+                colorClickableText: Colors.pink,
+                trimMode: TrimMode.Line,
+                // trimCollapsedText: '..Read More',
+                style: TextStyle(
+                    fontSize: 14, color: Colors.white.withOpacity(0.7)),
+                trimExpandedText: ' Less',
+              ),
+
+              isThreeLine: true,
+            );
+          }),
     );
   }
 }
@@ -436,7 +397,8 @@ class deleteComment extends StatelessWidget {
                 style: TextStyle(color: Colors.black),
               )),
         ),
-        if (document!.data()!['Tag'] == 'Query')
+        if (document!.data()!['Tag'] == 'Query' &&
+            document!.data()!['Correct Answere'] == null)
           PopupMenuItem(
             value: "Correct",
             child: TextButton.icon(
@@ -538,7 +500,7 @@ class UserComment extends StatelessWidget {
                       msg: "Comment too-short atleast 2 characters");
                 }
               },
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
               ),
               textInputAction: TextInputAction.done,
@@ -546,7 +508,7 @@ class UserComment extends StatelessWidget {
                   contentPadding: EdgeInsets.symmetric(
                       horizontal: MWidth * 0.03, vertical: MHeight * 0.01),
                   hintText: "Add a Comment...",
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.white,
                   ),
                   border: const OutlineInputBorder(

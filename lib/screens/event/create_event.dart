@@ -199,14 +199,15 @@ class _createEventState extends State<createEvent> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xff171717),
-        title: const Text('Post A Notice'),
+        title: const Text('Post A Event'),
         actions: [
           IconButton(onPressed: submitted, icon: const Icon(Icons.send))
         ],
       ),
       backgroundColor: const Color(0xff080808),
       body: SingleChildScrollView(
-        child: Expanded(
+        child: Container(
+          height: Mheight * 1.4,
           child: Stack(
             children: [
               Container(

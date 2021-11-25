@@ -162,7 +162,8 @@ class _internCreateState extends State<internCreate> {
       ),
       backgroundColor: const Color(0xff080808),
       body: SingleChildScrollView(
-        child: Expanded(
+        child: Container(
+          height: Mheight * 2,
           child: Stack(
             children: [
               Container(

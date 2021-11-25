@@ -52,12 +52,6 @@ class _noticeBoardState extends State<noticeBoard> {
           .limit(currentmax)
           .snapshots();
     }
-    if (search != null) {
-      return Notice.where("Title", isGreaterThanOrEqualTo: search)
-          // .orderBy("Time", descending: true)
-          .limit(currentmax)
-          .snapshots();
-    }
 
     if (_selected != null && _selectedBefore != null) {
       return Notice.where("Time", isGreaterThanOrEqualTo: _selectedBefore)
@@ -78,6 +72,11 @@ class _noticeBoardState extends State<noticeBoard> {
       print("date before");
       return Notice.where("Time", isLessThanOrEqualTo: _selectedBefore)
           .orderBy("Time", descending: true)
+          .limit(currentmax)
+          .snapshots();
+    }
+    if (search != "") {
+      return Notice.where("searchItems", arrayContains: search)
           .limit(currentmax)
           .snapshots();
     }
@@ -180,6 +179,7 @@ class _noticeBoardState extends State<noticeBoard> {
                       onPressed: () {
                         setState(() {
                           _isSearching = !_isSearching;
+                          search = '';
                         });
                       },
                       icon: const Icon(Icons.search)),
@@ -422,62 +422,67 @@ class _noticeBoardState extends State<noticeBoard> {
                 ),
               ),
             )),
-            body: StreamBuilder(
-                stream: _isSearching ? getSearchStream() : getStream(),
-                builder: (context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  final noticeData = snapshot.data!.docs;
-
-                  return _isSearching
-                      ? Container(
-                          child: Column(
-                            children: [
-                              TextField(
-                                autocorrect: false,
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                                decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.search_outlined,
-                                      color: Colors.black),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                ),
-                                onSubmitted: (String value) {
-                                  setState(() {
-                                    search = value;
-                                  });
-                                },
-                              ),
-                              SizedBox(
-                                height: MSize.height * 0.01,
-                              ),
-                              Container(
-                                height: MSize.height * 0.8,
-                                // color: Colors.amber,
-                                child: ListView.builder(
-                                    controller: _scrollController,
-                                    itemCount: noticeData.length,
-                                    itemBuilder: (context, i) =>
-                                        noticeCard(newNotice: noticeData[i])),
-                              )
-                            ],
-                          ),
-                        )
-                      : Container(
-                          // color: Colors.amber,
-                          child: ListView.builder(
-                              controller: _scrollController,
-                              itemCount: noticeData.length,
-                              itemBuilder: (context, i) =>
-                                  noticeCard(newNotice: noticeData[i])),
+            body: SingleChildScrollView(
+              child: Container(
+                height: MSize.height,
+                child: StreamBuilder(
+                    stream: _isSearching ? getSearchStream() : getStream(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
                         );
-                }),
+                      }
+                      final noticeData = snapshot.data!.docs;
+
+                      return _isSearching
+                          ? Container(
+                              child: Column(
+                                children: [
+                                  TextField(
+                                    autocorrect: false,
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 18),
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.search_outlined,
+                                          color: Colors.black),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    onSubmitted: (String value) {
+                                      setState(() {
+                                        search = value;
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: MSize.height * 0.01,
+                                  ),
+                                  Container(
+                                    height: MSize.height * 0.8,
+                                    // color: Colors.amber,
+                                    child: ListView.builder(
+                                        controller: _scrollController,
+                                        itemCount: noticeData.length,
+                                        itemBuilder: (context, i) => noticeCard(
+                                            newNotice: noticeData[i])),
+                                  )
+                                ],
+                              ),
+                            )
+                          : Container(
+                              // color: Colors.amber,
+                              child: ListView.builder(
+                                  controller: _scrollController,
+                                  itemCount: noticeData.length,
+                                  itemBuilder: (context, i) =>
+                                      noticeCard(newNotice: noticeData[i])),
+                            );
+                    }),
+              ),
+            ),
           );
         });
   }
