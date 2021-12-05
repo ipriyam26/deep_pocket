@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, camel_case_types, use_key_in_widget_constructors
 
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -84,6 +86,8 @@ class _internshipPost extends State<internshipPost> {
       liked = false;
     }
     final CarouselController _controller = CarouselController();
+    Color randomColor() =>
+        Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0).withOpacity(0.8);
 
     return Card(
       color: const Color.fromRGBO(11, 10, 10, 1),
@@ -93,20 +97,22 @@ class _internshipPost extends State<internshipPost> {
           children: [
             Container(
                 padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.width * 0.01,
+                    bottom: MediaQuery.of(context).size.width * 0.01,
                     left: MediaQuery.of(context).size.width * 0.04),
                 width: double.maxFinite,
-                decoration: const BoxDecoration(
-                    color: Colors.pink,
+                decoration: BoxDecoration(
+                    color: randomColor(),
                     shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10))),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(2),
+                        topRight: Radius.circular(2))),
                 child: Text(
                   "NEW " + widget.tag.toString().toUpperCase(),
                   style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700),
                 )),
             Container(
               // color: Colors.black,
