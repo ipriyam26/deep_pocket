@@ -1,3 +1,4 @@
+import 'package:deep_pocket_1/screens/Nearby/nearby_add.dart';
 import 'package:deep_pocket_1/screens/Nearby/nearby_first.dart';
 import 'package:deep_pocket_1/screens/Nearby/nearby_tab.dart';
 import 'package:deep_pocket_1/screens/Nearby/place.dart';
@@ -98,7 +99,8 @@ class MyApp extends StatelessWidget {
           createEvent.route: (ctx) => createEvent(),
           fullImage.route: (ctx) => fullImage(),
           searchProfileScreen.route: (ctx) => searchProfileScreen(),
-          internCreate.route: (ctx) => internCreate()
+          internCreate.route: (ctx) => internCreate(),
+          NearbAdd.route: (ctx) => NearbAdd()
         });
   }
 }
