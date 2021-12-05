@@ -149,7 +149,7 @@ class _feedScreenState extends State<feedScreen> {
             //     )),
           ],
         ),
-        backgroundColor: Color(0xff0E0C0A),
+        backgroundColor: Colors.black,
         body: StreamBuilder(
             stream: filter == 0 ? getposts() : getFilteredposts(),
 
@@ -166,7 +166,7 @@ class _feedScreenState extends State<feedScreen> {
                 controller: _scrollController,
                 child: Column(
                   children: [
-                    Container(height: MHeight * 0.22, child: MenuP()),
+                    SizedBox(height: MHeight * 0.22, child: MenuP()),
                     SizedBox(
                       height: MHeight * 0.005,
                     ),
@@ -179,7 +179,9 @@ class _feedScreenState extends State<feedScreen> {
                                 snapshot.data!.docs.length
                             ? const CupertinoActivityIndicator()
                             : snapshot.data!.docs[index].data()['Tag'] !=
-                                    'Internship'
+                                        'Internship' &&
+                                    snapshot.data!.docs[index].data()['Tag'] !=
+                                        'Event'
                                 ? Center(
                                     child: InkWell(
                                       splashColor: Colors.pinkAccent,

@@ -15,15 +15,15 @@ class eventScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final MSize = MediaQuery.of(context).size;
     final details = ModalRoute.of(context)!.settings.arguments
-        as QueryDocumentSnapshot<Map<String, dynamic>>;
-    int applied = details.data()['Applied'] ?? 0;
+        as DocumentSnapshot<Map<String, dynamic>>;
+    int applied = details.data()!['Applied'] ?? 0;
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           backgroundColor: Colors.white.withOpacity(0.1),
           onPressed: () async {
-            final url = details.data()['Link'];
+            final url = details.data()!['Link'];
             if (await canLaunch(url!)) {
               await FirebaseFirestore.instance
                   .collection("Events")
@@ -149,7 +149,7 @@ class aboutEvent extends StatelessWidget {
   }) : super(key: key);
 
   final Size MSize;
-  final QueryDocumentSnapshot<Map<String, dynamic>> details;
+  final DocumentSnapshot<Map<String, dynamic>> details;
 
   @override
   Widget build(BuildContext context) {
@@ -192,10 +192,10 @@ class dateHost extends StatelessWidget {
   }) : super(key: key);
 
   final Size MSize;
-  final QueryDocumentSnapshot<Map<String, dynamic>> details;
+  final DocumentSnapshot<Map<String, dynamic>> details;
   @override
   Widget build(BuildContext context) {
-    int applied = details.data()['Applied'] ?? 0;
+    int applied = details.data()!['Applied'] ?? 0;
     return Container(
       // color: Colors.amber,
       padding: EdgeInsets.only(

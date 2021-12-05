@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, use_key_in_widget_constructors, non_constant_identifier_names, prefer_final_fields, unused_local_variable, avoid_print
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,7 +36,6 @@ class _createNoticeState extends State<createNotice> {
   //     FirebaseFirestore.instance.collection("users");
 
   int cata = 0;
-  int _value = 0;
   double radius = 18;
   List<String> ImageLink = [];
   bool _posting = false;
@@ -81,14 +82,11 @@ class _createNoticeState extends State<createNotice> {
         .add(newNotice)
         .then((value) => print(value));
 
-    //Sending newPost to previous page via Navigator.
-    // context.read<mockData>().addPost(newPost as dataFeed);
     Navigator.of(context).pop(); //<- Attention
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     titleController.dispose();
     senderController.dispose();
     bodyController.dispose();
@@ -122,7 +120,7 @@ class _createNoticeState extends State<createNotice> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       height: Mheight * 0.12,
                       child: TextFormField(
                         maxLines: null,
@@ -131,7 +129,8 @@ class _createNoticeState extends State<createNotice> {
                         controller: titleController,
                         maxLength: 200,
                         autocorrect: false,
-                        scrollPadding: EdgeInsets.symmetric(horizontal: 20),
+                        scrollPadding:
+                            const EdgeInsets.symmetric(horizontal: 20),
                         // onChanged: (value){
                         //   titleController = value;
 
@@ -166,7 +165,7 @@ class _createNoticeState extends State<createNotice> {
                     SizedBox(
                       height: Mheight * 0.01,
                     ),
-                    Container(
+                    SizedBox(
                       height: Mheight * 0.08,
                       child: TextFormField(
                         maxLines: null,
@@ -175,7 +174,8 @@ class _createNoticeState extends State<createNotice> {
                         controller: senderController,
                         maxLength: 50,
                         autocorrect: false,
-                        scrollPadding: EdgeInsets.symmetric(horizontal: 20),
+                        scrollPadding:
+                            const EdgeInsets.symmetric(horizontal: 20),
                         // onChanged: (value){
                         //   titleController = value;
 
@@ -207,7 +207,7 @@ class _createNoticeState extends State<createNotice> {
                         ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: Mheight * 0.35,
                       child: TextFormField(
                         maxLength: 1500,
@@ -236,7 +236,7 @@ class _createNoticeState extends State<createNotice> {
                         ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: MWidth,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -261,12 +261,9 @@ class _createNoticeState extends State<createNotice> {
                                 (String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: Container(
-                                  child: Text(
-                                    value,
-                                    style:
-                                        const TextStyle(color: Colors.orange),
-                                  ),
+                                child: Text(
+                                  value,
+                                  style: const TextStyle(color: Colors.orange),
                                 ),
                               );
                             }).toList(),
@@ -288,7 +285,7 @@ class _createNoticeState extends State<createNotice> {
             Container(
               color: Colors.black.withOpacity(0.7),
               child: Center(
-                child: Container(
+                child: SizedBox(
                   height: Mheight * 0.1,
                   width: Mheight * 0.1,
                   child: const CircularProgressIndicator(

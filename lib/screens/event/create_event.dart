@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names, avoid_print, use_key_in_widget_constructors, unused_local_variable
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -62,11 +64,31 @@ class _createEventState extends State<createEvent> {
       'HostRole': hostRole,
       'Image': ImageLink,
     };
+    String EventID = "";
     await FirebaseFirestore.instance
         .collection("Events")
         .add(newEvent)
-        .then((value) => print(value));
+        .then((value) {
+      EventID = value.id;
+    });
 
+    var newPostEvent = {
+      'AuthorUID': user!.uid,
+      'AuthorProfilePic':
+          "https://t3.ftcdn.net/jpg/03/32/31/96/240_F_332319626_8JB5rN3WmHEunZ1PkJBMjva3sH5Rxe0v.jpg",
+      'AuthorName': OrgController.text,
+      'Time': DateTime.now(),
+      'Title': titleController.text,
+      'Body': bodyController.text,
+      'ImageLinks': [ImageLink],
+      'Likes': 0,
+      'Comments': 0,
+      'Tag': "Event",
+      'LikedBy': [],
+      "Anonymous": false,
+      "SpecialID": EventID
+    };
+    await FirebaseFirestore.instance.collection("Posts").add(newPostEvent);
     //Sending newPost to previous page via Navigator.
     // context.read<mockData>().addPost(newPost as dataFeed);
     Navigator.of(context).pop(); //<- Attention
@@ -74,7 +96,6 @@ class _createEventState extends State<createEvent> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     titleController.dispose();
     linkController.dispose();
     OrgController.dispose();
@@ -125,7 +146,8 @@ class _createEventState extends State<createEvent> {
             final DesignationController = TextEditingController();
             return Dialog(
               child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   height: MediaQuery.of(context).size.height * 0.182,
                   width: MediaQuery.of(context).size.width,
                   child: Column(
@@ -181,7 +203,7 @@ class _createEventState extends State<createEvent> {
                             });
                             Navigator.pop(ctx);
                           },
-                          child: Text("ADD"))
+                          child: const Text("ADD"))
                     ],
                   )),
             );
@@ -206,7 +228,7 @@ class _createEventState extends State<createEvent> {
       ),
       backgroundColor: const Color(0xff080808),
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: Mheight * 1.4,
           child: Stack(
             children: [
@@ -234,7 +256,7 @@ class _createEventState extends State<createEvent> {
                           height: Mheight * 0.02,
                         ),
                         //Starting Date
-                        Container(
+                        SizedBox(
                           height: Mheight * 0.09,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -350,11 +372,11 @@ class _createEventState extends State<createEvent> {
                                       )),
                                 ],
                               ),
-                        Container(
+                        SizedBox(
                           width: MWidth,
                           child: Column(
                             children: [
-                              Container(
+                              SizedBox(
                                 width: MWidth,
                                 child: const Text(
                                   "Host:",
@@ -418,7 +440,7 @@ class _createEventState extends State<createEvent> {
                 Container(
                   color: Colors.black.withOpacity(0.7),
                   child: Center(
-                    child: Container(
+                    child: SizedBox(
                       height: Mheight * 0.1,
                       width: Mheight * 0.1,
                       child: const CircularProgressIndicator(
@@ -448,14 +470,14 @@ class linkField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Mheight * 0.05,
       child: TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.url,
         controller: linkController,
         autocorrect: false,
-        scrollPadding: EdgeInsets.symmetric(horizontal: 5),
+        scrollPadding: const EdgeInsets.symmetric(horizontal: 5),
 
         validator: (value) {
           if (!value!.contains("https://")) {
@@ -500,7 +522,7 @@ class EventField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Mheight * 0.15,
       child: TextFormField(
         // maxLength: 1500,
@@ -544,7 +566,7 @@ class OrgField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Mheight * 0.05,
       child: TextFormField(
         maxLines: null,
@@ -552,7 +574,7 @@ class OrgField extends StatelessWidget {
         expands: true,
         controller: OrgController,
         autocorrect: false,
-        scrollPadding: EdgeInsets.symmetric(horizontal: 5),
+        scrollPadding: const EdgeInsets.symmetric(horizontal: 5),
         validator: (value) {
           if (value!.length <= 5) {
             return ("Organisation should be at least 5 Characters");
@@ -594,7 +616,7 @@ class titleField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Mheight * 0.05,
       child: TextFormField(
         maxLines: null,
@@ -603,7 +625,7 @@ class titleField extends StatelessWidget {
         controller: titleController,
 
         autocorrect: false,
-        scrollPadding: EdgeInsets.symmetric(horizontal: 5),
+        scrollPadding: const EdgeInsets.symmetric(horizontal: 5),
         // onChanged: (value){
         //   titleController = value;
 

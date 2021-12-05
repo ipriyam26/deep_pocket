@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/admin.dart';
+import 'package:deep_pocket_1/screens/event/event_screen.dart';
 import 'package:deep_pocket_1/screens/internship/internship_page.dart';
 import 'package:deep_pocket_1/screens/post/edit_post.dart';
 import 'package:deep_pocket_1/screens/profile/search_profile_screen.dart';
@@ -280,15 +281,28 @@ class _internshipPost extends State<internshipPost> {
                                     MaterialStateProperty.all<Color>(
                                         Colors.white)),
                             onPressed: () async {
-                              final data = await FirebaseFirestore.instance
-                                  .collection("Internships")
-                                  .doc(widget.SpecialID)
-                                  .get();
-                              DocumentSnapshot<Map<String, dynamic>>
-                                  internshipc = data;
-                              internshipc.data();
-                              Navigator.pushNamed(context, internPage.route,
-                                  arguments: internshipc);
+                              DocumentSnapshot<Map<String, dynamic>>?
+                                  internshipc;
+                              if (widget.tag == "Internship") {
+                                final data = await FirebaseFirestore.instance
+                                    .collection("Internships")
+                                    .doc(widget.SpecialID)
+                                    .get();
+
+                                internshipc = data;
+                                Navigator.pushNamed(context, internPage.route,
+                                    arguments: internshipc);
+                              } else if (widget.tag == 'Event') {
+                                final data = await FirebaseFirestore.instance
+                                    .collection("Events")
+                                    .doc(widget.SpecialID)
+                                    .get();
+
+                                internshipc = data;
+                                Navigator.pushNamed(context, eventScreen.route,
+                                    arguments: internshipc);
+                                ;
+                              }
                             },
                             icon: const Icon(Icons.double_arrow),
                             label: const Text("GOTO")),
