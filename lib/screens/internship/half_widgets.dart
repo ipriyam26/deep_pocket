@@ -11,7 +11,7 @@ class firstHalf extends StatelessWidget {
     required this.internship,
   });
 
-  Map<String, dynamic> internship;
+  Map<String, dynamic>? internship;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class firstHalf extends StatelessWidget {
                 ),
                 Container(
                   child: AutoSizeText(
-                    internship['Title'],
+                    internship!['Title'],
                     style: const TextStyle(
                         fontSize: 22,
                         color: Colors.white,
@@ -52,7 +52,7 @@ class firstHalf extends StatelessWidget {
                 //   height: MHeight * 0.015,
                 // ),
                 AutoSizeText(
-                  internship['Org'],
+                  internship!['Org'],
                   style: const TextStyle(
                       fontSize: 18,
                       color: Colors.white,
@@ -68,7 +68,7 @@ class firstHalf extends StatelessWidget {
             width: MHeight * 0.075,
             height: MHeight * 0.075,
             child: Image.network(
-              internship['Image'].toString(),
+              internship!['Image'].toString(),
               // color: Colors.white,
             ),
           ),

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, avoid_print, unused_local_variable
+
 import 'dart:io';
 
 // import 'package:email_password_login/model/user_model.dart';
@@ -43,7 +45,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return Container(
+          return SizedBox(
             height: MediaQuery.of(context).size.height * 0.15,
             child: Column(
               children: [

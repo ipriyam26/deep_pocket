@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, camel_case_types, avoid_print, unused_local_variable
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -99,11 +101,34 @@ class _internCreateState extends State<internCreate> {
       'AboutComapny': compCheck,
       'Applied': 0,
     };
+    String InternshipID = "";
     await FirebaseFirestore.instance
         .collection("Internships")
         .add(newEvent)
-        .then((value) => print(value));
+        .then((value) {
+      InternshipID = value.id;
+    });
+    final Imagelist = [ImageLink];
 
+    var newPostInternship = {
+      'AuthorUID': user!.uid,
+      'AuthorProfilePic': "https://i.imgur.com/aIzUbSs.jpeg",
+      'AuthorName': OrgController.text,
+      'Time': DateTime.now(),
+      'Title': titleController.text + " (₹$StipCheck/month)",
+      'Body': bodyController.text + "\n SKILL: $SkilCheck",
+      'ImageLinks': Imagelist,
+      'Likes': 0,
+      'Comments': 0,
+      'Tag': "Internship",
+      'LikedBy': [],
+      "Anonymous": false,
+      "SpecialID": InternshipID
+    };
+    await FirebaseFirestore.instance
+        .collection("Posts")
+        .add(newPostInternship)
+        .then((value) => print(value));
     //Sending newPost to previous page via Navigator.
     // context.read<mockData>().addPost(newPost as dataFeed);
     Navigator.of(context).pop(); //<- Attention
@@ -162,7 +187,7 @@ class _internCreateState extends State<internCreate> {
       ),
       backgroundColor: const Color(0xff080808),
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: Mheight * 2,
           child: Stack(
             children: [
@@ -198,7 +223,7 @@ class _internCreateState extends State<internCreate> {
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 )),
-                            Container(
+                            SizedBox(
                               width: MWidth * 0.2,
                               height: Mheight * 0.04,
                               child: TextField(
@@ -227,7 +252,7 @@ class _internCreateState extends State<internCreate> {
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 )),
-                            Container(
+                            SizedBox(
                               width: MWidth * 0.2,
                               height: Mheight * 0.04,
                               child: TextField(
@@ -304,7 +329,7 @@ class _internCreateState extends State<internCreate> {
                                 },
                                 child: Text(_anyStipend.toString())),
                             if (_anyStipend)
-                              Container(
+                              SizedBox(
                                 width: MWidth * 0.3,
                                 height: Mheight * 0.04,
                                 child: TextField(
@@ -445,7 +470,7 @@ class _internCreateState extends State<internCreate> {
                 Container(
                   color: Colors.black.withOpacity(0.7),
                   child: Center(
-                    child: Container(
+                    child: SizedBox(
                       height: Mheight * 0.1,
                       width: Mheight * 0.1,
                       child: const CircularProgressIndicator(
@@ -535,7 +560,7 @@ class _internCreateState extends State<internCreate> {
                             SizedBox(
                               height: Mheight * 0.01,
                             ),
-                            Container(
+                            SizedBox(
                               width: MWidth * 0.7,
                               height: Mheight * 0.04,
                               child: CupertinoDatePicker(
@@ -563,7 +588,7 @@ class _internCreateState extends State<internCreate> {
                             SizedBox(
                               height: Mheight * 0.01,
                             ),
-                            Container(
+                            SizedBox(
                               width: MWidth * 0.7,
                               height: Mheight * 0.04,
                               child: CupertinoDatePicker(
@@ -577,27 +602,25 @@ class _internCreateState extends State<internCreate> {
                                     });
                                   }),
                             ),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          selectedStartDate = StartingDate;
-                                          selectedEndDate = EndingDate;
-                                        });
-                                        Navigator.pop(ctx);
-                                      },
-                                      child: const Text(
-                                        "Done",
-                                        style: TextStyle(fontSize: 18),
-                                      )),
-                                  SizedBox(
-                                    width: MWidth * 0.03,
-                                  )
-                                ],
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        selectedStartDate = StartingDate;
+                                        selectedEndDate = EndingDate;
+                                      });
+                                      Navigator.pop(ctx);
+                                    },
+                                    child: const Text(
+                                      "Done",
+                                      style: TextStyle(fontSize: 18),
+                                    )),
+                                SizedBox(
+                                  width: MWidth * 0.03,
+                                )
+                              ],
                             )
                           ],
                         ),
@@ -662,8 +685,8 @@ class _internCreateState extends State<internCreate> {
                                         expands: true,
                                         decoration: InputDecoration(
                                             helperText: helpterText,
-                                            helperStyle:
-                                                TextStyle(color: Colors.white),
+                                            helperStyle: const TextStyle(
+                                                color: Colors.white),
                                             enabledBorder: const OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.white),
@@ -684,9 +707,8 @@ class _internCreateState extends State<internCreate> {
                                         maxLines: null,
                                         minLines: null,
                                         expands: true,
-                                        decoration: const InputDecoration(
-                                            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white), borderRadius: BorderRadius.all(Radius.circular(10))),
-                                            border: OutlineInputBorder(borderSide: BorderSide(color: Colors.white), borderRadius: BorderRadius.all(Radius.circular(10))))),
+                                        decoration:
+                                            const InputDecoration(enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white), borderRadius: BorderRadius.all(Radius.circular(10))), border: OutlineInputBorder(borderSide: BorderSide(color: Colors.white), borderRadius: BorderRadius.all(Radius.circular(10))))),
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -711,7 +733,7 @@ class _internCreateState extends State<internCreate> {
                     );
                   });
             },
-            child: Text("Add Description"))
+            child: const Text("Add Description"))
       ],
     );
   }
@@ -729,7 +751,7 @@ class OrgField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Mheight * 0.03,
       child: TextFormField(
         maxLines: null,
@@ -737,7 +759,7 @@ class OrgField extends StatelessWidget {
         expands: true,
         controller: OrgController,
         autocorrect: false,
-        scrollPadding: EdgeInsets.symmetric(horizontal: 5),
+        scrollPadding: const EdgeInsets.symmetric(horizontal: 5),
         validator: (value) {
           if (value!.length <= 5) {
             return ("Organisation should be at least 5 Characters");
@@ -780,7 +802,7 @@ class titleField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Mheight * 0.03,
       child: TextFormField(
         maxLines: null,
@@ -789,7 +811,7 @@ class titleField extends StatelessWidget {
         controller: titleController,
 
         autocorrect: false,
-        scrollPadding: EdgeInsets.symmetric(horizontal: 5),
+        scrollPadding: const EdgeInsets.symmetric(horizontal: 5),
         // onChanged: (value){
         //   titleController = value;
 
@@ -838,14 +860,14 @@ class linkField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Mheight * 0.05,
       child: TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.url,
         controller: linkController,
         autocorrect: false,
-        scrollPadding: EdgeInsets.symmetric(horizontal: 5),
+        scrollPadding: const EdgeInsets.symmetric(horizontal: 5),
 
         validator: (value) {
           if (!value!.contains("https://")) {
@@ -897,7 +919,7 @@ class EventField extends StatelessWidget {
       children: [
         Text(
           heading,
-          style: TextStyle(
+          style: const TextStyle(
               color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         Container(

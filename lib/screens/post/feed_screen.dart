@@ -8,6 +8,7 @@ import 'package:deep_pocket_1/screens/login-signup/login.dart';
 import 'package:deep_pocket_1/screens/menu-pages/menu.dart';
 
 import 'package:deep_pocket_1/screens/post/new_post_page.dart';
+import 'package:deep_pocket_1/screens/post/special_post.dart';
 import 'package:deep_pocket_1/screens/post/user_input.dart';
 import 'package:deep_pocket_1/screens/profile/search_user.dart';
 
@@ -56,8 +57,9 @@ class _feedScreenState extends State<feedScreen> {
                           onPressed: () {
                             return updateFilter(i, context);
                           },
-                          child: Text(Tag[i].toUpperCase(),
-                          style: TextStyle(color: Colors.pink),
+                          child: Text(
+                            Tag[i].toUpperCase(),
+                            style: TextStyle(color: Colors.pink),
                           ),
                         )),
               )),
@@ -147,7 +149,7 @@ class _feedScreenState extends State<feedScreen> {
             //     )),
           ],
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Color(0xff0E0C0A),
         body: StreamBuilder(
             stream: filter == 0 ? getposts() : getFilteredposts(),
 
@@ -173,10 +175,12 @@ class _feedScreenState extends State<feedScreen> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: snapshot.data!.docs.length + 1,
-                        itemBuilder: (context, index) =>
-                            index == snapshot.data!.docs.length
-                                ? const CupertinoActivityIndicator()
-                                : Center(
+                        itemBuilder: (context, index) => index ==
+                                snapshot.data!.docs.length
+                            ? const CupertinoActivityIndicator()
+                            : snapshot.data!.docs[index].data()['Tag'] !=
+                                    'Internship'
+                                ? Center(
                                     child: InkWell(
                                       splashColor: Colors.pinkAccent,
                                       onTap: () {
@@ -209,6 +213,51 @@ class _feedScreenState extends State<feedScreen> {
                                                   .data()['AuthorName'],
                                               AuthorImage: snapshot.data!.docs[index]
                                                   .data()['AuthorProfilePic'],
+                                              title: snapshot.data!.docs[index].data()['Title'],
+                                              body: snapshot.data!.docs[index].data()['Body'],
+                                              time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
+                                              likes: snapshot.data!.docs[index].data()['Likes'],
+                                              comments: snapshot.data!.docs[index].data()['Comments'],
+                                              date: snapshot.data!.docs[index].data()['Date'],
+                                              tag: snapshot.data!.docs[index].data()['Tag'])),
+                                    ),
+                                  )
+                                : Center(
+                                    child: InkWell(
+                                      splashColor: Colors.pinkAccent,
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, postPage.route,
+                                            arguments: {
+                                              'documentid':
+                                                  snapshot.data!.docs[index].id,
+                                              'user': loggedInuser,
+                                            });
+                                      },
+                                      child: Container(
+                                          child: internshipPost(
+                                              SpecialID: snapshot.data!.docs[index]
+                                                  .data()['SpecialID'],
+                                              points: snapshot.data!.docs[index]
+                                                      .data()['Points '] ??
+                                                  0,
+                                              AuthorUID: snapshot.data!.docs[index]
+                                                  .data()['AuthorUID'],
+                                              MHeight: MHeight,
+                                              Anonymous: snapshot
+                                                      .data!.docs[index]
+                                                      .data()['Anonymous'] ??
+                                                  false,
+                                              NotinFeed: false,
+                                              MWidth: MWidth,
+                                              imagesList: snapshot
+                                                  .data!.docs[index]
+                                                  .data()['ImageLinks'],
+                                              id: snapshot.data!.docs[index].id,
+                                              LikedBy: snapshot.data!.docs[index]
+                                                  .data()['LikedBy'],
+                                              name: snapshot.data!.docs[index].data()['AuthorName'],
+                                              AuthorImage: snapshot.data!.docs[index].data()['AuthorProfilePic'],
                                               title: snapshot.data!.docs[index].data()['Title'],
                                               body: snapshot.data!.docs[index].data()['Body'],
                                               time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),

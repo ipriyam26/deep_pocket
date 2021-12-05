@@ -397,7 +397,7 @@ class _nearByState extends State<nearBy> {
                               },
                               child: const Text(
                                 "ADD",
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.pink,
                                     fontSize: 20),

@@ -14,10 +14,10 @@ class internPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double MHeight = MediaQuery.of(context).size.height;
     double MWeight = MediaQuery.of(context).size.width;
-    QueryDocumentSnapshot<Map<String, dynamic>> internshipc =
-        ModalRoute.of(context)!.settings.arguments
-            as QueryDocumentSnapshot<Map<String, dynamic>>;
-    Map<String, dynamic> internship = internshipc.data();
+    DocumentSnapshot<Map<String, dynamic>> internshipc = ModalRoute.of(context)!
+        .settings
+        .arguments as DocumentSnapshot<Map<String, dynamic>>;
+    Map<String, dynamic> internship = internshipc.data()!;
 
     return Scaffold(
         appBar: AppBar(

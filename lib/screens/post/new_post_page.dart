@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/admin.dart';
+import 'package:deep_pocket_1/screens/post/special_post.dart';
 import 'package:deep_pocket_1/screens/profile/search_profile_screen.dart';
 
 import 'package:deep_pocket_1/widgets/post_widget.dart';
@@ -540,25 +541,46 @@ class postCardCall extends StatelessWidget {
   Widget build(BuildContext context) {
     return Hero(
       tag: "xcross",
-      child: postCard(
-          Anonymous: document!.data()!['Anonymous'] ?? false,
-          points: document!.data()!['Points '] ?? 0,
-          AuthorUID: document!.data()!['AuthorUID'],
-          NotinFeed: true,
-          MHeight: MHeight,
-          MWidth: MWidth,
-          imagesList: document!.data()!['ImageLinks'],
-          id: document!.id,
-          LikedBy: document!.data()!['LikedBy'],
-          name: document!.data()!['AuthorName'],
-          AuthorImage: document!.data()!['AuthorProfilePic'],
-          title: document!.data()!['Title'],
-          body: document!.data()!['Body'],
-          time: time,
-          likes: document!.data()!['Likes'],
-          comments: document!.data()!['Comments'],
-          date: document!.data()!['Date'],
-          tag: document!.data()!['Tag']),
+      child: document!.data()!['Tag'] != 'Internship'
+          ? postCard(
+              Anonymous: document!.data()!['Anonymous'] ?? false,
+              points: document!.data()!['Points '] ?? 0,
+              AuthorUID: document!.data()!['AuthorUID'],
+              NotinFeed: true,
+              MHeight: MHeight,
+              MWidth: MWidth,
+              imagesList: document!.data()!['ImageLinks'],
+              id: document!.id,
+              LikedBy: document!.data()!['LikedBy'],
+              name: document!.data()!['AuthorName'],
+              AuthorImage: document!.data()!['AuthorProfilePic'],
+              title: document!.data()!['Title'],
+              body: document!.data()!['Body'],
+              time: time,
+              likes: document!.data()!['Likes'],
+              comments: document!.data()!['Comments'],
+              date: document!.data()!['Date'],
+              tag: document!.data()!['Tag'])
+          : internshipPost(
+              SpecialID: document!.data()!['SpecialID'],
+              Anonymous: document!.data()!['Anonymous'] ?? false,
+              points: document!.data()!['Points '] ?? 0,
+              AuthorUID: document!.data()!['AuthorUID'],
+              NotinFeed: true,
+              MHeight: MHeight,
+              MWidth: MWidth,
+              imagesList: document!.data()!['ImageLinks'],
+              id: document!.id,
+              LikedBy: document!.data()!['LikedBy'],
+              name: document!.data()!['AuthorName'],
+              AuthorImage: document!.data()!['AuthorProfilePic'],
+              title: document!.data()!['Title'],
+              body: document!.data()!['Body'],
+              time: time,
+              likes: document!.data()!['Likes'],
+              comments: document!.data()!['Comments'],
+              date: document!.data()!['Date'],
+              tag: document!.data()!['Tag']),
     );
   }
 }
