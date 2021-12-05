@@ -181,7 +181,9 @@ class _feedScreenState extends State<feedScreen> {
                             : snapshot.data!.docs[index].data()['Tag'] !=
                                         'Internship' &&
                                     snapshot.data!.docs[index].data()['Tag'] !=
-                                        'Event'
+                                        'Event' &&
+                                    snapshot.data!.docs[index].data()['Tag'] !=
+                                        'Notice'
                                 ? Center(
                                     child: InkWell(
                                       splashColor: Colors.pinkAccent,

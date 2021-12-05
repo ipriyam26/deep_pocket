@@ -77,12 +77,33 @@ class _createNoticeState extends State<createNotice> {
       'Department': _chosenValue,
       'searchItems': finale
     };
+    String NoticeID = "";
     await FirebaseFirestore.instance
         .collection("Notices")
         .add(newNotice)
-        .then((value) => print(value));
+        .then((value) {
+      NoticeID = value.id;
+    });
 
-    Navigator.of(context).pop(); //<- Attention
+    var newPostNotice = {
+      'AuthorUID': user!.uid,
+      'AuthorProfilePic':
+          "https://as2.ftcdn.net/v2/jpg/03/97/68/63/1000_F_397686319_bzfypCKI13uWJetS60FB4EiDHzExJasl.jpg",
+      'AuthorName': _chosenValue,
+      'Time': DateTime.now(),
+      'Title': titleController.text,
+      'Body': bodyController.text,
+      'ImageLinks': [],
+      'Likes': 0,
+      'Comments': 0,
+      'Tag': "Notice",
+      'LikedBy': [],
+      "Anonymous": false,
+      "SpecialID": NoticeID
+    };
+    await FirebaseFirestore.instance.collection("Posts").add(newPostNotice);
+
+    Navigator.of(context).pop();
   }
 
   @override

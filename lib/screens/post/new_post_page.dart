@@ -542,7 +542,8 @@ class postCardCall extends StatelessWidget {
     return Hero(
       tag: "xcross",
       child: document!.data()!['Tag'] != 'Internship' &&
-              document!.data()!['Tag'] != 'Event'
+              document!.data()!['Tag'] != 'Event' &&
+              document!.data()!['Tag'] != 'Notice'
           ? postCard(
               Anonymous: document!.data()!['Anonymous'] ?? false,
               points: document!.data()!['Points '] ?? 0,

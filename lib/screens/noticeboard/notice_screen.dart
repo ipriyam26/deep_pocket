@@ -12,11 +12,11 @@ class noticeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final MSize = MediaQuery.of(context).size;
     final newNotice = ModalRoute.of(context)!.settings.arguments
-        as QueryDocumentSnapshot<Map<String, dynamic>>;
+        as DocumentSnapshot<Map<String, dynamic>>;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          newNotice.data()['Department'],
+          newNotice.data()!['Department'],
         ),
         backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
       ),
@@ -32,7 +32,7 @@ class noticeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  newNotice.data()['Title'],
+                  newNotice.data()!['Title'],
                   style: const TextStyle(
                       fontSize: 23,
                       // color: Colors.white,
@@ -46,14 +46,14 @@ class noticeScreen extends StatelessWidget {
                 ),
                 Text(
                   DateFormat('hh:mm a  dd MMM, y ').format(DateTime.parse(
-                      newNotice.data()['Time'].toDate().toString())),
+                      newNotice.data()!['Time'].toDate().toString())),
                   style: const TextStyle(color: Colors.white, fontSize: 15),
                 ),
                 SizedBox(
                   height: MSize.height * 0.01,
                 ),
                 Text(
-                  newNotice.data()['Sender'],
+                  newNotice.data()!['Sender'],
                   // .format(newNotice.date),
                   style: const TextStyle(
                       color: Colors.pink,

@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/admin.dart';
 import 'package:deep_pocket_1/screens/event/event_screen.dart';
 import 'package:deep_pocket_1/screens/internship/internship_page.dart';
+import 'package:deep_pocket_1/screens/noticeboard/notice_screen.dart';
 import 'package:deep_pocket_1/screens/post/edit_post.dart';
 import 'package:deep_pocket_1/screens/profile/search_profile_screen.dart';
 import 'package:deep_pocket_1/widgets/fullscreen_image.dart';
@@ -282,26 +283,34 @@ class _internshipPost extends State<internshipPost> {
                                         Colors.white)),
                             onPressed: () async {
                               DocumentSnapshot<Map<String, dynamic>>?
-                                  internshipc;
+                                  argumentData;
                               if (widget.tag == "Internship") {
                                 final data = await FirebaseFirestore.instance
                                     .collection("Internships")
                                     .doc(widget.SpecialID)
                                     .get();
 
-                                internshipc = data;
+                                argumentData = data;
                                 Navigator.pushNamed(context, internPage.route,
-                                    arguments: internshipc);
+                                    arguments: argumentData);
                               } else if (widget.tag == 'Event') {
                                 final data = await FirebaseFirestore.instance
                                     .collection("Events")
                                     .doc(widget.SpecialID)
                                     .get();
 
-                                internshipc = data;
+                                argumentData = data;
                                 Navigator.pushNamed(context, eventScreen.route,
-                                    arguments: internshipc);
-                                ;
+                                    arguments: argumentData);
+                              } else {
+                                final data = await FirebaseFirestore.instance
+                                    .collection("Notices")
+                                    .doc(widget.SpecialID)
+                                    .get();
+
+                                argumentData = data;
+                                Navigator.pushNamed(context, noticeScreen.route,
+                                    arguments: argumentData);
                               }
                             },
                             icon: const Icon(Icons.double_arrow),
