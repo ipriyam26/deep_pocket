@@ -666,7 +666,7 @@ class internshipCard extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: Colors.white,
                       image: DecorationImage(
-                        fit: BoxFit.scaleDown,
+                        fit: BoxFit.cover,
                         image: NetworkImage(internship['Image'].toString()),
                       ),
                     ),
