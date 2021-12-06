@@ -1,6 +1,10 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deep_pocket_1/models/user_model.dart';
 import 'package:deep_pocket_1/screens/Nearby/nearby_add.dart';
 import 'package:deep_pocket_1/screens/Nearby/place.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -63,7 +67,11 @@ class _nearByState extends State<nearBy> {
         actions: [
           IconButton(
               onPressed: () {
-                addPlace(context, Mwidth, Mheight);
+                addPlace(
+                  context,
+                  Mwidth,
+                  Mheight,
+                );
                 // Navigator.pushNamed(context, NearbAdd.route);
               },
               icon: const Icon(
@@ -99,8 +107,6 @@ class _nearByState extends State<nearBy> {
               for (int i = -1; i < Types.length; i++)
                 ListTile(
                   leading: Radio(
-                      // focusColor: Colors.white,
-                      // overlayColor: MaterialStateProperty<Color>[],
                       value: i,
                       groupValue: _selected,
                       activeColor: Colors.pink,
@@ -113,7 +119,7 @@ class _nearByState extends State<nearBy> {
                   title: i == -1
                       ? const Text(
                           "All",
-                          style: const TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white),
                         )
                       : Text(
                           Types[i],
@@ -143,8 +149,13 @@ class _nearByState extends State<nearBy> {
                   itemCount: data.length,
                   // shrinkWrap: true,
                   controller: _scrollController,
-                  itemBuilder: (context, index) =>
-                      nearbyCard(data: data[index])),
+                  itemBuilder: (context, index) {
+                    bool archived = data[index].data()['Archived'] ?? false;
+                    if (!archived) {
+                      return nearbyCard(data: data[index]);
+                    }
+                    return Container();
+                  }),
             );
           }),
     );
@@ -155,6 +166,14 @@ class _nearByState extends State<nearBy> {
     return showDialog(
         context: context,
         builder: (BuildContext ctx) {
+          Future<UserModel> getUserData() async {
+            var doc = await FirebaseFirestore.instance
+                .collection("users")
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .get();
+            return UserModel.fromMap(doc.data());
+          }
+
           return StatefulBuilder(builder: (context, setState) {
             final _formKey = GlobalKey<FormState>();
             final nameController = TextEditingController();
@@ -374,35 +393,69 @@ class _nearByState extends State<nearBy> {
                           ),
                         ),
                         Align(
-                          alignment: Alignment.bottomRight,
-                          child: TextButton(
-                              onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  await FirebaseFirestore.instance
-                                      .collection("Nearby")
-                                      .add({
-                                    'Name': nameController.text,
-                                    'Address': addressController.text,
-                                    'Url': linkController.text,
-                                    'Catagory': _chosenValue,
-                                    'Description': desController.text,
-                                    'Rating': 0,
-                                  }).then((value) => print(value));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Processing Data')),
-                                  );
-                                  Navigator.pop(ctx);
-                                }
-                              },
-                              child: const Text(
-                                "ADD",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.pink,
-                                    fontSize: 20),
-                              )),
-                        )
+                            alignment: Alignment.bottomRight,
+                            child: TextButton(
+                                onPressed: () async {
+                                  String nearbyID = "";
+                                  if (_formKey.currentState!.validate()) {
+                                    await FirebaseFirestore.instance
+                                        .collection("Nearby")
+                                        .add({
+                                      'Name': nameController.text,
+                                      'Address': addressController.text,
+                                      'Url': linkController.text,
+                                      'Catagory': _chosenValue,
+                                      'Description': desController.text,
+                                      'Rating': 0,
+                                      'Archived': true
+                                    }).then((value) {
+                                      nearbyID = value.id;
+                                    });
+
+                                    var newPostNearby = {
+                                      'AuthorUID': FirebaseAuth
+                                          .instance.currentUser!.uid,
+                                      'AuthorProfilePic':
+                                          "https://t3.ftcdn.net/jpg/03/32/31/96/240_F_332319626_8JB5rN3WmHEunZ1PkJBMjva3sH5Rxe0v.jpg",
+                                      'AuthorName': _chosenValue,
+                                      'Time': DateTime.now(),
+                                      'Title': nameController.text,
+                                      'Body': "Address :  " +
+                                          addressController.text +
+                                          "\n" +
+                                          "Describtion:  " +
+                                          desController.text,
+                                      'ImageLinks': [],
+                                      'Likes': 0,
+                                      'DisLike': 0,
+                                      'Comments': 0,
+                                      'Tag': "Nearby",
+                                      'LikedBy': [],
+                                      'DislikedBy': [],
+                                      "Anonymous": false,
+                                      "SpecialID": linkController.text,
+                                      "NearbyID": nearbyID
+                                    };
+
+                                    await FirebaseFirestore.instance
+                                        .collection("Posts")
+                                        .add(newPostNearby);
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text('Processing Data')),
+                                    );
+                                    dispose();
+                                    Navigator.pop(ctx);
+                                  }
+                                },
+                                child: const Text(
+                                  "ADD",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.pink,
+                                      fontSize: 20),
+                                )))
                       ],
                     ),
                   )

@@ -184,48 +184,100 @@ class _feedScreenState extends State<feedScreen> {
                                         'Event' &&
                                     snapshot.data!.docs[index].data()['Tag'] !=
                                         'Notice'
-                                ? Center(
-                                    child: InkWell(
-                                      splashColor: Colors.pinkAccent,
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                            context, postPage.route,
-                                            arguments: {
-                                              'documentid':
-                                                  snapshot.data!.docs[index].id,
-                                              'user': loggedInuser,
-                                            });
-                                      },
-                                      child: Container(
-                                          child: postCard(
-                                              points: snapshot.data!.docs[index].data()['Points '] ??
-                                                  0,
-                                              AuthorUID: snapshot.data!.docs[index]
-                                                  .data()['AuthorUID'],
-                                              MHeight: MHeight,
-                                              Anonymous: snapshot.data!.docs[index]
-                                                      .data()['Anonymous'] ??
-                                                  false,
-                                              NotinFeed: false,
-                                              MWidth: MWidth,
-                                              imagesList: snapshot.data!.docs[index]
-                                                  .data()['ImageLinks'],
-                                              id: snapshot.data!.docs[index].id,
-                                              LikedBy: snapshot.data!.docs[index]
-                                                  .data()['LikedBy'],
-                                              name: snapshot.data!.docs[index]
-                                                  .data()['AuthorName'],
-                                              AuthorImage: snapshot.data!.docs[index]
-                                                  .data()['AuthorProfilePic'],
-                                              title: snapshot.data!.docs[index].data()['Title'],
-                                              body: snapshot.data!.docs[index].data()['Body'],
-                                              time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
-                                              likes: snapshot.data!.docs[index].data()['Likes'],
-                                              comments: snapshot.data!.docs[index].data()['Comments'],
-                                              date: snapshot.data!.docs[index].data()['Date'],
-                                              tag: snapshot.data!.docs[index].data()['Tag'])),
-                                    ),
-                                  )
+                                ? snapshot.data!.docs[index].data()['Tag'] ==
+                                        'Nearby'
+                                    ? Center(
+                                        child: InkWell(
+                                          splashColor: Colors.pinkAccent,
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                                context, postPage.route,
+                                                arguments: {
+                                                  'documentid': snapshot
+                                                      .data!.docs[index].id,
+                                                  'user': loggedInuser,
+                                                });
+                                          },
+                                          child: Container(
+                                              child: nearbyPost(
+                                                  nearbyID: snapshot
+                                                      .data!.docs[index]
+                                                      .data()['NearbyID'],
+                                                  points: snapshot
+                                                          .data!.docs[index]
+                                                          .data()['Points '] ??
+                                                      0,
+                                                  AuthorUID: snapshot
+                                                      .data!.docs[index]
+                                                      .data()['AuthorUID'],
+                                                  DislikedBy: snapshot
+                                                      .data!.docs[index]
+                                                      .data()['DislikedBy'],
+                                                  MHeight: MHeight,
+                                                  Anonymous: snapshot
+                                                          .data!.docs[index]
+                                                          .data()['Anonymous'] ??
+                                                      false,
+                                                  NotinFeed: false,
+                                                  MWidth: MWidth,
+                                                  imagesList: snapshot.data!.docs[index].data()['ImageLinks'],
+                                                  id: snapshot.data!.docs[index].id,
+                                                  LikedBy: snapshot.data!.docs[index].data()['LikedBy'],
+                                                  name: snapshot.data!.docs[index].data()['AuthorName'],
+                                                  AuthorImage: snapshot.data!.docs[index].data()['AuthorProfilePic'],
+                                                  SpecialID: snapshot.data!.docs[index].data()['SpecialID'],
+                                                  title: snapshot.data!.docs[index].data()['Title'],
+                                                  body: snapshot.data!.docs[index].data()['Body'],
+                                                  time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
+                                                  likes: snapshot.data!.docs[index].data()['Likes'],
+                                                  comments: snapshot.data!.docs[index].data()['Comments'],
+                                                  date: snapshot.data!.docs[index].data()['Date'],
+                                                  tag: snapshot.data!.docs[index].data()['Tag'])),
+                                        ),
+                                      )
+                                    : Center(
+                                        child: InkWell(
+                                          splashColor: Colors.pinkAccent,
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                                context, postPage.route,
+                                                arguments: {
+                                                  'documentid': snapshot
+                                                      .data!.docs[index].id,
+                                                  'user': loggedInuser,
+                                                });
+                                          },
+                                          child: Container(
+                                              child: postCard(
+                                                  points: snapshot.data!.docs[index]
+                                                          .data()['Points '] ??
+                                                      0,
+                                                  AuthorUID: snapshot.data!.docs[index]
+                                                      .data()['AuthorUID'],
+                                                  MHeight: MHeight,
+                                                  Anonymous: snapshot.data!.docs[index].data()['Anonymous'] ??
+                                                      false,
+                                                  NotinFeed: false,
+                                                  MWidth: MWidth,
+                                                  imagesList: snapshot
+                                                      .data!.docs[index]
+                                                      .data()['ImageLinks'],
+                                                  id: snapshot
+                                                      .data!.docs[index].id,
+                                                  LikedBy: snapshot.data!.docs[index]
+                                                      .data()['LikedBy'],
+                                                  name: snapshot.data!.docs[index]
+                                                      .data()['AuthorName'],
+                                                  AuthorImage: snapshot.data!.docs[index].data()['AuthorProfilePic'],
+                                                  title: snapshot.data!.docs[index].data()['Title'],
+                                                  body: snapshot.data!.docs[index].data()['Body'],
+                                                  time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
+                                                  likes: snapshot.data!.docs[index].data()['Likes'],
+                                                  comments: snapshot.data!.docs[index].data()['Comments'],
+                                                  date: snapshot.data!.docs[index].data()['Date'],
+                                                  tag: snapshot.data!.docs[index].data()['Tag'])),
+                                        ),
+                                      )
                                 : Center(
                                     child: InkWell(
                                       splashColor: Colors.pinkAccent,

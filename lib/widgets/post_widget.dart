@@ -46,6 +46,7 @@ class postCard extends StatefulWidget {
     required this.NotinFeed,
     required this.Anonymous,
     required this.points,
+    DislikedBy,
   }) : super(key: key);
 
   final dynamic points;

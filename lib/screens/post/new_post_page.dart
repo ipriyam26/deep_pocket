@@ -544,25 +544,49 @@ class postCardCall extends StatelessWidget {
       child: document!.data()!['Tag'] != 'Internship' &&
               document!.data()!['Tag'] != 'Event' &&
               document!.data()!['Tag'] != 'Notice'
-          ? postCard(
-              Anonymous: document!.data()!['Anonymous'] ?? false,
-              points: document!.data()!['Points '] ?? 0,
-              AuthorUID: document!.data()!['AuthorUID'],
-              NotinFeed: true,
-              MHeight: MHeight,
-              MWidth: MWidth,
-              imagesList: document!.data()!['ImageLinks'],
-              id: document!.id,
-              LikedBy: document!.data()!['LikedBy'],
-              name: document!.data()!['AuthorName'],
-              AuthorImage: document!.data()!['AuthorProfilePic'],
-              title: document!.data()!['Title'],
-              body: document!.data()!['Body'],
-              time: time,
-              likes: document!.data()!['Likes'],
-              comments: document!.data()!['Comments'],
-              date: document!.data()!['Date'],
-              tag: document!.data()!['Tag'])
+          ? document!.data()!['Tag'] == 'Nearby'
+              ? nearbyPost(
+                  nearbyID: document!.data()!['NearbyID'],
+                  points: document!.data()!['Points '] ?? 0,
+                  AuthorUID: document!.data()!['AuthorUID'],
+                  DislikedBy: document!.data()!['DislikedBy'],
+                  MHeight: MHeight,
+                  Anonymous: document!.data()!['Anonymous'] ?? false,
+                  NotinFeed: false,
+                  MWidth: MWidth,
+                  imagesList: document!.data()!['ImageLinks'],
+                  id: document!.id,
+                  LikedBy: document!.data()!['LikedBy'],
+                  name: document!.data()!['AuthorName'],
+                  AuthorImage: document!.data()!['AuthorProfilePic'],
+                  SpecialID: document!.data()!['SpecialID'],
+                  title: document!.data()!['Title'],
+                  body: document!.data()!['Body'],
+                  time: DateTime.parse(
+                      document!.data()!['Time'].toDate().toString()),
+                  likes: document!.data()!['Likes'],
+                  comments: document!.data()!['Comments'],
+                  date: document!.data()!['Date'],
+                  tag: document!.data()!['Tag'])
+              : postCard(
+                  Anonymous: document!.data()!['Anonymous'] ?? false,
+                  points: document!.data()!['Points '] ?? 0,
+                  AuthorUID: document!.data()!['AuthorUID'],
+                  NotinFeed: true,
+                  MHeight: MHeight,
+                  MWidth: MWidth,
+                  imagesList: document!.data()!['ImageLinks'],
+                  id: document!.id,
+                  LikedBy: document!.data()!['LikedBy'],
+                  name: document!.data()!['AuthorName'],
+                  AuthorImage: document!.data()!['AuthorProfilePic'],
+                  title: document!.data()!['Title'],
+                  body: document!.data()!['Body'],
+                  time: time,
+                  likes: document!.data()!['Likes'],
+                  comments: document!.data()!['Comments'],
+                  date: document!.data()!['Date'],
+                  tag: document!.data()!['Tag'])
           : internshipPost(
               SpecialID: document!.data()!['SpecialID'],
               Anonymous: document!.data()!['Anonymous'] ?? false,

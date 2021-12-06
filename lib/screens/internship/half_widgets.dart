@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, must_be_immutable, non_constant_identifier_names
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,7 +11,7 @@ class firstHalf extends StatelessWidget {
   firstHalf({
     Key? key,
     required this.internship,
-  });
+  }) : super(key: key);
 
   Map<String, dynamic>? internship;
 
@@ -25,7 +27,7 @@ class firstHalf extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Container(
+          SizedBox(
             // color: Colors.amber,
             width: MWidth * 0.75,
             child: Column(
@@ -36,17 +38,15 @@ class firstHalf extends StatelessWidget {
                 SizedBox(
                   height: MHeight * 0.18 * 0.05,
                 ),
-                Container(
-                  child: AutoSizeText(
-                    internship!['Title'],
-                    style: const TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                    minFontSize: 18,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                AutoSizeText(
+                  internship!['Title'],
+                  style: const TextStyle(
+                      fontSize: 22,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                  minFontSize: 18,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 // SizedBox(
                 //   height: MHeight * 0.015,
@@ -64,7 +64,7 @@ class firstHalf extends StatelessWidget {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: MHeight * 0.075,
             height: MHeight * 0.075,
             child: Image.network(
@@ -80,8 +80,9 @@ class firstHalf extends StatelessWidget {
 
 class middleButton extends StatelessWidget {
   middleButton({
+    Key? key,
     required this.internship,
-  });
+  }) : super(key: key);
   Map<String, dynamic> internship;
   @override
   Widget build(BuildContext context) {
@@ -141,7 +142,7 @@ class middleButton extends StatelessWidget {
                               DateTime.parse(
                                   internship['EndingDate'].toDate().toString()))
                           .toString(),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     const Icon(
                       Icons.brightness_1_outlined,
@@ -213,10 +214,11 @@ class enrollCard extends StatelessWidget {
   Map<String, dynamic> internship;
 
   enrollCard({
+    Key? key,
     required this.MHeight,
     required this.MWidth,
     required this.internship,
-  });
+  }) : super(key: key);
 
   final double MHeight;
   final double MWidth;
@@ -261,82 +263,73 @@ class enrollCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    // padding: const EdgeInsets.symmetric(vertical: 5),
-                    //This area is used for Top Part Started
-                    // color: Colors.amber,
-                    // height: MHeight * 0.15,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        // SizedBox(
-                        //   height: MHeight * 0.15 * 0.14,
-                        // ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // SizedBox(
+                      //   height: MHeight * 0.15 * 0.14,
+                      // ),
 
-                        SizedBox(
-                          height: MHeight * 0.15 * 0.14,
+                      SizedBox(
+                        height: MHeight * 0.15 * 0.14,
+                      ),
+
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          // color: Colors.yellow,
+                          color: const Color.fromRGBO(40, 40, 43, 1),
+                          borderRadius: BorderRadius.circular(7),
                         ),
-
-                        Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            // color: Colors.yellow,
-                            color: Color.fromRGBO(40, 40, 43, 1),
-                            borderRadius: BorderRadius.circular(7),
-                          ),
-                          // height: MHeight * 0.15 * 0.8,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Required skill",
-                                style: TextStyle(
+                        // height: MHeight * 0.15 * 0.8,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Required skill",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(
+                              height: MHeight * 0.15 * 0.04,
+                            ),
+                            Text(internship['Skills'].toString(),
+                                style: const TextStyle(
+                                    fontSize: 15,
                                     color: Colors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              SizedBox(
-                                height: MHeight * 0.15 * 0.04,
-                              ),
-                              Container(
-                                // color: Colors.yellow,
-                                child: Text(internship['Skills'].toString(),
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w300)),
-                              ),
+                                    fontWeight: FontWeight.w300)),
 
-                              // Row(
-                              //   children: [
-                              //     Text("- "),
-                              //     Container(
-                              //       // color: Colors.amber,
-                              //       width: MWidth * 0.65,
-                              //       child: const Text(
-                              //           "In Depth experience on Python",
-                              //           style: TextStyle(
-                              //               fontSize: 15,
-                              //               fontWeight: FontWeight.w300)),
-                              //     )
-                              //   ],
-                              // ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                            // Row(
+                            //   children: [
+                            //     Text("- "),
+                            //     Container(
+                            //       // color: Colors.amber,
+                            //       width: MWidth * 0.65,
+                            //       child: const Text(
+                            //           "In Depth experience on Python",
+                            //           style: TextStyle(
+                            //               fontSize: 15,
+                            //               fontWeight: FontWeight.w300)),
+                            //     )
+                            //   ],
+                            // ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                   const Divider(
                     thickness: 1,
                   ),
                   Container(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       // color: Colors.yellow,
-                      color: Color.fromRGBO(40, 40, 43, 1),
+                      color: const Color.fromRGBO(40, 40, 43, 1),
                       borderRadius: BorderRadius.circular(7),
                     ),
                     // height: MHeight * 0.5 * 0.4,
@@ -378,7 +371,7 @@ class enrollCard extends StatelessWidget {
                   const Divider(
                     thickness: 1,
                   ),
-                  Container(
+                  SizedBox(
                     // color: Colors.yellow,
                     width: double.maxFinite,
                     child: Text(
@@ -428,7 +421,7 @@ class jobLine extends StatelessWidget {
             SizedBox(
               width: MWidth * 0.02,
             ),
-            Container(
+            SizedBox(
               // color: Colors.green,
               width: MWidth * 0.5,
               child: AutoSizeText(
@@ -471,7 +464,7 @@ class skill_line extends StatelessWidget {
           "- ",
           style: TextStyle(color: Colors.white),
         ),
-        Container(
+        SizedBox(
           // color: Colors.amber,
           width: MWidth * 0.6,
           child: AutoSizeText(
@@ -534,8 +527,8 @@ class aboutCompany extends StatelessWidget {
                 height: MHeight * 0.01,
               ),
               Container(
-                padding: EdgeInsets.all(8),
-                color: Color.fromRGBO(40, 40, 43, 1),
+                padding: const EdgeInsets.all(8),
+                color: const Color.fromRGBO(40, 40, 43, 1),
                 child: Text(
                   internship['AboutComapny'],
                   style: const TextStyle(
@@ -594,8 +587,8 @@ class jobDescribtion extends StatelessWidget {
                 height: MHeight * 0.01,
               ),
               Container(
-                padding: EdgeInsets.all(8),
-                color: Color.fromRGBO(40, 40, 43, 1),
+                padding: const EdgeInsets.all(8),
+                color: const Color.fromRGBO(40, 40, 43, 1),
                 child: Text(
                   internship['JobDescription'],
                   style: const TextStyle(
@@ -609,9 +602,10 @@ class jobDescribtion extends StatelessWidget {
 }
 
 class internshipCard extends StatelessWidget {
-  internshipCard({
+  const internshipCard({
+    Key? key,
     required this.internshipc,
-  });
+  }) : super(key: key);
 
   final QueryDocumentSnapshot<Map<String, dynamic>> internshipc;
 
@@ -636,7 +630,7 @@ class internshipCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.7,
                         height: MediaQuery.of(context).size.height * 0.05,
                         child: AutoSizeText(
@@ -676,7 +670,7 @@ class internshipCard extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.01,
               ),
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.1,
                 // color: Colors.blue,
                 child: Column(
@@ -719,7 +713,8 @@ class internshipCard extends StatelessWidget {
                                       " ₹ " +
                                           internship['Stipend'].toString() +
                                           " /month",
-                                      style: TextStyle(color: Colors.white)),
+                                      style:
+                                          const TextStyle(color: Colors.white)),
                                 ],
                               )
                             : Row(
@@ -746,7 +741,7 @@ class internshipCard extends StatelessWidget {
                                 " " +
                                     internship['Duration'].toString() +
                                     " Days",
-                                style: TextStyle(color: Colors.white)),
+                                style: const TextStyle(color: Colors.white)),
                           ],
                         )
                       ],
