@@ -1,21 +1,25 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+// ignore_for_file: unused_field
+
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_pocket_1/screens/event/even_main_screen.dart';
+
 import 'package:deep_pocket_1/screens/event/get_event.dart';
 import 'package:deep_pocket_1/screens/event/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+
 import 'package:table_calendar/table_calendar.dart';
 import 'event_widgets.dart';
-import 'mock_event.dart';
+
 
 class TableEventsExample extends StatefulWidget {
   static const route = '/eventTabs/eventScreenex';
+
+  const TableEventsExample({Key? key}) : super(key: key);
 
   @override
   _TableEventsExampleState createState() => _TableEventsExampleState();
@@ -112,7 +116,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(11, 10, 10, 1),
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height * 0.88,
           child: Column(
             children: [
@@ -197,23 +201,21 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 },
               ),
               const SizedBox(height: 2.0),
-              Container(
-                child: ValueListenableBuilder<
-                    List<QueryDocumentSnapshot<Map<String, dynamic>>>>(
-                  valueListenable: _selectedEvents,
-                  builder: (context, value, _) {
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: value.length,
-                      itemBuilder: (context, index) {
-                        return eventCard(
-                            upcomingEvent: value[index],
-                            MHeight: MediaQuery.of(context).size.height);
-                      },
-                    );
-                  },
-                ),
+              ValueListenableBuilder<
+                  List<QueryDocumentSnapshot<Map<String, dynamic>>>>(
+                valueListenable: _selectedEvents,
+                builder: (context, value, _) {
+                  return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: value.length,
+                    itemBuilder: (context, index) {
+                      return eventCard(
+                          upcomingEvent: value[index],
+                          MHeight: MediaQuery.of(context).size.height);
+                    },
+                  );
+                },
               ),
             ],
           ),

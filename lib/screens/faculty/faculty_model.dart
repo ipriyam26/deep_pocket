@@ -1,4 +1,6 @@
-import 'package:deep_pocket_1/models/faculty_profile.dart';
+// ignore_for_file: non_constant_identifier_names, camel_case_types
+
+
 
 class Faculty_model {
   Faculty_model({

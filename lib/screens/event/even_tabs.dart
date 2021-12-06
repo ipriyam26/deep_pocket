@@ -18,11 +18,9 @@ class eventTabs extends StatefulWidget {
 
 class _eventTabsState extends State<eventTabs> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
     eventMainScreen(),
-    TableEventsExample(),
+    const TableEventsExample(),
   ];
 
   void _onItemTapped(int index) {
@@ -45,7 +43,7 @@ class _eventTabsState extends State<eventTabs> {
                         onPressed: () {
                           Navigator.of(context).pushNamed(createEvent.route);
                         },
-                        icon: Icon(Icons.add))
+                        icon: const Icon(Icons.add))
                 ],
                 title: const Text(
                   'Event',

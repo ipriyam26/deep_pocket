@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:unique_list/unique_list.dart';
 
@@ -63,7 +65,6 @@ class schoolScreen extends StatelessWidget {
       return false;
     }).toList();
 
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       // endDrawer: Drawer(),
       // appBar: AppBar(title: ,),

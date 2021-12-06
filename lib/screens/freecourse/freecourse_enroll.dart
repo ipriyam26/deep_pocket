@@ -2,7 +2,7 @@ import 'package:deep_pocket_1/models/course_read.dart';
 import 'package:deep_pocket_1/screens/freecourse/freecourse_widgets.dart';
 import 'package:flutter/material.dart';
 
-import 'freecourse_mock.dart';
+
 
 class enrollCard extends StatelessWidget {
   enrollCard({

@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names, use_key_in_widget_constructors, must_be_immutable
+
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -16,12 +18,11 @@ class cardHeading extends StatelessWidget {
   final String heading;
   final double MWidth;
   final double MHeight;
-  cardHeading({
+  const cardHeading({
     required this.list,
     required this.MHeight,
     required this.MWidth,
     required this.heading,
-    // ignore: non_constant_identifier_names
   });
 
   @override
@@ -49,7 +50,7 @@ class cardHeading extends StatelessWidget {
           padding: EdgeInsets.all(MHeight * 0.01),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color.fromRGBO(40, 40, 43, 1),
+            color: const Color.fromRGBO(40, 40, 43, 1),
           ),
           height:
               min(MHeight * 0.05 * list.length + MHeight * 0.05, MHeight * 0.4),
@@ -60,7 +61,7 @@ class cardHeading extends StatelessWidget {
               itemCount: list.length,
               itemBuilder: (context, i) => Text(
                     list[i],
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    style: const TextStyle(fontSize: 18, color: Colors.white),
                   )),
         )
       ],
@@ -91,7 +92,7 @@ class NameAndStuff extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               // color: Colors.amber,
               width: MWidth * 0.99,
               child: AutoSizeText(
@@ -109,16 +110,16 @@ class NameAndStuff extends StatelessWidget {
             if (teacher.Designation != 'null')
               Row(
                 children: [
-                  Icon(Icons.verified, color: Colors.blue),
+                  const Icon(Icons.verified, color: Colors.blue),
                   SizedBox(
                     width: MWidth * 0.02,
                   ),
-                  Container(
+                  SizedBox(
                       // color: Colors.amber,
                       width: MWidth * 0.77,
                       child: Text(
                         teacher.Designation,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ))
                 ],
               ),
@@ -152,13 +153,13 @@ class NameAndStuff extends StatelessWidget {
                     horizontal: MWidth * 0.03, vertical: MHeight * 0.02),
                 child: AutoSizeText(
                   teacher.About,
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                   minFontSize: 8,
                   maxFontSize: 15,
                 ),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color(0xffF2EEB3)),
+                    color: const Color(0xffF2EEB3)),
               )
           ],
         ),
@@ -201,7 +202,7 @@ class deansCard extends StatelessWidget {
                 fontSize: headingSize),
           ),
         ),
-        Container(
+        SizedBox(
           // color: Colors.amber,
           height: MHeight * 0.167 * (head.length / 3).ceilToDouble(),
           child: GridView.builder(
@@ -232,23 +233,21 @@ class deansCard extends StatelessWidget {
                           children: [
                             Hero(
                               tag: head[i].profile,
-                              child: Container(
-                                child: ClipOval(
-                                  child: Container(
-                                    height: MWidth * 0.2,
-                                    width: MWidth * 0.2,
-                                    child: CachedNetworkImage(
-                                      fadeInDuration:
-                                          const Duration(microseconds: 0),
-                                      fadeOutDuration:
-                                          const Duration(microseconds: 0),
-                                      placeholder: (context, url) => Container(
-                                          height: MWidth * 0.1,
-                                          width: MWidth * 0.1,
-                                          child:
-                                              const CupertinoActivityIndicator()),
-                                      imageUrl: head[i].Image,
-                                    ),
+                              child: ClipOval(
+                                child: SizedBox(
+                                  height: MWidth * 0.2,
+                                  width: MWidth * 0.2,
+                                  child: CachedNetworkImage(
+                                    fadeInDuration:
+                                        const Duration(microseconds: 0),
+                                    fadeOutDuration:
+                                        const Duration(microseconds: 0),
+                                    placeholder: (context, url) => SizedBox(
+                                        height: MWidth * 0.1,
+                                        width: MWidth * 0.1,
+                                        child:
+                                            const CupertinoActivityIndicator()),
+                                    imageUrl: head[i].Image,
                                   ),
                                 ),
                               ),
@@ -312,7 +311,7 @@ class cardList extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
                 // color: Colors.pink,
 
                 height: MHeight * 0.17,
@@ -322,7 +321,7 @@ class cardList extends StatelessWidget {
                   child: CachedNetworkImage(
                     fadeInDuration: const Duration(microseconds: 0),
                     fadeOutDuration: const Duration(microseconds: 0),
-                    placeholder: (context, url) => Container(
+                    placeholder: (context, url) => SizedBox(
                         height: MHeight * 0.02,
                         child: const CupertinoActivityIndicator()),
                     imageUrl: sch.Image,

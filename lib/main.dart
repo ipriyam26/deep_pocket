@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
           internShips.route: (ctx) => internShips(),
           internPage.route: (ctx) => internPage(),
           TableEventsExample.route: (ctx) => TableEventsExample(),
-          eventTabs.route: (ctx) => eventTabs(),
+          eventTabs.route: (ctx) => const eventTabs(),
           eventScreen.route: (ctx) => eventScreen(),
           noticeBoard.route: (ctx) => const noticeBoard(),
           noticeScreen.route: (ctx) => noticeScreen(),

@@ -1,14 +1,14 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, camel_case_types, non_constant_identifier_names, unused_local_variable
 
 import 'package:deep_pocket_1/models/course_read.dart';
 import 'package:deep_pocket_1/screens/freecourse/freecourse_widgets.dart';
 import 'package:flutter/material.dart';
 
-import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 import 'freecourse_enroll.dart';
-import 'freecourse_mock.dart';
+
 
 class courseScreen extends StatelessWidget {
   const courseScreen({Key? key}) : super(key: key);
@@ -64,7 +64,7 @@ class courseScreen extends StatelessWidget {
                     ],
                   )),
                   child: SingleChildScrollView(
-                    child: Container(
+                    child: SizedBox(
                       height: MHeight,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,

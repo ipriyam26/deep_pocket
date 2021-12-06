@@ -1,7 +1,9 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_pocket_1/screens/event/mock_event.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +12,8 @@ import 'package:url_launcher/url_launcher.dart';
 class eventScreen extends StatelessWidget {
   // const eventScreen({Key? key}) : super(key: key);
   static const route = 'even_tabs/event_screen';
+
+  const eventScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +49,7 @@ class eventScreen extends StatelessWidget {
           title: Text(
             details['Title'],
           ),
-          backgroundColor: Color.fromRGBO(16, 15, 1, 1)),
+          backgroundColor: const Color.fromRGBO(16, 15, 1, 1)),
       body: Column(
         children: [
           Stack(
@@ -55,8 +59,8 @@ class eventScreen extends StatelessWidget {
                 height: MSize.height * 0.7 * 0.6,
                 fit: BoxFit.fill,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CupertinoActivityIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                    const CupertinoActivityIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
               Image.network(
                 details['Image'],
@@ -126,7 +130,7 @@ class eventScreen extends StatelessWidget {
                 builder: (BuildContext context) {
                   return Container(
                       width: MSize.width,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
                       // decoration: BoxDecoration(color: Colors.amber),
                       child: i == 0
                           ? dateHost(MSize: MSize, details: details)
@@ -243,18 +247,15 @@ class dateHost extends StatelessWidget {
                         fontWeight: FontWeight.w300)),
               )
             else
-              Container(
-                // width: double.maxFinite,
-                child: const Text('Weekday',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 17,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300)),
-              ),
+              const Text('Weekday',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300)),
             Text(
               "Applied : " + applied.toString(),
-              style: TextStyle(color: Colors.white, fontSize: 17),
+              style: const TextStyle(color: Colors.white, fontSize: 17),
             )
           ]),
           SizedBox(height: MSize.height * 0.01),
@@ -277,12 +278,12 @@ class dateHost extends StatelessWidget {
                 itemCount: details['HostImage'].length,
                 itemBuilder: (context, i) => ListTile(
                       contentPadding: EdgeInsets.zero,
-                      leading: Container(
+                      leading: SizedBox(
                         height: MSize.height * 0.055,
                         width: MSize.height * 0.055,
                         child: ClipOval(
                           child: Container(
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             color: Colors.white,
                             child: ClipOval(
                               child: CachedNetworkImage(
