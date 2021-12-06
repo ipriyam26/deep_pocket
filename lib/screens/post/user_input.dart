@@ -51,6 +51,7 @@ class _userInputState extends State<userInput> {
   void submitted() async {
     String titleCheck = titleController.text;
     String bodyCheck = bodyController.text;
+    // ignore: unused_local_variable
     int tag = Tag.indexOf(_chosenValue);
     if (titleCheck.isEmpty || bodyCheck.length < 10) {
       return;

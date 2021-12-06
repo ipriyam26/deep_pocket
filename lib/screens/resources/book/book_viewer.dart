@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, deprecated_member_use, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -6,6 +8,8 @@ class bookViewer extends StatefulWidget {
   // bookViewer({Key? key, required this.title}) : super(key: key);
 
   static const route = 'resources-tabs/book-resources/book-viewer';
+
+  const bookViewer({Key? key}) : super(key: key);
 
   // final String title;
 
@@ -16,13 +20,11 @@ class bookViewer extends StatefulWidget {
 class _bookViewerState extends State<bookViewer> {
   late PdfViewerController _pdfViewerController;
   OverlayEntry? _overlayEntry;
-  late PdfTextSearchResult _searchResult;
 
   final GlobalKey<SfPdfViewerState> _pdfViewerStateKey = GlobalKey();
   @override
   void initState() {
     _pdfViewerController = PdfViewerController();
-    _searchResult = PdfTextSearchResult();
 
     super.initState();
   }
@@ -43,7 +45,7 @@ class _bookViewerState extends State<bookViewer> {
           },
           color: Colors.white,
           elevation: 10,
-          child: Text('Copy', style: TextStyle(fontSize: 17)),
+          child: const Text('Copy', style: TextStyle(fontSize: 17)),
         ),
       ),
     );
@@ -76,7 +78,7 @@ class _bookViewerState extends State<bookViewer> {
               onPressed: () {
                 _pdfViewerStateKey.currentState!.openBookmarkView();
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.bookmark,
                 color: Colors.white,
               )),
@@ -84,7 +86,7 @@ class _bookViewerState extends State<bookViewer> {
           //     onPressed: () {
           //       _pdfViewerController.jumpToPage(5);
           //     },
-          //     icon: Icon(
+          //     icon: const Icon(
           //       Icons.arrow_drop_down_circle,
           //       color: Colors.white,
           //     )),
@@ -95,7 +97,7 @@ class _bookViewerState extends State<bookViewer> {
                       _pdfViewerController.zoomLevel - 0.25;
                 }
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.zoom_out,
                 color: Colors.white,
               )),
@@ -106,7 +108,7 @@ class _bookViewerState extends State<bookViewer> {
                       _pdfViewerController.zoomLevel + 0.25;
                 }
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.zoom_in,
                 color: Colors.white,
               ))

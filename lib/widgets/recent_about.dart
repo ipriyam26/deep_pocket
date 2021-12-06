@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, non_constant_identifier_names
+
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -10,7 +12,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 
 class RecentAbout extends StatefulWidget {
   final Map<String, dynamic> userdata;
@@ -25,7 +26,7 @@ class RecentAbout extends StatefulWidget {
 }
 
 class _RecentAboutState extends State<RecentAbout> {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   bool recent = true;
   int currentMax = 3;
@@ -52,8 +53,7 @@ class _RecentAboutState extends State<RecentAbout> {
   @override
   Widget build(BuildContext context) {
     final Mwidth = MediaQuery.of(context).size.width;
-    return Container(
-        child: Column(
+    return Column(
       children: [
         Container(
             height: MediaQuery.of(context).size.height * 0.04,
@@ -139,85 +139,77 @@ class _RecentAboutState extends State<RecentAbout> {
                       ),
                     );
                   }
-                  if (snapshot.data!.docs.length == 0) {
-                    return Container(
-                      child: Center(
-                          child: Column(
-                        children: [
-                          CachedNetworkImage(
-                            fadeInDuration: const Duration(microseconds: 0),
-                            fadeOutDuration: const Duration(microseconds: 0),
-                            placeholder: (context, url) =>
-                                const CupertinoActivityIndicator(),
-                            imageUrl:
-                                "https://media.giphy.com/media/l3q2SlRG7lKR3BCVO/giphy.gif",
-                            fit: BoxFit.fitWidth,
-                            height: Mwidth * 0.8,
-                          ),
-                          const Text(
-                            "Post Something To See",
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      )
-                          // child: Image.network(
-                          //   "https://media.giphy.com/media/l3q2SlRG7lKR3BCVO/giphy.gif",
-                          //   // height: Mwidth * 0.6,
-                          // ),
-                          ),
-                    );
+                  if (snapshot.data!.docs.isEmpty) {
+                    return Center(
+                        child: Column(
+                      children: [
+                        CachedNetworkImage(
+                          fadeInDuration: const Duration(microseconds: 0),
+                          fadeOutDuration: const Duration(microseconds: 0),
+                          placeholder: (context, url) =>
+                              const CupertinoActivityIndicator(),
+                          imageUrl:
+                              "https://media.giphy.com/media/l3q2SlRG7lKR3BCVO/giphy.gif",
+                          fit: BoxFit.fitWidth,
+                          height: Mwidth * 0.8,
+                        ),
+                        const Text(
+                          "Post Something To See",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    )
+                        // child: Image.network(
+                        //   "https://media.giphy.com/media/l3q2SlRG7lKR3BCVO/giphy.gif",
+                        //   // height: Mwidth * 0.6,
+                        // ),
+                        );
                   }
-                  return Container(
-                    // height: MediaQuery.of(context).size.height,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      controller: _scrollController,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) => Center(
-                        child: InkWell(
-                          splashColor: Colors.black,
-                          onTap: () {
-                            Navigator.pushNamed(context, postPage.route,
-                                arguments: {
-                                  'documentid': snapshot.data!.docs[index].id,
-                                  'user': widget.userdata,
-                                });
-                          },
-                          child: postCard(
-                            points:
-                                snapshot.data!.docs[index].data()['Points '] ??
-                                    0,
-                            Anonymous: snapshot.data!.docs[index]
-                                    .data()['Anonymous'] ??
-                                false,
-                            AuthorUID:
-                                snapshot.data!.docs[index].data()['AuthorUID'],
-                            MHeight: MediaQuery.of(context).size.height,
-                            MWidth: MediaQuery.of(context).size.width,
-                            imagesList:
-                                snapshot.data!.docs[index].data()['ImageLinks'],
-                            name:
-                                snapshot.data!.docs[index].data()['AuthorName'],
-                            AuthorImage: snapshot.data!.docs[index]
-                                .data()['AuthorProfilePic'],
-                            title: snapshot.data!.docs[index].data()['Title'],
-                            body: snapshot.data!.docs[index].data()['Body'],
-                            time: DateTime.parse(snapshot.data!.docs[index]
-                                .data()['Time']
-                                .toDate()
-                                .toString()),
-                            likes: snapshot.data!.docs[index].data()['Likes'],
-                            comments:
-                                snapshot.data!.docs[index].data()['Comments'],
-                            date: snapshot.data!.docs[index].data()['Date'],
-                            tag: snapshot.data!.docs[index].data()['Tag'],
-                            id: snapshot.data!.docs[index].id,
-                            LikedBy:
-                                snapshot.data!.docs[index].data()['LikedBy'],
-                            NotinFeed: false,
-                          ),
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    controller: _scrollController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) => Center(
+                      child: InkWell(
+                        splashColor: Colors.black,
+                        onTap: () {
+                          Navigator.pushNamed(context, postPage.route,
+                              arguments: {
+                                'documentid': snapshot.data!.docs[index].id,
+                                'user': widget.userdata,
+                              });
+                        },
+                        child: postCard(
+                          points:
+                              snapshot.data!.docs[index].data()['Points '] ?? 0,
+                          Anonymous:
+                              snapshot.data!.docs[index].data()['Anonymous'] ??
+                                  false,
+                          AuthorUID:
+                              snapshot.data!.docs[index].data()['AuthorUID'],
+                          MHeight: MediaQuery.of(context).size.height,
+                          MWidth: MediaQuery.of(context).size.width,
+                          imagesList:
+                              snapshot.data!.docs[index].data()['ImageLinks'],
+                          name: snapshot.data!.docs[index].data()['AuthorName'],
+                          AuthorImage: snapshot.data!.docs[index]
+                              .data()['AuthorProfilePic'],
+                          title: snapshot.data!.docs[index].data()['Title'],
+                          body: snapshot.data!.docs[index].data()['Body'],
+                          time: DateTime.parse(snapshot.data!.docs[index]
+                              .data()['Time']
+                              .toDate()
+                              .toString()),
+                          likes: snapshot.data!.docs[index].data()['Likes'],
+                          comments:
+                              snapshot.data!.docs[index].data()['Comments'],
+                          date: snapshot.data!.docs[index].data()['Date'],
+                          tag: snapshot.data!.docs[index].data()['Tag'],
+                          id: snapshot.data!.docs[index].id,
+                          LikedBy: snapshot.data!.docs[index].data()['LikedBy'],
+                          NotinFeed: false,
                         ),
                       ),
                     ),
@@ -225,7 +217,7 @@ class _RecentAboutState extends State<RecentAbout> {
                 })
             : Credentials(userdata: widget.userdata, editing: _editing)
       ],
-    ));
+    );
   }
 }
 
@@ -249,7 +241,7 @@ class Credentials extends StatelessWidget {
         child: ListView(
           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           // crossAxisAlignment: CrossAxisAlignment.start,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           children: [
             ListGrid(
@@ -293,7 +285,7 @@ class ListGrid extends StatelessWidget {
           builder: (BuildContext ctx) {
             final nameController = TextEditingController();
             return Dialog(
-              child: Container(
+              child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.27,
                   width: MediaQuery.of(context).size.width * 0.7,
                   child: Column(
@@ -333,7 +325,7 @@ class ListGrid extends StatelessWidget {
                               });
                               Navigator.pop(ctx);
                             },
-                            child: Text("ADD"))
+                            child: const Text("ADD"))
                       ])),
             );
           });
@@ -352,7 +344,7 @@ class ListGrid extends StatelessWidget {
       children: [
         Text(
           title + "s",
-          style: TextStyle(
+          style: const TextStyle(
               color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
         ),
         SizedBox(
@@ -360,125 +352,117 @@ class ListGrid extends StatelessWidget {
         ),
         // if (list.length > 0)
         editing
-            ? Container(
-                child: GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: list.length + 1,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 10 / 9,
-                            crossAxisSpacing: 5,
-                            crossAxisCount: 4),
-                    itemBuilder: (context, index) => index == list.length
-                        ? IconButton(
-                            onPressed: () {
-                              _pickImage(context);
-                            },
-                            icon: const Icon(
-                              Icons.add,
-                              color: Color.fromRGBO(40, 40, 43, 1),
-                              size: 50,
-                            ))
-                        : Stack(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: Container(
-                                  color: const Color.fromRGBO(40, 40, 43, 1),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      CachedNetworkImage(
-                                        fadeInDuration:
-                                            const Duration(microseconds: 0),
-                                        fadeOutDuration:
-                                            const Duration(microseconds: 2),
-                                        placeholder: (context, url) =>
-                                            const CupertinoActivityIndicator(),
-                                        imageUrl: list[index],
-                                        fit: BoxFit.cover,
-                                        height: Mheight * 0.07,
-                                      ),
-                                      Text(
-                                        listText[index]
-                                            .toString()
-                                            .split(" ")[0]
-                                            .toUpperCase(),
-                                        style: const TextStyle(
-                                            fontSize: 15, color: Colors.white),
-                                      )
-                                    ],
+            ? GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: list.length + 1,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 10 / 9,
+                    crossAxisSpacing: 5,
+                    crossAxisCount: 4),
+                itemBuilder: (context, index) => index == list.length
+                    ? IconButton(
+                        onPressed: () {
+                          _pickImage(context);
+                        },
+                        icon: const Icon(
+                          Icons.add,
+                          color: Color.fromRGBO(40, 40, 43, 1),
+                          size: 50,
+                        ))
+                    : Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: Container(
+                              color: const Color.fromRGBO(40, 40, 43, 1),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CachedNetworkImage(
+                                    fadeInDuration:
+                                        const Duration(microseconds: 0),
+                                    fadeOutDuration:
+                                        const Duration(microseconds: 2),
+                                    placeholder: (context, url) =>
+                                        const CupertinoActivityIndicator(),
+                                    imageUrl: list[index],
+                                    fit: BoxFit.cover,
+                                    height: Mheight * 0.07,
                                   ),
-                                ),
+                                  Text(
+                                    listText[index]
+                                        .toString()
+                                        .split(" ")[0]
+                                        .toUpperCase(),
+                                    style: const TextStyle(
+                                        fontSize: 15, color: Colors.white),
+                                  )
+                                ],
                               ),
-                              Positioned(
-                                top: -Mheight * 0.02,
-                                left: Mwidth * 0.14,
-                                child: IconButton(
-                                    onPressed: () async {
-                                      list.removeAt(index);
-                                      listText.removeAt(index);
-                                      // print(listText);
-                                      await FirebaseFirestore.instance
-                                          .collection("users")
-                                          .doc(userdata['uid'])
-                                          .update({
-                                        title: list,
-                                        title + "text": listText
-                                      });
-                                    },
-                                    icon: const Icon(
-                                      Icons.cancel,
-                                      color: Colors.white,
-                                      size: 30,
-                                    )),
-                              )
-                            ],
-                          )),
-              )
-            : Container(
-                child: GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: list.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 10 / 9,
-                            crossAxisSpacing: 5,
-                            crossAxisCount: 4),
-                    itemBuilder: (context, index) => ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Container(
-                            color: Color.fromRGBO(40, 40, 43, 1),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CachedNetworkImage(
-                                  fadeInDuration:
-                                      const Duration(microseconds: 0),
-                                  fadeOutDuration:
-                                      const Duration(microseconds: 2),
-                                  placeholder: (context, url) =>
-                                      const CupertinoActivityIndicator(),
-                                  imageUrl: list[index],
-                                  fit: BoxFit.cover,
-                                  height: Mheight * 0.07,
-                                ),
-                                Text(
-                                  listText[index]
-                                      .toString()
-                                      .split(" ")[0]
-                                      .toUpperCase(),
-                                  style: const TextStyle(
-                                      fontSize: 15, color: Colors.white),
-                                )
-                              ],
                             ),
                           ),
-                        )),
-              )
+                          Positioned(
+                            top: -Mheight * 0.02,
+                            left: Mwidth * 0.14,
+                            child: IconButton(
+                                onPressed: () async {
+                                  list.removeAt(index);
+                                  listText.removeAt(index);
+                                  // print(listText);
+                                  await FirebaseFirestore.instance
+                                      .collection("users")
+                                      .doc(userdata['uid'])
+                                      .update({
+                                    title: list,
+                                    title + "text": listText
+                                  });
+                                },
+                                icon: const Icon(
+                                  Icons.cancel,
+                                  color: Colors.white,
+                                  size: 30,
+                                )),
+                          )
+                        ],
+                      ))
+            : GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: list.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 10 / 9,
+                    crossAxisSpacing: 5,
+                    crossAxisCount: 4),
+                itemBuilder: (context, index) => ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Container(
+                        color: const Color.fromRGBO(40, 40, 43, 1),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CachedNetworkImage(
+                              fadeInDuration: const Duration(microseconds: 0),
+                              fadeOutDuration: const Duration(microseconds: 2),
+                              placeholder: (context, url) =>
+                                  const CupertinoActivityIndicator(),
+                              imageUrl: list[index],
+                              fit: BoxFit.cover,
+                              height: Mheight * 0.07,
+                            ),
+                            Text(
+                              listText[index]
+                                  .toString()
+                                  .split(" ")[0]
+                                  .toUpperCase(),
+                              style: const TextStyle(
+                                  fontSize: 15, color: Colors.white),
+                            )
+                          ],
+                        ),
+                      ),
+                    ))
       ],
     );
   }

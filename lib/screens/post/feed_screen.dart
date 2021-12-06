@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, camel_case_types, avoid_print, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/data_feed.dart';
@@ -9,7 +9,6 @@ import 'package:deep_pocket_1/screens/menu-pages/menu.dart';
 
 import 'package:deep_pocket_1/screens/post/new_post_page.dart';
 import 'package:deep_pocket_1/screens/post/special_post.dart';
-import 'package:deep_pocket_1/screens/post/user_input.dart';
 import 'package:deep_pocket_1/screens/profile/search_user.dart';
 
 import 'package:deep_pocket_1/widgets/post_widget.dart';
@@ -17,7 +16,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,7 +30,7 @@ class _feedScreenState extends State<feedScreen> {
   int filter = 0;
 
   late SharedPreferences localStorage;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   void updateFilter(tx, context) {
     setState(() {
       filter = tx;
@@ -59,7 +57,7 @@ class _feedScreenState extends State<feedScreen> {
                           },
                           child: Text(
                             Tag[i].toUpperCase(),
-                            style: TextStyle(color: Colors.pink),
+                            style: const TextStyle(color: Colors.pink),
                           ),
                         )),
               )),
@@ -118,7 +116,7 @@ class _feedScreenState extends State<feedScreen> {
                 onPressed: () {
                   Navigator.pushNamed(context, SearchUser.route);
                 },
-                icon: Icon(Icons.search)),
+                icon: const Icon(Icons.search)),
             TextButton(
                 onPressed: () async {
                   SharedPreferences prefs =
@@ -198,41 +196,38 @@ class _feedScreenState extends State<feedScreen> {
                                                   'user': loggedInuser,
                                                 });
                                           },
-                                          child: Container(
-                                              child: nearbyPost(
-                                                  nearbyID: snapshot
-                                                      .data!.docs[index]
-                                                      .data()['NearbyID'],
-                                                  points: snapshot
-                                                          .data!.docs[index]
-                                                          .data()['Points '] ??
-                                                      0,
-                                                  AuthorUID: snapshot
-                                                      .data!.docs[index]
-                                                      .data()['AuthorUID'],
-                                                  DislikedBy: snapshot
-                                                      .data!.docs[index]
-                                                      .data()['DislikedBy'],
-                                                  MHeight: MHeight,
-                                                  Anonymous: snapshot
-                                                          .data!.docs[index]
-                                                          .data()['Anonymous'] ??
-                                                      false,
-                                                  NotinFeed: false,
-                                                  MWidth: MWidth,
-                                                  imagesList: snapshot.data!.docs[index].data()['ImageLinks'],
-                                                  id: snapshot.data!.docs[index].id,
-                                                  LikedBy: snapshot.data!.docs[index].data()['LikedBy'],
-                                                  name: snapshot.data!.docs[index].data()['AuthorName'],
-                                                  AuthorImage: snapshot.data!.docs[index].data()['AuthorProfilePic'],
-                                                  SpecialID: snapshot.data!.docs[index].data()['SpecialID'],
-                                                  title: snapshot.data!.docs[index].data()['Title'],
-                                                  body: snapshot.data!.docs[index].data()['Body'],
-                                                  time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
-                                                  likes: snapshot.data!.docs[index].data()['Likes'],
-                                                  comments: snapshot.data!.docs[index].data()['Comments'],
-                                                  date: snapshot.data!.docs[index].data()['Date'],
-                                                  tag: snapshot.data!.docs[index].data()['Tag'])),
+                                          child: nearbyPost(
+                                              nearbyID: snapshot.data!.docs[index]
+                                                  .data()['NearbyID'],
+                                              points: snapshot.data!.docs[index]
+                                                      .data()['Points '] ??
+                                                  0,
+                                              AuthorUID: snapshot.data!.docs[index]
+                                                  .data()['AuthorUID'],
+                                              DislikedBy: snapshot
+                                                  .data!.docs[index]
+                                                  .data()['DislikedBy'],
+                                              MHeight: MHeight,
+                                              Anonymous: snapshot.data!.docs[index]
+                                                      .data()['Anonymous'] ??
+                                                  false,
+                                              NotinFeed: false,
+                                              MWidth: MWidth,
+                                              imagesList: snapshot
+                                                  .data!.docs[index]
+                                                  .data()['ImageLinks'],
+                                              id: snapshot.data!.docs[index].id,
+                                              LikedBy: snapshot.data!.docs[index].data()['LikedBy'],
+                                              name: snapshot.data!.docs[index].data()['AuthorName'],
+                                              AuthorImage: snapshot.data!.docs[index].data()['AuthorProfilePic'],
+                                              SpecialID: snapshot.data!.docs[index].data()['SpecialID'],
+                                              title: snapshot.data!.docs[index].data()['Title'],
+                                              body: snapshot.data!.docs[index].data()['Body'],
+                                              time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
+                                              likes: snapshot.data!.docs[index].data()['Likes'],
+                                              comments: snapshot.data!.docs[index].data()['Comments'],
+                                              date: snapshot.data!.docs[index].data()['Date'],
+                                              tag: snapshot.data!.docs[index].data()['Tag']),
                                         ),
                                       )
                                     : Center(
@@ -247,35 +242,34 @@ class _feedScreenState extends State<feedScreen> {
                                                   'user': loggedInuser,
                                                 });
                                           },
-                                          child: Container(
-                                              child: postCard(
-                                                  points: snapshot.data!.docs[index]
-                                                          .data()['Points '] ??
-                                                      0,
-                                                  AuthorUID: snapshot.data!.docs[index]
-                                                      .data()['AuthorUID'],
-                                                  MHeight: MHeight,
-                                                  Anonymous: snapshot.data!.docs[index].data()['Anonymous'] ??
-                                                      false,
-                                                  NotinFeed: false,
-                                                  MWidth: MWidth,
-                                                  imagesList: snapshot
-                                                      .data!.docs[index]
-                                                      .data()['ImageLinks'],
-                                                  id: snapshot
-                                                      .data!.docs[index].id,
-                                                  LikedBy: snapshot.data!.docs[index]
-                                                      .data()['LikedBy'],
-                                                  name: snapshot.data!.docs[index]
-                                                      .data()['AuthorName'],
-                                                  AuthorImage: snapshot.data!.docs[index].data()['AuthorProfilePic'],
-                                                  title: snapshot.data!.docs[index].data()['Title'],
-                                                  body: snapshot.data!.docs[index].data()['Body'],
-                                                  time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
-                                                  likes: snapshot.data!.docs[index].data()['Likes'],
-                                                  comments: snapshot.data!.docs[index].data()['Comments'],
-                                                  date: snapshot.data!.docs[index].data()['Date'],
-                                                  tag: snapshot.data!.docs[index].data()['Tag'])),
+                                          child: postCard(
+                                              points: snapshot.data!.docs[index].data()['Points '] ??
+                                                  0,
+                                              AuthorUID: snapshot.data!.docs[index]
+                                                  .data()['AuthorUID'],
+                                              MHeight: MHeight,
+                                              Anonymous: snapshot.data!.docs[index]
+                                                      .data()['Anonymous'] ??
+                                                  false,
+                                              NotinFeed: false,
+                                              MWidth: MWidth,
+                                              imagesList: snapshot.data!.docs[index]
+                                                  .data()['ImageLinks'],
+                                              id: snapshot.data!.docs[index].id,
+                                              LikedBy: snapshot.data!.docs[index]
+                                                  .data()['LikedBy'],
+                                              name: snapshot.data!.docs[index]
+                                                  .data()['AuthorName'],
+                                              AuthorImage: snapshot
+                                                  .data!.docs[index]
+                                                  .data()['AuthorProfilePic'],
+                                              title: snapshot.data!.docs[index].data()['Title'],
+                                              body: snapshot.data!.docs[index].data()['Body'],
+                                              time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
+                                              likes: snapshot.data!.docs[index].data()['Likes'],
+                                              comments: snapshot.data!.docs[index].data()['Comments'],
+                                              date: snapshot.data!.docs[index].data()['Date'],
+                                              tag: snapshot.data!.docs[index].data()['Tag']),
                                         ),
                                       )
                                 : Center(
@@ -290,37 +284,35 @@ class _feedScreenState extends State<feedScreen> {
                                               'user': loggedInuser,
                                             });
                                       },
-                                      child: Container(
-                                          child: internshipPost(
-                                              SpecialID: snapshot.data!.docs[index]
-                                                  .data()['SpecialID'],
-                                              points: snapshot.data!.docs[index]
-                                                      .data()['Points '] ??
-                                                  0,
-                                              AuthorUID: snapshot.data!.docs[index]
-                                                  .data()['AuthorUID'],
-                                              MHeight: MHeight,
-                                              Anonymous: snapshot
-                                                      .data!.docs[index]
-                                                      .data()['Anonymous'] ??
-                                                  false,
-                                              NotinFeed: false,
-                                              MWidth: MWidth,
-                                              imagesList: snapshot
-                                                  .data!.docs[index]
-                                                  .data()['ImageLinks'],
-                                              id: snapshot.data!.docs[index].id,
-                                              LikedBy: snapshot.data!.docs[index]
-                                                  .data()['LikedBy'],
-                                              name: snapshot.data!.docs[index].data()['AuthorName'],
-                                              AuthorImage: snapshot.data!.docs[index].data()['AuthorProfilePic'],
-                                              title: snapshot.data!.docs[index].data()['Title'],
-                                              body: snapshot.data!.docs[index].data()['Body'],
-                                              time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
-                                              likes: snapshot.data!.docs[index].data()['Likes'],
-                                              comments: snapshot.data!.docs[index].data()['Comments'],
-                                              date: snapshot.data!.docs[index].data()['Date'],
-                                              tag: snapshot.data!.docs[index].data()['Tag'])),
+                                      child: internshipPost(
+                                          SpecialID: snapshot.data!.docs[index]
+                                              .data()['SpecialID'],
+                                          points: snapshot.data!.docs[index].data()['Points '] ??
+                                              0,
+                                          AuthorUID: snapshot.data!.docs[index]
+                                              .data()['AuthorUID'],
+                                          MHeight: MHeight,
+                                          Anonymous: snapshot.data!.docs[index]
+                                                  .data()['Anonymous'] ??
+                                              false,
+                                          NotinFeed: false,
+                                          MWidth: MWidth,
+                                          imagesList: snapshot.data!.docs[index]
+                                              .data()['ImageLinks'],
+                                          id: snapshot.data!.docs[index].id,
+                                          LikedBy: snapshot.data!.docs[index]
+                                              .data()['LikedBy'],
+                                          name: snapshot.data!.docs[index]
+                                              .data()['AuthorName'],
+                                          AuthorImage: snapshot.data!.docs[index]
+                                              .data()['AuthorProfilePic'],
+                                          title: snapshot.data!.docs[index].data()['Title'],
+                                          body: snapshot.data!.docs[index].data()['Body'],
+                                          time: DateTime.parse(snapshot.data!.docs[index].data()['Time'].toDate().toString()),
+                                          likes: snapshot.data!.docs[index].data()['Likes'],
+                                          comments: snapshot.data!.docs[index].data()['Comments'],
+                                          date: snapshot.data!.docs[index].data()['Date'],
+                                          tag: snapshot.data!.docs[index].data()['Tag']),
                                     ),
                                   )),
                   ],

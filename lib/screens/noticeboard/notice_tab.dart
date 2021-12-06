@@ -1,21 +1,20 @@
 import 'package:deep_pocket_1/screens/noticeboard/notiboard_home.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notice_saved.dart';
-import 'package:deep_pocket_1/screens/resources/video_resources.dart';
 import 'package:flutter/material.dart';
 
 class NoticeTab extends StatefulWidget {
   static const route = '/noticeboard_tab';
+
+  const NoticeTab({Key? key}) : super(key: key);
   @override
   _NoticeTabState createState() => _NoticeTabState();
 }
 
 class _NoticeTabState extends State<NoticeTab> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
-    noticeBoard(),
-    noticeSaved(),
+    const noticeBoard(),
+    const noticeSaved(),
   ];
 
   void _onItemTapped(int index) {

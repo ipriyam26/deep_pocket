@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notice_screen.dart';
@@ -5,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'notice_model.dart';
 
 class noticeCard extends StatelessWidget {
   const noticeCard({
@@ -55,7 +56,7 @@ class noticeCard extends StatelessWidget {
                   SizedBox(
                     height: MSize.height * 0.01,
                   ),
-                  Container(
+                  SizedBox(
                     // color: Colors.amber,
                     width: MSize.width * 0.7,
                     child: AutoSizeText(

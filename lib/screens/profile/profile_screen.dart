@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, avoid_unnecessary_containers, use_key_in_widget_constructors, non_constant_identifier_names
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +15,8 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import '../../models/user_model.dart';
 
 class profileScreen extends StatefulWidget {
+  const profileScreen({Key? key}) : super(key: key);
+
   @override
   State<profileScreen> createState() => _profileScreenState();
 }
@@ -59,85 +63,84 @@ class _profileScreenState extends State<profileScreen> {
                       }
 
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                            child: Container(
+                        return const Center(
+                            child: SizedBox(
                           height: 50,
                           width: 50,
-                          child: const CupertinoActivityIndicator(),
+                          child: CupertinoActivityIndicator(),
                         ));
                       }
                       if (!snapshot.hasData) {
-                        return Center(
-                            child: Container(
+                        return const Center(
+                            child: SizedBox(
                           height: 50,
                           width: 50,
-                          child: const CupertinoActivityIndicator(),
+                          child: CupertinoActivityIndicator(),
                         ));
                       }
 
                       var userdata = snapshot.data!.data();
                       return SingleChildScrollView(
-                        child: Container(
-                            child: Column(
+                        child: Column(
                           children: [
-                            Container(
-                              padding: EdgeInsets.all(
-                                  MediaQuery.of(context).size.height * 0.01),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black)),
-                              height: MediaQuery.of(context).size.height * 0.33,
-                              child: Column(
+                        Container(
+                          padding: EdgeInsets.all(
+                              MediaQuery.of(context).size.height * 0.01),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black)),
+                          height: MediaQuery.of(context).size.height * 0.33,
+                          child: Column(
+                            children: [
+                              userImageName(
+                                name: userdata!['Name'] ?? "Add Name",
+                                Image: userdata['Image'] ??
+                                    "https://imgur.com/a/8eGSOON",
+                                enrollmentNo: userdata["enrollmentNo"] ??
+                                    "Add Enrollment",
+                                college: userdata['CollegeName'] ??
+                                    "Add College",
+                                points: userdata['Points'] ?? 0,
+                              ),
+                              Row(
+                                // mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  userImageName(
-                                    name: userdata!['Name'] ?? "Add Name",
-                                    Image: userdata['Image'] ??
-                                        "https://imgur.com/a/8eGSOON",
-                                    enrollmentNo: userdata["enrollmentNo"] ??
-                                        "Add Enrollment",
-                                    college: userdata['CollegeName'] ??
-                                        "Add College",
-                                    points: userdata['Points'] ?? 0,
-                                  ),
-                                  Row(
-                                    // mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.055),
-                                        child: Row(
-                                          children: [
-                                            const Text(
-                                              "Points : ",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Chip(
-                                              backgroundColor: Colors.pink,
-                                              label: Text(
-                                                userdata['Points'].toString(),
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        left: MediaQuery.of(context)
+                                                .size
+                                                .width *
+                                            0.055),
+                                    child: Row(
+                                      children: [
+                                        const Text(
+                                          "Points : ",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                      ),
-                                    ],
+                                        Chip(
+                                          backgroundColor: Colors.pink,
+                                          label: Text(
+                                            userdata['Points'].toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  editprofile(),
                                 ],
                               ),
-                            ),
-                            RecentAbout(userdata: userdata),
+                              const editprofile(),
+                            ],
+                          ),
+                        ),
+                        RecentAbout(userdata: userdata),
                           ],
-                        )),
+                        ),
                       );
                     }),
               ),
@@ -148,6 +151,8 @@ class _profileScreenState extends State<profileScreen> {
 }
 
 class editprofile extends StatelessWidget {
+  const editprofile({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -174,14 +179,14 @@ class editprofile extends StatelessWidget {
             ),
           ),
         ),
-        IconButton(onPressed: () {}, icon: Icon(Icons.share))
+        IconButton(onPressed: () {}, icon: const Icon(Icons.share))
       ],
     ));
   }
 }
 
 class userImageName extends StatelessWidget {
-  userImageName({
+  const userImageName({
     required this.name,
     required this.Image,
     required this.college,
@@ -211,8 +216,8 @@ class userImageName extends StatelessWidget {
                 width: MediaQuery.of(context).size.height * 0.14,
                 height: MediaQuery.of(context).size.height * 0.14,
                 child: CachedNetworkImage(
-                  placeholder: (context, url) => Container(
-                      height: 50, child: const CircularProgressIndicator()),
+                  placeholder: (context, url) => const SizedBox(
+                      height: 50, child: CircularProgressIndicator()),
                   imageUrl: Image,
                   fit: BoxFit.cover,
                 ),

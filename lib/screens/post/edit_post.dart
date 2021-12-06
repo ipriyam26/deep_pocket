@@ -1,20 +1,24 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names, prefer_final_fields, unused_field, avoid_print, unused_local_variable
+
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/api_integration_imgur.dart';
-import 'package:deep_pocket_1/models/image_upload.dart';
+
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
+
 
 class editPost extends StatefulWidget {
   static const route = '/edit-post';
+
+  const editPost({Key? key}) : super(key: key);
 
   @override
   _editPostState createState() => _editPostState();
@@ -49,7 +53,6 @@ class _editPostState extends State<editPost> {
   void submitted(String id) async {
     String titleCheck = titleController.text;
     String bodyCheck = bodyController.text;
-    int tag = Tag.indexOf(_chosenValue);
     if (titleCheck.isEmpty || bodyCheck.length < 10) {
       return;
     }
@@ -103,7 +106,7 @@ class _editPostState extends State<editPost> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+
     titleController.dispose();
     bodyController.dispose();
     super.dispose();
@@ -113,19 +116,19 @@ class _editPostState extends State<editPost> {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return Container(
+          return SizedBox(
             height: MediaQuery.of(context).size.height * 0.15,
             child: Column(
               children: [
                 // IconButton(onPressed: _pickImage, icon: icon)
                 TextButton.icon(
                     onPressed: _pickImage,
-                    icon: Icon(Icons.image),
-                    label: Text("Open Gallery")),
+                    icon: const Icon(Icons.image),
+                    label: const Text("Open Gallery")),
                 TextButton.icon(
                     onPressed: _pickImageCamera,
-                    icon: Icon(Icons.camera),
-                    label: Text("Take A Picture")),
+                    icon: const Icon(Icons.camera),
+                    label: const Text("Take A Picture")),
               ],
             ),
           );
@@ -149,17 +152,17 @@ class _editPostState extends State<editPost> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff171717),
+        backgroundColor: const Color(0xff171717),
         title: const Text('Edit Your Question'),
         actions: [
           IconButton(
               onPressed: () {
                 submitted(PostId);
               },
-              icon: Icon(Icons.send))
+              icon: const Icon(Icons.send))
         ],
       ),
-      backgroundColor: const Color(0xff080808),
+      backgroundColor: const  Color(0xff080808),
       body: Stack(
         children: [
           StreamBuilder(
@@ -172,7 +175,7 @@ class _editPostState extends State<editPost> {
                   AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
                       snapshot) {
                 if (!snapshot.hasData) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
                 var userdata = snapshot.data!.data();
 
@@ -183,7 +186,7 @@ class _editPostState extends State<editPost> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         height: Mheight * 0.10,
                         // color: Colors.amber,
                         child: Row(
@@ -208,7 +211,7 @@ class _editPostState extends State<editPost> {
                             SizedBox(
                               width: MWidth * 0.05,
                             ),
-                            Container(
+                            SizedBox(
                               // color: Colors.amber,
                               width: MWidth * 0.65,
                               child: Column(
@@ -248,12 +251,10 @@ class _editPostState extends State<editPost> {
                                                 (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
-                                            child: Container(
-                                              child: Text(
-                                                value,
-                                                style: const TextStyle(
-                                                    color: Colors.orange),
-                                              ),
+                                            child: Text(
+                                              value,
+                                              style: const TextStyle(
+                                                  color: Colors.orange),
                                             ),
                                           );
                                         }).toList(),
@@ -274,7 +275,7 @@ class _editPostState extends State<editPost> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             height: Mheight * 0.08,
                             child: TextFormField(
                               maxLines: null,
@@ -285,7 +286,7 @@ class _editPostState extends State<editPost> {
                               maxLength: 80,
                               autocorrect: false,
                               scrollPadding:
-                                  EdgeInsets.symmetric(horizontal: 20),
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               // onChanged: (value){
                               //   titleController = value;
 
@@ -317,7 +318,7 @@ class _editPostState extends State<editPost> {
                               ),
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             height: Mheight * 0.14,
                             child: TextFormField(
                               maxLength: 500,
@@ -350,7 +351,7 @@ class _editPostState extends State<editPost> {
                         ],
                       ),
                       image.isNotEmpty
-                          ? Container(
+                          ? SizedBox(
                               height: Mheight * 0.28,
                               child: CarouselSlider(
                                 options: CarouselOptions(
@@ -384,7 +385,7 @@ class _editPostState extends State<editPost> {
                                                       image.remove(item);
                                                     });
                                                   },
-                                                  icon: const Icon(
+                                                  icon:  const Icon(
                                                     Icons.close,
                                                     color: Colors.white,
                                                     size: 40,
@@ -400,7 +401,7 @@ class _editPostState extends State<editPost> {
                           : InkWell(
                               onTap: uploadImage,
                               splashColor: Colors.white,
-                              child: Icon(
+                              child:  Icon(
                                 Icons.add_a_photo,
                                 size: Mheight * 0.18,
                                 color: Colors.white,
@@ -413,7 +414,7 @@ class _editPostState extends State<editPost> {
                           child: InkWell(
                             onTap: uploadImage,
                             splashColor: Colors.white,
-                            child: const Icon(
+                            child:  const Icon(
                               Icons.add_a_photo,
                               // Icons.add_a_photo,
                               size: 30,
@@ -421,6 +422,7 @@ class _editPostState extends State<editPost> {
                             ),
                           ),
                         ),
+                      // ignore: prefer_is_empty
                       if (image.length == 0)
                         SizedBox(
                           height: Mheight * 0.135,
@@ -428,13 +430,13 @@ class _editPostState extends State<editPost> {
                       SizedBox(
                         height: Mheight * 0.03,
                       ),
-                      Container(
+                      SizedBox(
                         height: 100,
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: UploadedImage.length,
                             itemBuilder: (context, index) => Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 10),
+                                  margin: const EdgeInsets.symmetric(horizontal: 10),
                                   height: 100,
                                   width: 90,
                                   child: Stack(
@@ -456,7 +458,7 @@ class _editPostState extends State<editPost> {
                                               UploadedImage.removeAt(index);
                                             });
                                           },
-                                          icon: const Icon(
+                                          icon:  const Icon(
                                             Icons.cancel,
                                             color: Colors.white,
                                             size: 32,
@@ -473,7 +475,7 @@ class _editPostState extends State<editPost> {
             Container(
               color: Colors.black.withOpacity(0.7),
               child: Center(
-                child: Container(
+                child: SizedBox(
                   height: Mheight * 0.1,
                   width: Mheight * 0.1,
                   child: const CircularProgressIndicator(

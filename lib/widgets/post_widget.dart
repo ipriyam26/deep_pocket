@@ -1,11 +1,10 @@
-import 'dart:math';
+// ignore_for_file: camel_case_types, must_be_immutable, non_constant_identifier_names, unused_local_variable
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/admin.dart';
-import 'package:deep_pocket_1/models/data_feed.dart';
 import 'package:deep_pocket_1/screens/post/edit_post.dart';
 import 'package:deep_pocket_1/screens/profile/search_profile_screen.dart';
 import 'package:deep_pocket_1/widgets/fullscreen_image.dart';
@@ -14,7 +13,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:intl/intl.dart';
-import 'package:pinch_zoom/pinch_zoom.dart';
 
 import 'package:readmore/readmore.dart';
 
@@ -154,25 +152,22 @@ class _postCardState extends State<postCard> {
                             fontSize: 17,
                           ),
                         ),
-                        Container(
-                          // height:DeviceSize.height(context),
-                          child: ReadMoreText(
-                            widget.body.toString(),
-                            trimLines: 2,
-                            colorClickableText: Colors.pink,
-                            trimMode: TrimMode.Line,
-                            trimCollapsedText: '..Read More',
-                            style: const TextStyle(
-                              fontSize: 13,
-                              color: Colors.white,
-                            ),
-                            trimExpandedText: ' Less',
+                        ReadMoreText(
+                          widget.body.toString(),
+                          trimLines: 2,
+                          colorClickableText: Colors.pink,
+                          trimMode: TrimMode.Line,
+                          trimCollapsedText: '..Read More',
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.white,
                           ),
+                          trimExpandedText: ' Less',
                         ),
                       ],
                     ),
                   ),
-                  if (widget.imagesList.length > 0)
+                  if (widget.imagesList.isNotEmpty)
                     Container(
                       height: widget.MHeight * 0.33,
                       padding: EdgeInsets.all(widget.MHeight * 0.002),
@@ -340,171 +335,165 @@ class firstColumn extends StatelessWidget {
     return GetBuilder(
         init: userRoleController(),
         builder: (userRoleController roleController) {
-          return Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    (Anonymous &&
-                            roleController.specialAccess!
-                                .contains(currentUserId))
-                        ? ClipOval(
-                            child: Container(
-                              height: MWidth * 0.16,
-                              width: MWidth * 0.16,
-                              color: Colors.grey,
-                              child: CachedNetworkImage(
-                                placeholder: (context, url) => Container(
-                                    child: Image.asset('assets/person.png')),
-                                imageUrl: AuthorImage.toString(),
-                                fit: BoxFit.cover,
-                              ),
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  (Anonymous &&
+                          roleController.specialAccess!.contains(currentUserId))
+                      ? ClipOval(
+                          child: Container(
+                            height: MWidth * 0.16,
+                            width: MWidth * 0.16,
+                            color: Colors.grey,
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) =>
+                                  Image.asset('assets/person.png'),
+                              imageUrl: AuthorImage.toString(),
+                              fit: BoxFit.cover,
                             ),
-                          )
-                        : Anonymous
-                            ? ClipOval(
-                                child: Container(
-                                  height: MWidth * 0.16,
-                                  width: MWidth * 0.16,
-                                  color: Colors.grey,
-                                  child: Container(
-                                      child: Image.asset(
-                                    'assets/person.png',
-                                    fit: BoxFit.cover,
-                                  )),
-                                ),
-                              )
-                            : ClipOval(
-                                child: Container(
-                                  height: MWidth * 0.16,
-                                  width: MWidth * 0.16,
-                                  color: Colors.grey,
-                                  child: CachedNetworkImage(
-                                    placeholder: (context, url) => Container(
-                                        child:
-                                            Image.asset('assets/person.png')),
-                                    imageUrl: AuthorImage.toString(),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                    SizedBox(
-                      width: MWidth * 0.03,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            (Anonymous)
-                                ? const AutoSizeText(
-                                    'Anonymous',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                    maxFontSize: 19,
-                                    minFontSize: 18,
-                                  )
-                                : GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, searchProfileScreen.route,
-                                          arguments: AuthorUID);
-                                    },
-                                    child: Row(
-                                      children: [
-                                        AutoSizeText(
-                                          name.toString().split(" ")[0],
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                          maxFontSize: 19,
-                                          minFontSize: 18,
-                                        ),
-                                        if (roleController.instructor!
-                                            .contains(AuthorUID))
-                                          AutoSizeText(
-                                            "  Instructor".toUpperCase(),
-                                            style: const TextStyle(
-                                              color: Colors.pink,
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                            if (Anonymous &&
-                                roleController.specialAccess!
-                                    .contains(currentUserId))
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, searchProfileScreen.route,
-                                      arguments: AuthorUID);
-                                },
-                                child: AutoSizeText(
-                                  "(${name.toString().split(" ")[0]})",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                  maxFontSize: 19,
-                                  minFontSize: 8,
-                                ),
-                              )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            AutoSizeText(
-                              DateFormat.jm().format(time).toString() +
-                                  ",  " +
-                                  DateFormat.MMMd().format(time).toString(),
-                              style: const TextStyle(
-                                  color: Colors.grey, fontSize: 14),
-                            ),
-                          ],
+                          ),
                         )
-                      ],
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Chip(
-                      label: Text(
-                        tag,
-                        style:
-                            const TextStyle(color: Colors.pink, fontSize: 12),
+                      : Anonymous
+                          ? ClipOval(
+                              child: Container(
+                                height: MWidth * 0.16,
+                                width: MWidth * 0.16,
+                                color: Colors.grey,
+                                child: Image.asset(
+                                  'assets/person.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : ClipOval(
+                              child: Container(
+                                height: MWidth * 0.16,
+                                width: MWidth * 0.16,
+                                color: Colors.grey,
+                                child: CachedNetworkImage(
+                                  placeholder: (context, url) =>
+                                      Image.asset('assets/person.png'),
+                                  imageUrl: AuthorImage.toString(),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                  SizedBox(
+                    width: MWidth * 0.03,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          (Anonymous)
+                              ? const AutoSizeText(
+                                  'Anonymous',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                  maxFontSize: 19,
+                                  minFontSize: 18,
+                                )
+                              : GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, searchProfileScreen.route,
+                                        arguments: AuthorUID);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      AutoSizeText(
+                                        name.toString().split(" ")[0],
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                        maxFontSize: 19,
+                                        minFontSize: 18,
+                                      ),
+                                      if (roleController.instructor!
+                                          .contains(AuthorUID))
+                                        AutoSizeText(
+                                          "  Instructor".toUpperCase(),
+                                          style: const TextStyle(
+                                            color: Colors.pink,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                          if (Anonymous &&
+                              roleController.specialAccess!
+                                  .contains(currentUserId))
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, searchProfileScreen.route,
+                                    arguments: AuthorUID);
+                              },
+                              child: AutoSizeText(
+                                "(${name.toString().split(" ")[0]})",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                                maxFontSize: 19,
+                                minFontSize: 8,
+                              ),
+                            )
+                        ],
                       ),
-                      backgroundColor: const Color.fromRGBO(40, 40, 43, 1),
+                      Row(
+                        children: [
+                          AutoSizeText(
+                            DateFormat.jm().format(time).toString() +
+                                ",  " +
+                                DateFormat.MMMd().format(time).toString(),
+                            style: const TextStyle(
+                                color: Colors.grey, fontSize: 14),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Chip(
+                    label: Text(
+                      tag,
+                      style: const TextStyle(color: Colors.pink, fontSize: 12),
                     ),
+                    backgroundColor: const Color.fromRGBO(40, 40, 43, 1),
+                  ),
 
-                    // This is the type used by the popup menu below.
+                  // This is the type used by the popup menu below.
 
-                    // This menu button widget updates a _selection field (of type ,
-                    // not shown here).
-                    (AuthorUID == currentUserId) ||
-                            roleController.specialAccess!
-                                .contains(currentUserId)
-                        ? sheet(
-                            id: id,
-                            imageList: imageList,
-                            title: title,
-                            tag: tag,
-                            body: body,
-                          )
-                        : SizedBox(width: MWidth * 0.1)
-                  ],
-                )
-              ],
-            ),
+                  // This menu button widget updates a _selection field (of type ,
+                  // not shown here).
+                  (AuthorUID == currentUserId) ||
+                          roleController.specialAccess!.contains(currentUserId)
+                      ? sheet(
+                          id: id,
+                          imageList: imageList,
+                          title: title,
+                          tag: tag,
+                          body: body,
+                        )
+                      : SizedBox(width: MWidth * 0.1)
+                ],
+              )
+            ],
           );
         });
   }
 }
 
 class sheet extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const sheet(
       {required this.id,
       required this.imageList,

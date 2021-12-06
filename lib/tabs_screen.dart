@@ -11,7 +11,7 @@ import 'screens/post/user_input.dart';
 import 'screens/profile/profile_screen.dart';
 
 class TabsScreen extends StatefulWidget {
-  TabsScreen({Key? key}) : super(key: key);
+  const TabsScreen({Key? key}) : super(key: key);
   static const route = '/tabsScreen';
   @override
   _TabsScreenState createState() => _TabsScreenState();
@@ -19,14 +19,12 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
     feedScreen(),
     // SearchUser(),
     // Menu(),
     userInput(),
-    profileScreen(),
+    const profileScreen(),
   ];
   void _onItemTapped(int index) {
     setState(() {

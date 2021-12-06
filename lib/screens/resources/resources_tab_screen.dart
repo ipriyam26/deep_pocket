@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:deep_pocket_1/screens/resources/video_resources.dart';
 import 'package:flutter/material.dart';
 
@@ -5,16 +7,16 @@ import 'book/book_resources.dart';
 
 class resourcesTab extends StatefulWidget {
   static const route = '/resources';
+
+  const resourcesTab({Key? key}) : super(key: key);
   @override
   _resourcesTabState createState() => _resourcesTabState();
 }
 
 class _resourcesTabState extends State<resourcesTab> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
-    bookResources(),
+    const bookResources(),
     videoResources(),
   ];
 

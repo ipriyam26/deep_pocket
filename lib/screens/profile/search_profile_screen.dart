@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, avoid_unnecessary_containers, non_constant_identifier_names, use_key_in_widget_constructors
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,6 +14,8 @@ import '../../models/user_model.dart';
 
 class searchProfileScreen extends StatefulWidget {
   static const route = '/searchProfileScreen';
+
+  const searchProfileScreen({Key? key}) : super(key: key);
   @override
   State<searchProfileScreen> createState() => _searchProfileScreenState();
 }
@@ -49,19 +53,19 @@ class _searchProfileScreenState extends State<searchProfileScreen> {
                       }
 
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                            child: Container(
+                        return const Center(
+                            child: SizedBox(
                           height: 50,
                           width: 50,
-                          child: const CupertinoActivityIndicator(),
+                          child: CupertinoActivityIndicator(),
                         ));
                       }
                       if (!snapshot.hasData) {
-                        return Center(
-                            child: Container(
+                        return const Center(
+                            child: SizedBox(
                           height: 50,
                           width: 50,
-                          child: const CupertinoActivityIndicator(),
+                          child: CupertinoActivityIndicator(),
                         ));
                       }
 
@@ -136,7 +140,7 @@ class _searchProfileScreenState extends State<searchProfileScreen> {
 }
 
 class userImageName extends StatelessWidget {
-  userImageName({
+  const userImageName({
     required this.name,
     required this.Image,
     required this.college,
@@ -164,8 +168,8 @@ class userImageName extends StatelessWidget {
                 width: MediaQuery.of(context).size.height * 0.14,
                 height: MediaQuery.of(context).size.height * 0.14,
                 child: CachedNetworkImage(
-                  placeholder: (context, url) => Container(
-                      height: 50, child: const CircularProgressIndicator()),
+                  placeholder: (context, url) => const SizedBox(
+                      height: 50, child: CircularProgressIndicator()),
                   imageUrl: Image,
                   fit: BoxFit.cover,
                 ),

@@ -1,4 +1,4 @@
-import 'dart:io';
+// ignore_for_file: camel_case_types, non_constant_identifier_names, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/api_integration_imgur.dart';
@@ -8,24 +8,23 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../models/user_model.dart';
-
 class editProfile extends StatefulWidget {
   static const route = 'editProfile';
+
+  const editProfile({Key? key}) : super(key: key);
   @override
   _editProfileState createState() => _editProfileState();
 }
 
 class _editProfileState extends State<editProfile> {
   User? user = FirebaseAuth.instance.currentUser;
-  String? Imagelink = null;
-  final NameEditingController = new TextEditingController();
-  final collegeEditingController = new TextEditingController();
-  final enrollmentNoEditingController = new TextEditingController();
+  String? Imagelink;
+  final NameEditingController = TextEditingController();
+  final collegeEditingController = TextEditingController();
+  final enrollmentNoEditingController = TextEditingController();
   final db = FirebaseFirestore.instance;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -43,7 +42,7 @@ class _editProfileState extends State<editProfile> {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return Container(
+          return SizedBox(
             height: MediaQuery.of(context).size.height * 0.15,
             child: Column(
               children: [
@@ -170,7 +169,7 @@ class _editProfileState extends State<editProfile> {
                                   cursorColor: Colors.white,
                                   keyboardType: TextInputType.name,
                                   validator: (value) {
-                                    RegExp regex = new RegExp(r'^.{3,}$');
+                                    RegExp regex = RegExp(r'^.{3,}$');
                                     if (value!.isEmpty) {
                                       return ("First Name cannot be Empty");
                                     }
@@ -199,8 +198,8 @@ class _editProfileState extends State<editProfile> {
                                     fillColor: Colors.black,
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(20),
-                                        borderSide:
-                                            BorderSide(color: Colors.black)),
+                                        borderSide: const BorderSide(
+                                            color: Colors.black)),
                                   )),
                               SizedBox(
                                 height: Mheight * 0.02,
@@ -272,7 +271,7 @@ class _editProfileState extends State<editProfile> {
                               SizedBox(
                                 height: Mheight * 0.05,
                               ),
-                              Container(
+                              SizedBox(
                                 width: Mwidth * 0.4,
                                 child: Material(
                                   elevation: 5,

@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, camel_case_types, use_function_type_syntax_for_parameters, avoid_print
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +20,8 @@ class postPage extends StatelessWidget {
   static const route = '/feed-screen/postPage';
   final commentText = TextEditingController();
   final user = FirebaseAuth.instance.currentUser;
+
+  postPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +160,7 @@ class postPage extends StatelessWidget {
           String id),
       DocumentSnapshot<Map<String, dynamic>> document,
       double MWidth) {
+    // ignore: avoid_unnecessary_containers
     return Container(
       child: FutureBuilder(
           future: getcorrectAnswere(document.data()!['Correct Answere']),
@@ -358,6 +361,7 @@ class deleteComment extends StatelessWidget {
               .get();
           int authorPoints = authordata.data()!['Points'];
           print(authorPoints);
+          // ignore: unused_local_variable
           var Cauthordata = await FirebaseFirestore.instance
               .collection("users")
               .doc(comment.data()['AuthorID'])
@@ -447,9 +451,7 @@ class UserComment extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-              // height: MHeight * 0.11,
-              child: ClipOval(
+          ClipOval(
             child: Container(
               padding: const EdgeInsets.all(2),
               color: Colors.black,
@@ -467,7 +469,7 @@ class UserComment extends StatelessWidget {
                 ),
               ),
             ),
-          )),
+          ),
           SizedBox(
             height: MHeight * 0.07,
             width: MWidth * 0.75,

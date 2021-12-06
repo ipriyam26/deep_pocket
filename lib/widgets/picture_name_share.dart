@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:deep_pocket_1/models/data_feed.dart';
 
 import 'package:flutter/material.dart';
@@ -53,7 +55,7 @@ class pictureNameShare extends StatelessWidget {
           ],
         ),
         Padding(
-            padding: EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10),
             child: Image.asset(
               'assets/refreshing.png',
               width: 25,

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, camel_case_types
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,8 @@ import 'package:pinch_zoom/pinch_zoom.dart';
 
 class fullImage extends StatelessWidget {
   static const route = '/fullImage';
+
+  const fullImage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     String image = ModalRoute.of(context)!.settings.arguments as String;

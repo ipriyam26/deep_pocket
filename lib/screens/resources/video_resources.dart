@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, must_be_immutable, unused_local_variable, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
@@ -8,10 +10,12 @@ class videoResources extends StatelessWidget {
   Stream<Video>? playlistVideos;
   Stream<Video>? somePlaylistVideos;
 
+  videoResources({Key? key}) : super(key: key);
+
   Future<void> youtubbe() async {
     var yt = YoutubeExplode();
     var search = await yt.search
-        .getVideos('Python', filter: SearchFilter('EgIQAw%253D%253D'));
+        .getVideos('Python', filter: const SearchFilter('EgIQAw%253D%253D'));
     var playlist = await yt.channels.get(
       'https://www.youtube.com/user/MathDoctorBob',
     );
@@ -26,17 +30,17 @@ class videoResources extends StatelessWidget {
       // print(videoTitle);
     }
 
-    playlistVideos = await yt.playlists.getVideos(playlist.id);
+    playlistVideos = yt.playlists.getVideos(playlist.id);
 
 // Get first 20 playlist videos.
-    somePlaylistVideos = await yt.playlists.getVideos(playlist.id).take(20);
+    somePlaylistVideos = yt.playlists.getVideos(playlist.id).take(20);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: [ElevatedButton(onPressed: youtubbe, child: Text("yoyo"))],
+        children: [ElevatedButton(onPressed: youtubbe, child: const Text("yoyo"))],
       ),
     );
   }

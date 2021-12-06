@@ -1,4 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
+// ignore_for_file: camel_case_types, unused_field, avoid_print, non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/admin.dart';
 
@@ -8,8 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 import 'notice_card.dart';
 import 'notice_model.dart';
@@ -28,10 +27,10 @@ class _noticeSavedState extends State<noticeSaved> {
   int fil = -1;
   int cata = 0;
   // var newNotice;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   DateTime? _selected;
   DateTime? _selectedBefore;
-  bool _isSearching = false;
+  final bool _isSearching = false;
   String search = '';
   var currentmax = 20;
   Stream<QuerySnapshot<Map<String, dynamic>>> getStream() {
@@ -54,7 +53,7 @@ class _noticeSavedState extends State<noticeSaved> {
         .snapshots();
   }
 
-  int _value = -1;
+  final int _value = -1;
 
   void updateFilter(tx, context) {
     setState(() {
@@ -106,48 +105,43 @@ class _noticeSavedState extends State<noticeSaved> {
                   final noticeData = snapshot.data!.docs;
 
                   return _isSearching
-                      ? Container(
-                          child: Column(
-                            children: [
-                              TextField(
-                                autocorrect: false,
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                                decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.search_outlined,
-                                      color: Colors.black),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                ),
-                                onSubmitted: (String value) {
-                                  setState(() {
-                                    search = value;
-                                  });
-                                },
+                      ? Column(
+                          children: [
+                            TextField(
+                              autocorrect: false,
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 18),
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.search_outlined,
+                                    color: Colors.black),
+                                filled: true,
+                                fillColor: Colors.white,
                               ),
-                              SizedBox(
-                                height: MSize.height * 0.01,
-                              ),
-                              Container(
-                                height: MSize.height * 0.8,
-                                // color: Colors.amber,
-                                child: ListView.builder(
-                                    controller: _scrollController,
-                                    itemCount: noticeData.length,
-                                    itemBuilder: (context, i) =>
-                                        noticeCard(newNotice: noticeData[i])),
-                              )
-                            ],
-                          ),
+                              onSubmitted: (String value) {
+                                setState(() {
+                                  search = value;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              height: MSize.height * 0.01,
+                            ),
+                            SizedBox(
+                              height: MSize.height * 0.8,
+                              // color: Colors.amber,
+                              child: ListView.builder(
+                                  controller: _scrollController,
+                                  itemCount: noticeData.length,
+                                  itemBuilder: (context, i) =>
+                                      noticeCard(newNotice: noticeData[i])),
+                            )
+                          ],
                         )
-                      : Container(
-                          // color: Colors.amber,
-                          child: ListView.builder(
-                              controller: _scrollController,
-                              itemCount: noticeData.length,
-                              itemBuilder: (context, i) =>
-                                  noticeCard(newNotice: noticeData[i])),
-                        );
+                      : ListView.builder(
+                          controller: _scrollController,
+                          itemCount: noticeData.length,
+                          itemBuilder: (context, i) =>
+                              noticeCard(newNotice: noticeData[i]));
                 }),
           );
         });

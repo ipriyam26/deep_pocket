@@ -1,6 +1,8 @@
+// ignore_for_file: camel_case_types
+
 import 'package:deep_pocket_1/screens/club/clubs_screen.dart';
 import 'package:deep_pocket_1/screens/event/even_tabs.dart';
-import 'package:deep_pocket_1/screens/event/events_example.dart';
+
 // import 'package:deep_poc_1ket/screens/event/events_screen.dart';
 import 'package:deep_pocket_1/screens/faculty/faculty_screen.dart';
 import 'package:deep_pocket_1/screens/freecourse/freecourses_screen.dart';
@@ -16,14 +18,14 @@ class menuButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 245,
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             color: Colors.lightBlue,
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             width: double.maxFinite,
             child: const Text(
               "MENU",
@@ -35,11 +37,11 @@ class menuButtons extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             height: 200,
             child: GridView(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4, childAspectRatio: 1.0),
               children: const [

@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names, avoid_unnecessary_containers
+
 import 'package:auto_size_text/auto_size_text.dart';
 // import 'package:deep_pocket/screens/freecourse/api_integration.dart';
 import 'package:deep_pocket_1/screens/freecourse/model_freecourse.dart';
@@ -6,6 +8,8 @@ import 'package:deep_pocket_1/screens/resources/book/book_viewer.dart';
 import 'package:flutter/material.dart';
 
 class bookResources extends StatefulWidget {
+  const bookResources({Key? key}) : super(key: key);
+
   // const bookResources({Key? key}) : super(key: key);
   @override
   State<bookResources> createState() => _bookResourcesState();
@@ -58,7 +62,7 @@ class _bookResourcesState extends State<bookResources> {
                       }
                     });
                   },
-                  icon: Icon(Icons.search))
+                  icon: const Icon(Icons.search))
             ],
             backgroundColor: const Color.fromRGBO(16, 15, 1, 1)),
         backgroundColor: const Color(0xFFFFF0E2),
@@ -70,7 +74,7 @@ class _bookResourcesState extends State<bookResources> {
                     children: [
                       Container(
                         child: DropdownButton<String>(
-                          style: TextStyle(fontSize: 17, color: Colors.black),
+                          style: const TextStyle(fontSize: 17, color: Colors.black),
                           dropdownColor: Colors.white,
                           // focusColor: Colors.white,
                           elevation: 0,
@@ -89,7 +93,7 @@ class _bookResourcesState extends State<bookResources> {
                           },
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: MWidth * 0.7,
                         child: TextField(
                           decoration: const InputDecoration(
@@ -121,7 +125,7 @@ class _bookResourcesState extends State<bookResources> {
                   // SizedBox(
                   //   height: MHeight * 0.01,
                   // ),
-                  Container(
+                  SizedBox(
                     // margin: EdgeInsets.only(top: MHeight * 0.01),
                     height: MHeight * 0.7,
                     child: ListView.builder(
@@ -136,7 +140,7 @@ class _bookResourcesState extends State<bookResources> {
               )
             : Column(
                 children: [
-                  Container(
+                  SizedBox(
                     // margin: EdgeInsets.only(top: MHeight * 0.01),
                     height: MHeight * 0.76,
                     child: ListView.builder(
@@ -177,7 +181,7 @@ class bookCard extends StatelessWidget {
             horizontal: MWidth * 0.02, vertical: MHeight * 0.006),
         child: Card(
           // color: Colors.amber,
-          color: Color(0xffadd8e6),
+          color: const Color(0xffadd8e6),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
@@ -203,7 +207,7 @@ class bookCard extends StatelessWidget {
                 SizedBox(
                   width: MWidth * 0.03,
                 ),
-                Container(
+                SizedBox(
                   width: MWidth * 0.9 * 0.6,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,7 +224,7 @@ class bookCard extends StatelessWidget {
                             ),
                             backgroundColor: Colors.black,
                           ),
-                          Icon(Icons.arrow_right_outlined)
+                          const Icon(Icons.arrow_right_outlined)
                         ],
                       ),
                       AutoSizeText(

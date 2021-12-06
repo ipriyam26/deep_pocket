@@ -1,10 +1,11 @@
+// ignore_for_file: non_constant_identifier_names, prefer_is_empty
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/screens/profile/search_profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/context_extensions.dart';
 
 class SearchUser extends StatefulWidget {
-  SearchUser({Key? key}) : super(key: key);
+  const SearchUser({Key? key}) : super(key: key);
   static const route = '/searchUser';
   @override
   _SearchUserState createState() => _SearchUserState();
@@ -36,7 +37,7 @@ class _SearchUserState extends State<SearchUser> {
         backgroundColor: Colors.black,
         title: const Text("Search User"),
       ),
-      backgroundColor: Color.fromRGBO(16, 15, 1, 1),
+      backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
       body: SingleChildScrollView(
         child: Container(
           height: Mheight * 0.8,
@@ -46,7 +47,7 @@ class _SearchUserState extends State<SearchUser> {
             // ignore: prefer_const_literals_to_create_immutables
             children: [
               TextField(
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 cursorColor: Colors.white,
                 onChanged: (String value) {
                   setState(() {
@@ -85,7 +86,7 @@ class _SearchUserState extends State<SearchUser> {
                       if (snapshot.data!.docs.length < currentMax) {
                         hasmore = false;
                       }
-                      return Container(
+                      return SizedBox(
                         height: Mheight * 0.7,
                         child: ListView.builder(
                           shrinkWrap: true,
@@ -102,7 +103,7 @@ class _SearchUserState extends State<SearchUser> {
                                       child: const Text("Find More",
                                           style:
                                               TextStyle(color: Colors.white)))
-                                  : Container(
+                                  : SizedBox(
                                       width: Mwidth * 0.8,
                                       child: const Center(
                                           child: Text("No More results",
@@ -170,7 +171,7 @@ class _SearchUserState extends State<SearchUser> {
                         ),
                       );
                     }
-                    return Container(
+                    return SizedBox(
                       height: Mheight * 0.2,
                       child: const Center(
                           child: Text(
