@@ -1,5 +1,7 @@
 // import 'package:email_password_login/screens/home_screen.dart';
 // import 'package:email_password_login/screens/registration_screen.dart';
+// ignore_for_file: avoid_print
+
 import 'package:deep_pocket_1/main.dart';
 import 'package:deep_pocket_1/screens/login-signup/reset_password.dart';
 import 'package:deep_pocket_1/screens/login-signup/signup.dart';
@@ -21,8 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   // editing controller
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   // firebase
   final _auth = FirebaseAuth.instance;
@@ -53,16 +55,16 @@ class _LoginScreenState extends State<LoginScreen> {
           emailController.text = value!;
         },
         textInputAction: TextInputAction.next,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
-          hintStyle: TextStyle(color: Colors.white),
-          prefixIcon: Icon(
+          hintStyle: const TextStyle(color: Colors.white),
+          prefixIcon: const Icon(
             Icons.mail,
             color: Colors.white,
           ),
           filled: true,
           fillColor: Colors.black,
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
@@ -75,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
         controller: passwordController,
         obscureText: true,
         validator: (value) {
-          RegExp regex = new RegExp(r'^.{6,}$');
+          RegExp regex = RegExp(r'^.{6,}$');
           if (value!.isEmpty) {
             return ("Password is required for login");
           }
@@ -86,17 +88,17 @@ class _LoginScreenState extends State<LoginScreen> {
         onSaved: (value) {
           passwordController.text = value!;
         },
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
-          hintStyle: TextStyle(color: Colors.white),
-          prefixIcon: Icon(
+          hintStyle: const TextStyle(color: Colors.white),
+          prefixIcon: const Icon(
             Icons.vpn_key,
             color: Colors.white,
           ),
           filled: true,
           fillColor: Colors.black,
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
@@ -108,12 +110,12 @@ class _LoginScreenState extends State<LoginScreen> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.purple,
       child: MaterialButton(
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () async {
             signIn(emailController.text, passwordController.text);
           },
-          child: Text(
+          child: const Text(
             "Login",
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -144,11 +146,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   //       "assets/logo.png",
                   //       fit: BoxFit.contain,
                   //     )),
-                  SizedBox(height: 45),
+                  const SizedBox(height: 45),
                   emailField,
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   passwordField,
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -157,15 +159,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ResetPassword()));
+                                    builder: (context) => const ResetPassword()));
                           },
                           child: const Text("Forgot Password?",
                               style: TextStyle(color: Colors.white)))
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   loginButton,
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -180,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        RegistrationScreen()));
+                                        const RegistrationScreen()));
                           },
                           child: const Text(
                             "SignUp",
@@ -214,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   localStrorage.setString(
                       'password', passwordController.text.toString()),
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => MyApp())),
+                      MaterialPageRoute(builder: (context) => const MyApp())),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

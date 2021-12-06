@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, camel_case_types, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +9,8 @@ import 'half_widgets.dart';
 class internPage extends StatelessWidget {
   // const courseScreen({Key? key}) : super(key: key);
   static const route = "/interPage/internships";
+
+  const internPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

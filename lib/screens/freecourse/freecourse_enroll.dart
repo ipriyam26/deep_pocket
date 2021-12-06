@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names
+
 import 'package:deep_pocket_1/models/course_read.dart';
 import 'package:deep_pocket_1/screens/freecourse/freecourse_widgets.dart';
 import 'package:flutter/material.dart';
@@ -5,10 +7,10 @@ import 'package:flutter/material.dart';
 
 
 class enrollCard extends StatelessWidget {
-  enrollCard({
+  const enrollCard({Key? key, 
     required this.course,
     required this.MHeight,
-  });
+  }) : super(key: key);
 
   final double MHeight;
 

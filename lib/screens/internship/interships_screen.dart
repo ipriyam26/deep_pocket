@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/admin.dart';
 import 'package:deep_pocket_1/screens/internship/internship_create.dart';
@@ -9,6 +11,8 @@ import 'package:get/get.dart';
 
 class internShips extends StatelessWidget {
   static const route = '/internships';
+
+  const internShips({Key? key}) : super(key: key);
 
   Future<QuerySnapshot<Map<String, dynamic>>> getInternships() async {
     return FirebaseFirestore.instance
@@ -32,7 +36,7 @@ class internShips extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushNamed(context, internCreate.route);
                         },
-                        icon: Icon(Icons.add))
+                        icon: const Icon(Icons.add))
                 ],
                 backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
                 title: const Text("Interships"),

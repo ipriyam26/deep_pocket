@@ -1,4 +1,6 @@
-import 'package:deep_pocket_1/models/freecourses_models.dart';
+
+// ignore_for_file: camel_case_types, non_constant_identifier_names
+
 import 'package:deep_pocket_1/screens/freecourse/catagory_model.dart';
 
 import 'package:deep_pocket_1/screens/freecourse/freecourse_widgets.dart';
@@ -6,6 +8,8 @@ import 'package:flutter/material.dart';
 
 class freeCources extends StatelessWidget {
   static const route = '/freeCources';
+
+  const freeCources({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

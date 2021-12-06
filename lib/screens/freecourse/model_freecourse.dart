@@ -231,7 +231,7 @@ class PriceSpecification {
         type: json["@type"],
         price: json["price"],
         priceCurrency:
-            json["priceCurrency"] == null ? null : json["priceCurrency"],
+            json["priceCurrency"],
         priceFree: json["price-free"],
       );
 
@@ -239,7 +239,7 @@ class PriceSpecification {
         "@context": context,
         "@type": type,
         "price": price,
-        "priceCurrency": priceCurrency == null ? null : priceCurrency,
+        "priceCurrency": priceCurrency,
         "price-free": priceFree,
       };
 }
