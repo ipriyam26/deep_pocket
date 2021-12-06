@@ -2,7 +2,7 @@
 //
 //     final imgur = imgurFromJson(jsonString);
 
-import 'package:meta/meta.dart';
+
 import 'dart:convert';
 
 Imgur imgurFromJson(String str) => Imgur.fromJson(json.decode(str));

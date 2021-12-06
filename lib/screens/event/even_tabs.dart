@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:deep_pocket_1/admin.dart';
 import 'package:deep_pocket_1/screens/event/create_event.dart';
 import 'package:deep_pocket_1/screens/event/even_main_screen.dart';
@@ -8,6 +10,8 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 
 class eventTabs extends StatefulWidget {
   static const route = '/eventTabs';
+
+  const eventTabs({Key? key}) : super(key: key);
   @override
   _eventTabsState createState() => _eventTabsState();
 }

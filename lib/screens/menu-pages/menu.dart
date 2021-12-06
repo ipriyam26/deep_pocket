@@ -1,15 +1,17 @@
+// ignore_for_file: camel_case_types, must_be_immutable, non_constant_identifier_names
+
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:deep_pocket_1/screens/Nearby/nearby_first.dart';
+
 import 'package:deep_pocket_1/screens/Nearby/nearby_tab.dart';
 import 'package:deep_pocket_1/screens/club/clubs_screen.dart';
 import 'package:deep_pocket_1/screens/event/even_tabs.dart';
 import 'package:deep_pocket_1/screens/faculty/faculty_screen.dart';
 import 'package:deep_pocket_1/screens/freecourse/freecourses_screen.dart';
 import 'package:deep_pocket_1/screens/internship/interships_screen.dart';
-import 'package:deep_pocket_1/screens/noticeboard/notiboard_home.dart';
+
 import 'package:deep_pocket_1/screens/noticeboard/notice_tab.dart';
 import 'package:deep_pocket_1/screens/resources/resources_tab_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -68,6 +70,8 @@ class MenuP extends StatelessWidget {
         image: "https://i.imgur.com/smD7BFCh.jpg",
         route: freeCources.route)
   ];
+
+  MenuP({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final Mheight = MediaQuery.of(context).size.height;
@@ -75,7 +79,7 @@ class MenuP extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
       body: SafeArea(
-          child: Container(
+          child: SizedBox(
         height: Mheight * 0.22,
         child: GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
@@ -130,8 +134,7 @@ class Menubtt extends StatelessWidget {
         color: randomColor(),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(5))),
-        child: Container(
-          // margin: EdgeInsets.symmetric(horizontal: Mwidth * 0.01),
+        child: SizedBox(
           height: Mheight * 0.08,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, camel_case_types, unnecessary_cast
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -64,7 +66,7 @@ class mockData with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print(e);
-      // TODO
+
     }
   }
 
@@ -96,7 +98,7 @@ class mockData with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print(e);
-      // TODO
+
     }
   }
 }

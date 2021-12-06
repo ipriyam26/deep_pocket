@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -7,6 +9,8 @@ import 'club_widgets.dart';
 class clubDetail extends StatelessWidget {
   // const clubDetail({Key? key}) : super(key: key);
   static const route = '/club-screen/club-detail';
+
+  const clubDetail({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,7 @@ class clubDetail extends StatelessWidget {
                 builder: (BuildContext context) {
                   return Container(
                     width: MSize.width,
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
                     // decoration: BoxDecoration(color: Colors.amber),
                     child: i == 0
                         ? hostclub(MSize: MSize, details: details)

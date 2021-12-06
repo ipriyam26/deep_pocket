@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:deep_pocket_1/models/course_read.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

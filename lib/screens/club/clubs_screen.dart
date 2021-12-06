@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 import 'package:deep_pocket_1/screens/club/club_models.dart';
@@ -37,7 +39,7 @@ class clubsScreen extends StatelessWidget {
               height: MSize.height * 0.87,
               child: GridView.builder(
                   padding: EdgeInsets.zero,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: clubdeatils.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       mainAxisSpacing: MSize.height * 0.015,

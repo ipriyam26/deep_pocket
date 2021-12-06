@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'dart:async';
 
 import 'package:deep_pocket_1/screens/profile/update_profile.dart';
@@ -9,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class verification extends StatefulWidget {
   final String password;
 
-  verification({Key? key, required this.password}) : super(key: key);
+  const verification({Key? key, required this.password}) : super(key: key);
   static const route = 'verfication-screen';
   @override
   _verificationState createState() => _verificationState();
@@ -22,7 +24,7 @@ class _verificationState extends State<verification> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     user = auth.currentUser;
     user!.sendEmailVerification();
     Timer.periodic(const Duration(seconds: 2), (timer) {
@@ -33,7 +35,7 @@ class _verificationState extends State<verification> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+
 
     timer!.cancel();
     super.dispose();
@@ -98,7 +100,7 @@ class _verificationState extends State<verification> {
 
       Navigator.pushAndRemoveUntil(
           (context),
-          MaterialPageRoute(builder: (context) => UpdateProfileScreen()),
+          MaterialPageRoute(builder: (context) => const UpdateProfileScreen()),
           (route) => false);
 
       timer!.cancel();

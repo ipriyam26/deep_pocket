@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/api_integration_imgur.dart';
 import 'package:deep_pocket_1/screens/login-signup/login.dart';
-import 'package:deep_pocket_1/tabs_screen.dart';
+
 // import 'package:email_password_login/model/user_model.dart';
 // import 'package:email_password_login/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +15,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../models/user_model.dart';
-import '../login-signup/verification_screen.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({Key? key}) : super(key: key);
@@ -368,9 +367,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     userModel.Name = NameEditingController.text;
     userModel.Image = link ??
         "https://i.dlpng.com/static/png/5780540-person-icon-person-icon-silhouette-transparent-png-370x370-icon-person-820_450_preview.png";
-    ;
+
     userModel.CollegeName = collegeEditingController.text;
     userModel.enrollmentNo = enrollmentNoEditingController.text;
+    userModel.Points = 50;
 
     List<String> value = NameEditingController.text.split("").toList();
     List<String> yolo = enrollmentNoEditingController.text.split("").toList();
@@ -387,7 +387,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
         (route) => false);
   }
 }

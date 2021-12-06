@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, must_be_immutable, non_constant_identifier_names
+
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -65,6 +67,8 @@ class Menu extends StatelessWidget {
         image: "https://i.imgur.com/smD7BFCh.jpg",
         route: freeCources.route)
   ];
+
+  Menu({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final Mheight = MediaQuery.of(context).size.height;
@@ -123,7 +127,7 @@ class menuButton extends StatelessWidget {
         color: randomColor(),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(25))),
-        child: Container(
+        child: SizedBox(
           // margin: EdgeInsets.symmetric(horizontal: Mwidth * 0.01),
           height: Mheight * 0.18,
           child: Column(

@@ -2,7 +2,7 @@
 //
 //     final course = courseFromJson(jsonString);
 
-import 'package:meta/meta.dart';
+
 import 'dart:convert';
 
 List<Course> courseFromJson(String str) =>

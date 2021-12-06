@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, camel_case_types
+
 import 'package:url_launcher/url_launcher.dart';
 
 class clubUtils {

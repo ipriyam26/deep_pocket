@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names
+
 import 'package:deep_pocket_1/screens/club/club_detail_screen.dart';
 import 'package:deep_pocket_1/screens/club/club_utils.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +113,7 @@ class hostDetails extends StatelessWidget {
           height: MSize.height * 0.09 * details.leaders.length,
           child: ListView.builder(
               padding: EdgeInsets.zero,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: details.leaders.length,
               itemBuilder: (context, i) => ListTile(
                     contentPadding: EdgeInsets.zero,
@@ -164,7 +166,7 @@ class clubCard extends StatelessWidget {
       child: Card(
         elevation: 5,
         // margin: EdgeInsets.all(10),
-        color: Color.fromRGBO(40, 40, 43, 1),
+        color: const Color.fromRGBO(40, 40, 43, 1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
@@ -273,13 +275,11 @@ class stackDetail extends StatelessWidget {
       children: [
         Hero(
           tag: details.img,
-          child: Container(
-            child: Image.network(
-              details.img,
-              height: MSize.height * 0.7 * 0.6,
-              width: MSize.width,
-              fit: BoxFit.fill,
-            ),
+          child: Image.network(
+            details.img,
+            height: MSize.height * 0.7 * 0.6,
+            width: MSize.width,
+            fit: BoxFit.fill,
           ),
         ),
         Container(

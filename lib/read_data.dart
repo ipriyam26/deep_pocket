@@ -1,4 +1,6 @@
-import 'dart:convert';
+
+
+// ignore_for_file: camel_case_types, non_constant_identifier_names
 
 import 'package:deep_pocket_1/models/places.dart';
 import 'package:flutter/services.dart';

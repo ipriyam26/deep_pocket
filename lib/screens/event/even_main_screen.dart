@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, must_be_immutable, non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/screens/event/get_event.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,8 @@ class eventMainScreen extends StatelessWidget {
   // const eventMainScreen({Key? key}) : super(key: key);
 
   List<event> upcomingEvents = [];
+
+  eventMainScreen({Key? key}) : super(key: key);
 
   bool isAfterToday(DateTime? b) {
     DateTime a = DateTime.now();
@@ -53,7 +57,7 @@ class eventMainScreen extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       );
                     }
-                    return Container(
+                    return SizedBox(
                         height: MHeight * 0.82,
                         child: ListView.builder(
                             shrinkWrap: true,

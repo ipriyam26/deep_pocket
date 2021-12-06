@@ -1,11 +1,11 @@
 import 'package:deep_pocket_1/screens/Nearby/nearby_add.dart';
-import 'package:deep_pocket_1/screens/Nearby/nearby_first.dart';
+
 import 'package:deep_pocket_1/screens/Nearby/nearby_tab.dart';
 import 'package:deep_pocket_1/screens/Nearby/place.dart';
 import 'package:deep_pocket_1/screens/event/create_event.dart';
 import 'package:deep_pocket_1/screens/internship/internship_create.dart';
 import 'package:deep_pocket_1/screens/login-signup/login.dart';
-import 'package:deep_pocket_1/screens/menu-pages/menu.dart';
+
 import 'package:deep_pocket_1/screens/noticeboard/notice_create.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notice_tab.dart';
 import 'package:deep_pocket_1/screens/post/edit_post.dart';
@@ -37,13 +37,13 @@ import 'package:deep_pocket_1/screens/resources/resources_tab_screen.dart';
 import 'package:deep_pocket_1/tabs_screen.dart';
 
 import 'package:deep_pocket_1/screens/post/user_input.dart';
-import 'package:deep_pocket_1/testfire.dart';
-import 'package:deep_pocket_1/theme.dart';
+
+
 import 'package:deep_pocket_1/widgets/fullscreen_image.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
           eventScreen.route: (ctx) => eventScreen(),
           noticeBoard.route: (ctx) => const noticeBoard(),
           noticeScreen.route: (ctx) => noticeScreen(),
-          clubDetail.route: (ctx) => clubDetail(),
+          clubDetail.route: (ctx) => const clubDetail(),
           resourcesTab.route: (ctx) => resourcesTab(),
           bookViewer.route: (ctx) => bookViewer(),
           schoolScreen.route: (ctx) => const schoolScreen(),
@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
           createEvent.route: (ctx) => createEvent(),
           fullImage.route: (ctx) => fullImage(),
           searchProfileScreen.route: (ctx) => searchProfileScreen(),
-          internCreate.route: (ctx) => internCreate(),
+          internCreate.route: (ctx) => const internCreate(),
           NearbAdd.route: (ctx) => NearbAdd()
         });
   }
