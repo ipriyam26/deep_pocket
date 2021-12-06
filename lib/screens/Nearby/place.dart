@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names, avoid_print
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,14 +7,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
-import 'package:http/http.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 import 'nearby_logic.dart';
 
 class place extends StatefulWidget {
   static const route = 'nearbyTab/nearby_first/place';
+
+  const place({Key? key}) : super(key: key);
 
   @override
   State<place> createState() => _placeState();
@@ -60,9 +63,9 @@ class _placeState extends State<place> {
           }
           var place = snapshot.data!;
           List<dynamic> SavedBy =
-              place.data()!['SavedBy'] ?? [] as List<dynamic>;
+              place.data()!['SavedBy'] ?? [];
           List<dynamic> ReviewedBy =
-              place.data()!['ReviewedBy'] ?? [] as List<dynamic>;
+              place.data()!['ReviewedBy'] ?? [];
           bool Saved = SavedBy.contains(FirebaseAuth.instance.currentUser!.uid);
           bool Reviewed =
               ReviewedBy.contains(FirebaseAuth.instance.currentUser!.uid);
@@ -103,7 +106,7 @@ class _placeState extends State<place> {
                 ),
               ),
               body: SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                   height: Mheight,
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -180,7 +183,7 @@ class _placeState extends State<place> {
                                     border: Border.all(color: Colors.pink)),
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 5, horizontal: 5),
-                                child: Container(
+                                child: SizedBox(
                                   width: Mwidth * 0.34,
                                   child: Row(
                                     children: [
@@ -241,7 +244,7 @@ class _placeState extends State<place> {
   }
 
   FutureBuilder<QuerySnapshot<Map<String, dynamic>>> reviewss(
-      Future<QuerySnapshot<Map<String, dynamic>>> getPlaceReviews(),
+      Future<QuerySnapshot<Map<String, dynamic>>> Function() getPlaceReviews,
       double Mwidth) {
     return FutureBuilder(
         future: getPlaceReviews(),
@@ -256,7 +259,7 @@ class _placeState extends State<place> {
           print(reviews.length);
           return ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: reviews.length,
             itemBuilder: (context, index) => Container(
               margin: EdgeInsets.symmetric(vertical: Mwidth * 0.01),
@@ -322,7 +325,7 @@ class _placeState extends State<place> {
       DocumentSnapshot<Map<String, dynamic>> place,
       double Mwidth,
       double Mheight,
-      Future<DocumentSnapshot<Map<String, dynamic>>> getUser()) async {
+      Future<DocumentSnapshot<Map<String, dynamic>>> Function() getUser) async {
     showDialog(
         context: context,
         builder: (BuildContext ctx) {
@@ -373,7 +376,7 @@ class _placeState extends State<place> {
                   SizedBox(
                     height: Mheight * 0.01,
                   ),
-                  Container(
+                  SizedBox(
                     height: Mheight * 0.18,
                     child: TextField(
                       controller: Userreview,

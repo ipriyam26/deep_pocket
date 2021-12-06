@@ -5,7 +5,7 @@ import 'dart:io';
 // import 'package:email_password_login/model/user_model.dart';
 // import 'package:email_password_login/screens/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_pocket_1/models/api_integration_imgur.dart';
+
 import 'package:deep_pocket_1/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -301,7 +301,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
           filled: true,
           fillColor: Colors.black,
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Confirm Password",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
@@ -359,7 +359,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       borderRadius: BorderRadius.circular(10),
       color: Colors.purple,
       child: MaterialButton(
-          padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
+          padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
           minWidth: MediaQuery.of(context).size.width * 0.7,
           onPressed: () {
             signUp(emailEditingController.text, passwordEditingController.text);
@@ -399,7 +399,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         // firstNameField,
                         ClipOval(
                           child: Container(
-                            padding: EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(5),
                             color: Colors.black,
                             child: ClipOval(
                                 child: Image.asset(
@@ -421,7 +421,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         // enrollmentNameField,
                         // SizedBox(height: 20),
                         signUpButton,
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                       ],
                     ),
                   ),
@@ -449,7 +449,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void signUp(String email, String password) async {
-    var errorMessage;
+    String errorMessage;
     if (_formKey.currentState!.validate()) {
       try {
         setState(() {
@@ -484,7 +484,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           default:
             errorMessage = "An undefined Error happened.";
         }
-        Fluttertoast.showToast(msg: errorMessage!);
+        Fluttertoast.showToast(msg: errorMessage);
         print(error.code);
       }
     }

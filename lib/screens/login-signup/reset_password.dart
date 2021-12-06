@@ -1,11 +1,13 @@
 // import 'package:email_password_login/screens/home_screen.dart';
 // import 'package:email_password_login/screens/registration_screen.dart';
 
+// ignore_for_file: avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key? key}) : super(key: key);
@@ -19,7 +21,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   final _formKey = GlobalKey<FormState>();
 
   // editing controller
-  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
   // firebase
   final _auth = FirebaseAuth.instance;
@@ -50,16 +52,16 @@ class _ResetPasswordState extends State<ResetPassword> {
           emailController.text = value!;
         },
         textInputAction: TextInputAction.next,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
-          hintStyle: TextStyle(color: Colors.white),
-          prefixIcon: Icon(
+          hintStyle: const TextStyle(color: Colors.white),
+          prefixIcon: const Icon(
             Icons.mail,
             color: Colors.white,
           ),
           filled: true,
           fillColor: Colors.black,
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
@@ -73,12 +75,12 @@ class _ResetPasswordState extends State<ResetPassword> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.purple,
       child: MaterialButton(
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () async {
             signIn(emailController.text);
           },
-          child: Text(
+          child: const Text(
             "Reset Password",
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -96,7 +98,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   image: AssetImage('assets/background.jpg'),
                   fit: BoxFit.fill)),
           child: Padding(
-            padding: const EdgeInsets.all(36.0),
+            padding: const  EdgeInsets.all(36.0),
             child: Form(
               key: _formKey,
               child: Column(
@@ -109,13 +111,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                   //       "assets/logo.png",
                   //       fit: BoxFit.contain,
                   //     )),
-                  SizedBox(height: 45),
+                  const SizedBox(height: 45),
                   emailField,
 
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
 
                   loginButton,
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                 ],
               ),
             ),
@@ -127,7 +129,6 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   // login function
   void signIn(String email) async {
-    var localStrorage = await SharedPreferences.getInstance();
     if (_formKey.currentState!.validate()) {
       try {
         _auth.sendPasswordResetEmail(email: email);

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class NearbAdd extends StatelessWidget {
   static const route = '/nearby-tabs/nearby-first/nearby-add';
 
+  const NearbAdd({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

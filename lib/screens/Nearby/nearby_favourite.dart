@@ -1,9 +1,13 @@
+// ignore_for_file: camel_case_types
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/screens/Nearby/nearby_first.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class nearbyFav extends StatelessWidget {
+  const nearbyFav({Key? key}) : super(key: key);
+
   Future<QuerySnapshot<Map<String, dynamic>>> getFavPlace() async {
     return FirebaseFirestore.instance
         .collection("Nearby")

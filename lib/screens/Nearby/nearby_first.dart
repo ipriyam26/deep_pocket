@@ -1,22 +1,21 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, camel_case_types, must_be_immutable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_pocket_1/models/user_model.dart';
-import 'package:deep_pocket_1/screens/Nearby/nearby_add.dart';
+
 import 'package:deep_pocket_1/screens/Nearby/place.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class nearBy extends StatefulWidget {
-  nearBy({Key? key}) : super(key: key);
+  const nearBy({Key? key}) : super(key: key);
 
   @override
   _nearByState createState() => _nearByState();
 }
 
 class _nearByState extends State<nearBy> {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   List<String> Types = [
     'Bank',
@@ -97,7 +96,7 @@ class _nearByState extends State<nearBy> {
             backgroundColor: Colors.black,
             title: const Text(
               "Filters",
-              style: const TextStyle(color: Colors.pink),
+              style:  TextStyle(color: Colors.pink),
             ),
           ),
           backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
@@ -143,7 +142,7 @@ class _nearByState extends State<nearBy> {
               );
             }
             var data = snapshot.data!.docs;
-            return Container(
+            return SizedBox(
               height: MediaQuery.of(context).size.height * 0.8,
               child: ListView.builder(
                   itemCount: data.length,
@@ -166,13 +165,6 @@ class _nearByState extends State<nearBy> {
     return showDialog(
         context: context,
         builder: (BuildContext ctx) {
-          Future<UserModel> getUserData() async {
-            var doc = await FirebaseFirestore.instance
-                .collection("users")
-                .doc(FirebaseAuth.instance.currentUser!.uid)
-                .get();
-            return UserModel.fromMap(doc.data());
-          }
 
           return StatefulBuilder(builder: (context, setState) {
             final _formKey = GlobalKey<FormState>();

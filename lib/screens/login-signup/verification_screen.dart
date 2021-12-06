@@ -82,7 +82,7 @@ class _verificationState extends State<verification> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.1,
             ),
-            CircularProgressIndicator(),
+            const CircularProgressIndicator(),
           ],
         ),
       ),

@@ -1,24 +1,26 @@
+// ignore_for_file: camel_case_types
+
 import 'package:deep_pocket_1/admin.dart';
 import 'package:deep_pocket_1/screens/Nearby/nearby_favourite.dart';
 import 'package:deep_pocket_1/screens/Nearby/nearby_first.dart';
-import 'package:deep_pocket_1/screens/event/create_event.dart';
-import 'package:deep_pocket_1/screens/event/even_main_screen.dart';
-import 'package:deep_pocket_1/screens/event/events_example.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class nearbyTab extends StatefulWidget {
   static const route = '/nearbyTab';
+
+  const nearbyTab({Key? key}) : super(key: key);
   @override
   _nearbyTabState createState() => _nearbyTabState();
 }
 
 class _nearbyTabState extends State<nearbyTab> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  final List<Widget> _widgetOptions = <Widget>[nearBy(), nearbyFav()];
+  final List<Widget> _widgetOptions = <Widget>[
+    const nearBy(),
+    const nearbyFav()
+  ];
 
   void _onItemTapped(int index) {
     setState(() {

@@ -1,16 +1,16 @@
-import 'package:auto_size_text/auto_size_text.dart';
+// ignore_for_file: camel_case_types, avoid_print, non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/admin.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notice_create.dart';
 // import 'package:deep_pocket/screens/event/mock_event.dart';
 import 'package:deep_pocket_1/screens/noticeboard/notice_model.dart';
-import 'package:deep_pocket_1/screens/noticeboard/notice_screen.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 import 'notice_card.dart';
 
@@ -28,7 +28,7 @@ class _noticeBoardState extends State<noticeBoard> {
   int fil = -1;
   int cata = 0;
   // var newNotice;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   DateTime? _selected;
   DateTime? _selectedBefore;
   bool _isSearching = false;
@@ -106,7 +106,7 @@ class _noticeBoardState extends State<noticeBoard> {
     Navigator.of(context).pop();
   }
 
-  Future<Null> _selectTime(BuildContext context) async {
+  Future<void> _selectTime(BuildContext context) async {
     final DateTime? picked_s = await showDatePicker(
       initialEntryMode: DatePickerEntryMode.calendar,
       context: context,
@@ -125,7 +125,7 @@ class _noticeBoardState extends State<noticeBoard> {
 
   List<dynamic> Admins = [];
 
-  Future<Null> _selectBeforeTime(BuildContext context) async {
+  Future<void> _selectBeforeTime(BuildContext context) async {
     final DateTime? picked_s = await showDatePicker(
       initialEntryMode: DatePickerEntryMode.calendar,
       context: context,
@@ -202,7 +202,7 @@ class _noticeBoardState extends State<noticeBoard> {
                 color: Colors.black,
                 child: Row(
                   children: [
-                    Container(
+                    SizedBox(
                       height: MSize.height,
                       // color: Colors.amber,
                       width: MSize.width * 0.3,
@@ -240,13 +240,11 @@ class _noticeBoardState extends State<noticeBoard> {
                                   cata = 1;
                                 });
                               },
-                              child: Container(
-                                  // padding: const EdgeInsets.symmetric(vertical: ),
-                                  child: const Text('Depatment',
-                                      style: TextStyle(
-                                        color: Colors.orange,
-                                        fontSize: 17,
-                                      ))))
+                              child: const Text('Depatment',
+                                  style: TextStyle(
+                                    color: Colors.orange,
+                                    fontSize: 17,
+                                  )))
                         ],
                       ),
                     ),
@@ -362,59 +360,55 @@ class _noticeBoardState extends State<noticeBoard> {
                                 ],
                               ))
                           : Container(
-                              // color: Colors.amber,
-                              child: Container(
-                                margin:
-                                    EdgeInsets.only(top: MSize.height * 0.02),
-                                // height: MSize.height * 0.7,
-                                child: Column(
-                                  children: <Widget>[
-                                    for (int i = -1; i < Department.length; i++)
-                                      Container(
-                                        width: MSize.width * 0.47,
-                                        child: Theme(
-                                          data: ThemeData(
-                                              unselectedWidgetColor:
-                                                  Colors.white),
-                                          child: ListTile(
-                                            contentPadding: EdgeInsets.zero,
-                                            title: i == -1
-                                                ? const Text(
-                                                    "All",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                    // style: Theme.of(context).textTheme.subtitle1.copyWith(color: i == 5 ? Colors.black38 : Colors.black),
-                                                  )
-                                                : Text(
-                                                    Department[i],
-                                                    style: const TextStyle(
-                                                        color: Colors.white),
-                                                    // style: Theme.of(context).textTheme.subtitle1.copyWith(color: i == 5 ? Colors.black38 : Colors.black),
-                                                  ),
-                                            leading: Radio(
-                                              value: i,
-                                              groupValue: _value,
-                                              activeColor: Colors.orange,
-                                              onChanged: (int? value) {
-                                                setState(() {
-                                                  _value = value!;
-                                                });
-                                                updateFilter(_value, context);
-                                              },
-                                            ),
+                              margin: EdgeInsets.only(top: MSize.height * 0.02),
+                              // height: MSize.height * 0.7,
+                              child: Column(
+                                children: <Widget>[
+                                  for (int i = -1; i < Department.length; i++)
+                                    SizedBox(
+                                      width: MSize.width * 0.47,
+                                      child: Theme(
+                                        data: ThemeData(
+                                            unselectedWidgetColor:
+                                                Colors.white),
+                                        child: ListTile(
+                                          contentPadding: EdgeInsets.zero,
+                                          title: i == -1
+                                              ? const Text(
+                                                  "All",
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                  // style: Theme.of(context).textTheme.subtitle1.copyWith(color: i == 5 ? Colors.black38 : Colors.black),
+                                                )
+                                              : Text(
+                                                  Department[i],
+                                                  style: const TextStyle(
+                                                      color: Colors.white),
+                                                  // style: Theme.of(context).textTheme.subtitle1.copyWith(color: i == 5 ? Colors.black38 : Colors.black),
+                                                ),
+                                          leading: Radio(
+                                            value: i,
+                                            groupValue: _value,
+                                            activeColor: Colors.orange,
+                                            onChanged: (int? value) {
+                                              setState(() {
+                                                _value = value!;
+                                              });
+                                              updateFilter(_value, context);
+                                            },
                                           ),
                                         ),
                                       ),
-                                    TextButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            _value = -1;
-                                          });
-                                          updateFilter(-1, context);
-                                        },
-                                        child: Text('Reset'))
-                                  ],
-                                ),
+                                    ),
+                                  TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _value = -1;
+                                        });
+                                        updateFilter(-1, context);
+                                      },
+                                      child: const Text('Reset'))
+                                ],
                               ),
                             ),
                     )
@@ -423,7 +417,7 @@ class _noticeBoardState extends State<noticeBoard> {
               ),
             )),
             body: SingleChildScrollView(
-              child: Container(
+              child: SizedBox(
                 height: MSize.height,
                 child: StreamBuilder(
                     stream: _isSearching ? getSearchStream() : getStream(),
@@ -438,48 +432,43 @@ class _noticeBoardState extends State<noticeBoard> {
                       final noticeData = snapshot.data!.docs;
 
                       return _isSearching
-                          ? Container(
-                              child: Column(
-                                children: [
-                                  TextField(
-                                    autocorrect: false,
-                                    style: const TextStyle(
-                                        color: Colors.black, fontSize: 18),
-                                    decoration: const InputDecoration(
-                                      prefixIcon: Icon(Icons.search_outlined,
-                                          color: Colors.black),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                    ),
-                                    onSubmitted: (String value) {
-                                      setState(() {
-                                        search = value;
-                                      });
-                                    },
+                          ? Column(
+                              children: [
+                                TextField(
+                                  autocorrect: false,
+                                  style: const TextStyle(
+                                      color: Colors.black, fontSize: 18),
+                                  decoration: const InputDecoration(
+                                    prefixIcon: Icon(Icons.search_outlined,
+                                        color: Colors.black),
+                                    filled: true,
+                                    fillColor: Colors.white,
                                   ),
-                                  SizedBox(
-                                    height: MSize.height * 0.01,
-                                  ),
-                                  Container(
-                                    height: MSize.height * 0.8,
-                                    // color: Colors.amber,
-                                    child: ListView.builder(
-                                        controller: _scrollController,
-                                        itemCount: noticeData.length,
-                                        itemBuilder: (context, i) => noticeCard(
-                                            newNotice: noticeData[i])),
-                                  )
-                                ],
-                              ),
+                                  onSubmitted: (String value) {
+                                    setState(() {
+                                      search = value;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  height: MSize.height * 0.01,
+                                ),
+                                SizedBox(
+                                  height: MSize.height * 0.8,
+                                  // color: Colors.amber,
+                                  child: ListView.builder(
+                                      controller: _scrollController,
+                                      itemCount: noticeData.length,
+                                      itemBuilder: (context, i) =>
+                                          noticeCard(newNotice: noticeData[i])),
+                                )
+                              ],
                             )
-                          : Container(
-                              // color: Colors.amber,
-                              child: ListView.builder(
-                                  controller: _scrollController,
-                                  itemCount: noticeData.length,
-                                  itemBuilder: (context, i) =>
-                                      noticeCard(newNotice: noticeData[i])),
-                            );
+                          : ListView.builder(
+                              controller: _scrollController,
+                              itemCount: noticeData.length,
+                              itemBuilder: (context, i) =>
+                                  noticeCard(newNotice: noticeData[i]));
                     }),
               ),
             ),
