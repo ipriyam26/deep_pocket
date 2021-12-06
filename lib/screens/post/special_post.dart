@@ -425,9 +425,9 @@ class _nearbyPost extends State<nearbyPost> {
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(2),
                         topRight: Radius.circular(2))),
-                child: Text(
-                  "NEW " + widget.tag.toString().toUpperCase(),
-                  style: const TextStyle(
+                child: const Text(
+                  "NEW USER ADDED PLACE",
+                  style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.w700),
@@ -474,6 +474,14 @@ class _nearbyPost extends State<nearbyPost> {
                             color: Colors.pinkAccent,
                             fontWeight: FontWeight.w700,
                             fontSize: 17,
+                          ),
+                        ),
+                        const Text(
+                          "@Place will be Automatically added after reaching 50 likes",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
                           ),
                         ),
                         ReadMoreText(
