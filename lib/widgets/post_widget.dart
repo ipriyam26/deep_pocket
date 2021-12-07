@@ -203,7 +203,8 @@ class _postCardState extends State<postCard> {
                                         fadeOutDuration:
                                             const Duration(microseconds: 2),
                                         placeholder: (context, url) =>
-                                            const CupertinoActivityIndicator(),
+                                            Image.asset(
+                                                "assets/imageLoading.gif"),
                                         imageUrl: item.toString(),
                                         fit: BoxFit.cover,
                                       ),
@@ -349,7 +350,7 @@ class firstColumn extends StatelessWidget {
                             color: Colors.grey,
                             child: CachedNetworkImage(
                               placeholder: (context, url) =>
-                                  Image.asset('assets/person.png'),
+                                  Image.asset('assets/personHolder2.gif'),
                               imageUrl: AuthorImage.toString(),
                               fit: BoxFit.cover,
                             ),

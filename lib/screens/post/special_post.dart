@@ -526,14 +526,15 @@ class _nearbyPost extends State<nearbyPost> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
                                     child: Container(
-                                      color: Colors.grey[200],
+                                      // color: Colors.grey[200],
                                       child: CachedNetworkImage(
                                         fadeInDuration:
                                             const Duration(microseconds: 0),
                                         fadeOutDuration:
                                             const Duration(microseconds: 2),
                                         placeholder: (context, url) =>
-                                            const CupertinoActivityIndicator(),
+                                            Image.asset(
+                                                "assets/ImageLoading.gif"),
                                         imageUrl: item.toString(),
                                         fit: BoxFit.cover,
                                       ),
@@ -742,7 +743,7 @@ class firstColumn extends StatelessWidget {
                       color: Colors.grey,
                       child: CachedNetworkImage(
                         placeholder: (context, url) =>
-                            Image.asset('assets/person.png'),
+                            Image.asset('assets/personHolder.gif'),
                         imageUrl: AuthorImage,
                         fit: BoxFit.cover,
                       ),

@@ -95,6 +95,10 @@ flutter:
     - assets/person.png
     - assets/logo.png
     - assets/empty.gif
+    - assets/imageLoading.gif
+    - assets/feedcard.gif
+    - assets/personHolder.gif
+    - assets/personHolder2.gif
     - jsondata/course_new.json
     - json-files/
   # An image asset can refer to one or more resolution-specific "variants", see

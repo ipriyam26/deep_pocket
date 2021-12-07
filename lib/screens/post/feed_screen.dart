@@ -155,10 +155,11 @@ class _feedScreenState extends State<feedScreen> {
             builder: (context,
                 AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
               if (!snapshot.hasData) {
-                return const Center(
-                    child: CircularProgressIndicator(
-                  color: Colors.orange,
-                ));
+                return Image.asset(
+                  "assets/feedcard.gif",
+                  width: MWidth * 0.98,
+                  height: MHeight * 0.7,
+                );
               }
               return SingleChildScrollView(
                 controller: _scrollController,
