@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_pocket_1/models/data_feed.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:deep_pocket_1/models/user_model.dart';
 import 'package:deep_pocket_1/screens/login-signup/login.dart';
@@ -138,13 +139,6 @@ class _feedScreenState extends State<feedScreen> {
                   "Filters",
                   style: TextStyle(color: Colors.white),
                 )),
-            // TextButton(
-            //     onPressed: () =>
-            //         {Navigator.pushNamed(context, userInput.route)},
-            //     child: const Icon(
-            //       Icons.add_box,
-            //       color: Colors.pink,
-            //     )),
           ],
         ),
         backgroundColor: Colors.black,
@@ -155,17 +149,26 @@ class _feedScreenState extends State<feedScreen> {
             builder: (context,
                 AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
               if (!snapshot.hasData) {
-                return Image.asset(
-                  "assets/feedcard.gif",
-                  width: MWidth * 0.98,
-                  height: MHeight * 0.7,
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 4,
+                  itemBuilder: (context, i) => Container(
+                    margin: EdgeInsets.symmetric(vertical: MHeight * 0.01),
+                    child: Image.asset(
+                      "assets/feedcard.gif",
+                      width: MWidth * 0.98,
+                      height: MHeight * 0.7,
+                    ),
+                  ),
                 );
               }
               return SingleChildScrollView(
                 controller: _scrollController,
                 child: Column(
                   children: [
-                    SizedBox(height: MHeight * 0.22, child: MenuP()),
+                    kIsWeb
+                        ? SizedBox(height: MHeight * 0.3, child: MenuP())
+                        : SizedBox(height: MHeight * 0.22, child: MenuP()),
                     SizedBox(
                       height: MHeight * 0.005,
                     ),

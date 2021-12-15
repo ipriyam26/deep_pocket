@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types, must_be_immutable, non_constant_identifier_names
 
 import 'dart:math';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -79,25 +80,47 @@ class MenuP extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(16, 15, 1, 1),
       body: SafeArea(
-          child: SizedBox(
-        height: Mheight * 0.22,
-        child: GridView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: Mwidth * 0.02),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                crossAxisCount: 4,
-                childAspectRatio: 5 / 4.8),
-            itemCount: menu.length,
-            itemBuilder: (context, i) => Menubtt(
-                  Mwidth: Mwidth,
-                  Mheight: Mheight,
-                  image: menu[i].image,
-                  name: menu[i].name,
-                  route: menu[i].route,
-                )),
-      )
+          child: kIsWeb
+              ? SizedBox(
+                  height: Mheight * 0.3,
+                  child: GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(horizontal: Mwidth * 0.02),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              mainAxisSpacing: 2,
+                              crossAxisSpacing: 5,
+                              crossAxisCount: 4,
+                              childAspectRatio: 5 / 4.8),
+                      itemCount: menu.length,
+                      itemBuilder: (context, i) => Menubtt(
+                            Mwidth: Mwidth,
+                            Mheight: Mheight,
+                            image: menu[i].image,
+                            name: menu[i].name,
+                            route: menu[i].route,
+                          )),
+                )
+              : SizedBox(
+                  height: Mheight * 0.22,
+                  child: GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(horizontal: Mwidth * 0.02),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              mainAxisSpacing: 5,
+                              crossAxisSpacing: 5,
+                              crossAxisCount: 4,
+                              childAspectRatio: 5 / 4.8),
+                      itemCount: menu.length,
+                      itemBuilder: (context, i) => Menubtt(
+                            Mwidth: Mwidth,
+                            Mheight: Mheight,
+                            image: menu[i].image,
+                            name: menu[i].name,
+                            route: menu[i].route,
+                          )),
+                )
 
           // Menubtt(
           //     Mwidth: Mwidth, Mheight: Mheight, image: image, name: name),
@@ -134,41 +157,79 @@ class Menubtt extends StatelessWidget {
         color: randomColor(),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(5))),
-        child: SizedBox(
-          height: Mheight * 0.08,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(5), topRight: Radius.circular(5)),
-                child: CachedNetworkImage(
-                    fadeInDuration: const Duration(microseconds: 0),
-                    fadeOutDuration: const Duration(microseconds: 0),
-                    placeholder: (context, url) => const SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: CupertinoActivityIndicator()),
-                    imageUrl: image,
-                    height: Mheight * 0.075,
-                    width: Mwidth * 0.225,
-                    fit: BoxFit.fill),
-              ),
-              SizedBox(
-                height: Mheight * 0.002,
-              ),
-              AutoSizeText(
-                name,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 11,
-                    color: Colors.white),
-                minFontSize: 11,
-                maxFontSize: 20,
+        child: kIsWeb
+            ? SizedBox(
+                height: Mheight * 0.1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          topRight: Radius.circular(5)),
+                      child: CachedNetworkImage(
+                          fadeInDuration: const Duration(microseconds: 0),
+                          fadeOutDuration: const Duration(microseconds: 0),
+                          placeholder: (context, url) => const SizedBox(
+                              height: 50,
+                              width: 50,
+                              child: CupertinoActivityIndicator()),
+                          imageUrl: image,
+                          height: Mheight * 0.1,
+                          width: Mwidth * 0.225,
+                          fit: BoxFit.fill),
+                    ),
+                    SizedBox(
+                      height: Mheight * 0.002,
+                    ),
+                    AutoSizeText(
+                      name,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 11,
+                          color: Colors.white),
+                      minFontSize: 11,
+                      maxFontSize: 20,
+                    )
+                  ],
+                ),
               )
-            ],
-          ),
-        ),
+            : SizedBox(
+                height: Mheight * 0.1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          topRight: Radius.circular(5)),
+                      child: CachedNetworkImage(
+                          fadeInDuration: const Duration(microseconds: 0),
+                          fadeOutDuration: const Duration(microseconds: 0),
+                          placeholder: (context, url) => const SizedBox(
+                              height: 50,
+                              width: 50,
+                              child: CupertinoActivityIndicator()),
+                          imageUrl: image,
+                          height: Mheight * 0.075,
+                          width: Mwidth * 0.225,
+                          fit: BoxFit.fill),
+                    ),
+                    SizedBox(
+                      height: Mheight * 0.002,
+                    ),
+                    AutoSizeText(
+                      name,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 11,
+                          color: Colors.white),
+                      minFontSize: 11,
+                      maxFontSize: 20,
+                    )
+                  ],
+                ),
+              ),
       ),
     );
   }
