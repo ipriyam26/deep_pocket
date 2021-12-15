@@ -6,7 +6,7 @@ import 'package:deep_pocket_1/admin.dart';
 // import 'package:deep_pocket/screens/event/mock_event.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 

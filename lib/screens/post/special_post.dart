@@ -525,19 +525,16 @@ class _nearbyPost extends State<nearbyPost> {
                                 child: Center(
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
-                                    child: Container(
-                                      // color: Colors.grey[200],
-                                      child: CachedNetworkImage(
-                                        fadeInDuration:
-                                            const Duration(microseconds: 0),
-                                        fadeOutDuration:
-                                            const Duration(microseconds: 2),
-                                        placeholder: (context, url) =>
-                                            Image.asset(
-                                                "assets/ImageLoading.gif"),
-                                        imageUrl: item.toString(),
-                                        fit: BoxFit.cover,
-                                      ),
+                                    child: CachedNetworkImage(
+                                      fadeInDuration:
+                                          const Duration(microseconds: 0),
+                                      fadeOutDuration:
+                                          const Duration(microseconds: 2),
+                                      placeholder: (context, url) =>
+                                          Image.asset(
+                                              "assets/ImageLoading.gif"),
+                                      imageUrl: item.toString(),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
