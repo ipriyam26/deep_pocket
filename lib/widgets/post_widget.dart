@@ -87,28 +87,8 @@ class _postCardState extends State<postCard> {
         child: Column(
           children: [
             if (widget.tag == 'Query')
-              Container(
-                  padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.04),
-                  width: double.maxFinite,
-                  decoration: const BoxDecoration(
-                      color: Colors.pink,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10))),
-                  child: Text(
-                    "POINTS : " + widget.points.toString(),
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                  )),
+              query(context),
             Container(
-              // color: Colors.black,
-              // height: widget.MHeight * 0.5,
-              // width: MWidth * 0.9,
-
               margin: EdgeInsets.only(
                   left: widget.MWidth * 0.02,
                   right: widget.MWidth * 0.02,
@@ -293,6 +273,26 @@ class _postCardState extends State<postCard> {
         ),
       ),
     );
+  }
+
+  Container query(BuildContext context) {
+    return Container(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.04),
+                width: double.maxFinite,
+                decoration: const BoxDecoration(
+                    color: Colors.pink,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10))),
+                child: Text(
+                  "POINTS : " + widget.points.toString(),
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600),
+                ));
   }
 }
 
