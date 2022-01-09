@@ -1,16 +1,7 @@
-# deep_pocket_1
+Deep Pocket is a student companion app for universities and schools to make it easy to communicate between there students and teachers helping peer to peer learning and provind structured information, the app is currently up and working you can download a copy from here
 
-A new Flutter project.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![deep-1](https://user-images.githubusercontent.com/79325116/147743753-d16bbc8a-c8de-4a75-b0c1-6b1bbc48d1e5.png)
+![deep-2](https://user-images.githubusercontent.com/79325116/147743773-743a1cbe-33e6-47fd-9670-e251725a96ad.png)
+![deep-3](https://user-images.githubusercontent.com/79325116/147743780-ecb983bb-c2db-4a6f-a9e5-4951af0632ba.png)
+![deep-4](https://user-images.githubusercontent.com/79325116/147743793-31587096-4e53-4f5a-b1ba-9a90ef72efb3.png)
