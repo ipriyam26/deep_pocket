@@ -1,4 +1,4 @@
-Deep Pocket is a student companion app for universities and schools to make it easy to communicate between there students and teachers helping peer to peer learning and provind structured information, the app is currently up and working you can download a copy from here
+Deep Pocket is a student companion app for universities and schools to make it easy to communicate between there students and teachers helping peer to peer learning and provind structured information, the app is currently up and working you can download a copy from here https://github.com/ipriyam26/deep_pocket/blob/main/app-release.apk
 
 
 ![deep-1](https://user-images.githubusercontent.com/79325116/147743753-d16bbc8a-c8de-4a75-b0c1-6b1bbc48d1e5.png)
