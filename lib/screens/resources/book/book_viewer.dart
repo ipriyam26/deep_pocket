@@ -36,15 +36,15 @@ class _bookViewerState extends State<bookViewer> {
       builder: (context) => Positioned(
         top: details.globalSelectedRegion!.center.dy - 55,
         left: details.globalSelectedRegion!.bottomLeft.dx,
-        child: RaisedButton(
+        child: ElevatedButton(
           onPressed: () {
             Clipboard.setData(ClipboardData(text: details.selectedText));
             print(
                 'Text copied to clipboard: ' + details.selectedText.toString());
             _pdfViewerController.clearSelection();
           },
-          color: Colors.white,
-          elevation: 10,
+          // color: Colors.white,
+          // elevation: 10,
           child: const Text('Copy', style: TextStyle(fontSize: 17)),
         ),
       ),
